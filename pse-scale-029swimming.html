@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#020b14">
+  <meta name="description" content="Escala PSE: Percepção Subjetiva do Esforço — Aprenda como monitorar a intensidade do treino de 1 a 10 com o Prof. Michel Victor da 029Swimming.">
+  <title>Escala PSE: Meça o Esforço do Seu Treino | 029Swimming — Prof. Michel Victor</title>
+  <link rel="canonical" href="https://029swimming.com.br/pse-scale-029swimming.html">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="029Swimming">
+  <meta property="og:title" content="Escala PSE: Meça o Esforço do Seu Treino | 029Swimming">
+  <meta property="og:description" content="A Escala de Percepção Subjetiva de Esforço (PSE) é uma ferramenta essencial para monitorar a intensidade do treino. Aprenda como usar de 1 a 10 e otimize sua performance.">
+  <meta property="og:url" content="https://029swimming.com.br/pse-scale-029swimming.html">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Fontes do sistema 029Swimming -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ══ TOKENS ══════════════════════════════════ */
+    :root {
+      --bg:#020b14;--bg2:#040f1e;--bg3:#071828;--bg4:#0a2035;--bg5:#0d2845;
+      --ocean:#0077b6;--glow:#00b4d8;--gp:rgba(0,180,216,.1);
+      --gold:#f0a500;--gd2:#ffc947;--grn:#00e676;
+      --t1:rgba(255,255,255,.92);--t2:#7aaecc;--t3:#3a6a8a;
+      --bd:rgba(0,180,216,.1);--bd2:rgba(0,180,216,.2);
+      --fd:"Orbitron",monospace;--fb:"Barlow",sans-serif;
+      --ease:cubic-bezier(.4,0,.2,1);
+      --max:1120px;--r:14px;--sp:clamp(3rem,6vw,5.5rem);
+
+      /* PSE color scale */
+      --bg-primary:     #0a0e1a;
+      --bg-secondary:   #0d1520;
+      --bg-card:        #111827;
+      --accent-primary: #00d4ff;
+      --accent-gold:    #f59e0b;
+      --accent-white:   #f0f9ff;
+      --text-primary:   #e2f4ff;
+      --text-secondary: #94b8cc;
+      --border-subtle:  rgba(0, 212, 255, 0.15);
+      --glow-pse:       rgba(0, 212, 255, 0.3);
+
+      --pse-10: #e53e3e;
+      --pse-9:  #ed6b35;
+      --pse-78: #f59e0b;
+      --pse-46: #68d391;
+      --pse-23: #4299e1;
+      --pse-1:  #00d4ff;
+    }
+
+    /* ══ RESET ═══════════════════════════════════ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      font-family: 'Barlow', sans-serif;
+      color: var(--t1);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      line-height: 1.65;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-thumb { background: var(--bg5); border-radius: 3px; }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background: radial-gradient(ellipse 70% 55% at 50% 110%, rgba(0,119,182,.16) 0%, transparent 62%);
+    }
+
+    /* ══ ANIMATIONS ══════════════════════════════ */
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+    /* ══ NAVBAR ══════════════════════════════════ */
+    #navbar{
+      all:unset;
+      position:fixed!important;top:0;left:0;right:0;z-index:200;
+      background:transparent!important;border:none!important;
+      box-shadow:none!important;overflow:visible!important;
+      padding:clamp(.85rem,2vw,1.4rem) clamp(1rem,2.5vw,2rem);
+      pointer-events:none;
+      display:flex;align-items:center;justify-content:space-between;gap:1rem
+    }
+    #navbar .brand-link{
+      display:inline-flex;align-items:center;text-decoration:none;
+      pointer-events:auto;flex:0 0 auto;transition:transform .25s ease
+    }
+    #navbar .brand-link:hover{transform:scale(1.04)}
+    #navbar .brand-logo{
+      display:block;height:clamp(72px,9vw,110px);width:auto;
+      filter:drop-shadow(0 6px 24px rgba(0,0,0,.65)) drop-shadow(0 1px 2px rgba(0,0,0,.4));
+      user-select:none;-webkit-user-drag:none
+    }
+    @media(max-width:600px){
+      #navbar{padding:.6rem .9rem}
+      #navbar .brand-logo{height:62px}
+    }
+    #navbar .nav-right{
+      display:flex;align-items:center;
+      gap:clamp(.7rem,1.6vw,1.4rem);pointer-events:auto
+    }
+    #navbar .nav-links{
+      display:flex;align-items:center;
+      gap:clamp(.8rem,1.8vw,1.6rem);list-style:none;margin:0;padding:0
+    }
+    #navbar .nav-links a{
+      font-family:'Barlow',sans-serif;font-size:.7rem;font-weight:600;
+      letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.92);
+      text-decoration:none;white-space:nowrap;padding:.35rem 0;
+      position:relative;transition:color .2s ease;
+      text-shadow:0 1px 8px rgba(0,0,0,.55)
+    }
+    #navbar .nav-links a::after{
+      content:"";position:absolute;left:50%;bottom:-2px;width:0;height:2px;
+      border-radius:2px;background:#00b4d8;transition:width .25s,left .25s
+    }
+    #navbar .nav-links a:hover{color:#00b4d8}
+    #navbar .nav-links a:hover::after{width:100%;left:0}
+    #navbar .nav-links a.active{color:#00b4d8}
+    #navbar .nav-links a.active::after{width:100%;left:0}
+    @media(max-width:560px){#navbar .nav-links{display:none}}
+
+    /* Dropdown */
+    #navbar .nav-dropdown{position:relative;pointer-events:auto}
+    #navbar .nav-dropdown-trigger{display:inline-flex;align-items:center;gap:.4rem;cursor:pointer}
+    #navbar .nav-dropdown-caret{width:9px;height:9px;transition:transform .25s ease;opacity:.7}
+    #navbar .nav-dropdown.is-open .nav-dropdown-caret,
+    #navbar .nav-dropdown:hover .nav-dropdown-caret{transform:rotate(180deg);opacity:1}
+    #navbar .nav-dropdown-menu{
+      position:absolute;top:100%;left:50%;
+      transform:translateX(-50%) translateY(-6px);
+      margin-top:.4rem;min-width:96px;
+      background:linear-gradient(160deg,rgba(2,11,20,.96),rgba(6,21,34,.96));
+      backdrop-filter:blur(18px) saturate(140%);
+      -webkit-backdrop-filter:blur(18px) saturate(140%);
+      border:1px solid rgba(0,180,216,.22);border-radius:8px;padding:.2rem;
+      display:flex;flex-direction:column;gap:.05rem;
+      opacity:0;pointer-events:none;
+      transition:opacity .22s ease,transform .22s cubic-bezier(.2,.8,.3,1);
+      box-shadow:0 16px 40px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.04) inset;
+      z-index:210
+    }
+    #navbar .nav-dropdown:hover .nav-dropdown-menu,
+    #navbar .nav-dropdown.is-open .nav-dropdown-menu{
+      opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)
+    }
+    #navbar .nav-dropdown-menu a{
+      font-family:'Barlow',sans-serif;font-size:.72rem;font-weight:700;
+      letter-spacing:.16em;text-transform:uppercase;color:#fff;text-decoration:none;
+      text-align:center;padding:.3rem .55rem;border-radius:5px;white-space:nowrap;
+      transition:background .2s,color .2s,transform .2s;text-shadow:none
+    }
+    #navbar .nav-dropdown-menu a::after{display:none}
+    #navbar .nav-dropdown-menu a:hover{background:rgba(0,180,216,.12);color:#00b4d8;transform:scale(1.04)}
+    #navbar .nav-dropdown::before{
+      content:"";position:absolute;top:100%;left:0;right:0;height:1rem;z-index:209
+    }
+    #navbar .nav-search-btn{
+      background:none;border:none;cursor:pointer;padding:.35rem;
+      color:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;
+      pointer-events:auto;filter:drop-shadow(0 1px 8px rgba(0,0,0,.55));
+      transition:color .2s,transform .2s
+    }
+    #navbar .nav-search-btn:hover{color:#00b4d8;transform:scale(1.1)}
+    #navbar .nav-search-btn svg{width:20px;height:20px;display:block}
+    #navbar .aluno-btn{
+      pointer-events:auto;display:inline-flex;align-items:center;gap:.55rem;
+      background:rgba(0,180,216,.12);border:1px solid rgba(0,180,216,.5);
+      color:#00b4d8;padding:.55rem 1.05rem;border-radius:999px;
+      font-family:'Barlow',sans-serif;font-size:.68rem;font-weight:700;
+      letter-spacing:.16em;text-transform:uppercase;cursor:pointer;white-space:nowrap;
+      backdrop-filter:blur(8px);transition:all .25s;
+      filter:drop-shadow(0 4px 14px rgba(0,0,0,.45))
+    }
+    #navbar .aluno-btn:hover{
+      background:#00b4d8;color:#020b14;border-color:#00b4d8;
+      transform:translateY(-1px);box-shadow:0 10px 28px rgba(0,180,216,.4)
+    }
+    #navbar .aluno-btn .aluno-btn-ico{width:16px;height:16px;display:block}
+    @media(max-width:480px){
+      #navbar .aluno-btn{padding:.5rem .85rem;font-size:.62rem}
+      #navbar .aluno-btn .aluno-btn-ico{width:14px;height:14px}
+    }
+    @media(max-width:360px){
+      #navbar .aluno-btn span{display:none}
+      #navbar .aluno-btn{padding:.5rem}
+    }
+
+    /* ══ BURGER + DRAWER ════════════════════════ */
+    .nav-burger{
+      display:flex;flex-direction:column;gap:5px;cursor:pointer;
+      padding:4px;background:none;border:none;flex-shrink:0;pointer-events:auto
+    }
+    .nav-burger span{
+      width:22px;height:2px;background:var(--t1);
+      border-radius:2px;transition:all .25s;display:block
+    }
+    .nav-burger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+    .nav-burger.open span:nth-child(2){opacity:0;transform:translateX(-8px)}
+    .nav-burger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+    .drawer-overlay{
+      display:none;position:fixed;inset:0;z-index:9998;
+      background:rgba(0,0,0,.55);backdrop-filter:blur(2px);
+      opacity:0;transition:opacity .3s ease
+    }
+    .drawer-overlay.open{display:block;opacity:1}
+
+    .mob-menu{
+      position:fixed;top:0;right:0;bottom:0;z-index:9999;
+      width:280px;max-width:92vw;
+      background:rgba(2,11,20,.97);backdrop-filter:blur(22px) saturate(160%);
+      border-left:1px solid rgba(0,180,216,.18);
+      display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;
+      transform:translateX(110%);transition:transform .32s cubic-bezier(.4,0,.2,1);
+      overflow-y:auto;padding-top:0
+    }
+    .mob-menu.open{transform:translateX(0)}
+    .mob-menu-header{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:1rem 1.2rem;border-bottom:1px solid rgba(0,180,216,.15);
+      min-height:58px;flex-shrink:0
+    }
+    .mob-menu-title{
+      font-family:var(--fd);font-size:.55rem;font-weight:800;
+      letter-spacing:.15em;text-transform:uppercase;color:var(--glow)
+    }
+    .mob-menu-close{
+      background:none;border:none;cursor:pointer;padding:.3rem;
+      color:rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;
+      transition:color .2s;border-radius:6px
+    }
+    .mob-menu-close:hover{color:#fff;background:rgba(255,255,255,.08)}
+    .mob-menu a{
+      font-family:var(--fd);font-size:.68rem;font-weight:700;letter-spacing:.12em;
+      text-transform:uppercase;color:var(--t2);padding:1rem 1.6rem;
+      text-align:left;border-bottom:1px solid rgba(0,180,216,.08);
+      transition:color .2s,padding-left .2s,background .2s;display:block
+    }
+    .mob-menu a:hover,.mob-menu a:active{
+      color:var(--glow);background:rgba(0,180,216,.07);padding-left:2rem
+    }
+    .mob-cta{
+      margin:1.4rem 1.2rem 1.2rem;
+      font-family:var(--fd);font-size:.62rem;font-weight:800;letter-spacing:.1em;
+      text-transform:uppercase;padding:.9rem 1.6rem;border-radius:8px;border:none;cursor:pointer;
+      background:linear-gradient(135deg,var(--gold),var(--gd2));color:#020b14;
+      box-shadow:0 3px 16px rgba(240,165,0,.4);transition:all .2s;display:block;
+      width:calc(100% - 2.4rem);text-align:center
+    }
+    .mob-cta:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(240,165,0,.6)}
+
+    /* ══ ARTICLE HERO BANNER ═══════════════════ */
+    .article-hero{
+      position:relative;
+      min-height:220px;
+      display:flex;align-items:center;justify-content:center;
+      text-align:center;
+      padding:clamp(6rem,14vw,9rem) 1.5rem clamp(2.5rem,6vw,4rem);
+      background:linear-gradient(160deg,#020b14 0%,#041826 40%,#0a1a2e 75%,#020b14 100%);
+      overflow:hidden
+    }
+    .article-hero::before{
+      content:"";position:absolute;inset:0;pointer-events:none;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 0%,rgba(0,212,255,.12) 0%,transparent 65%),
+        radial-gradient(ellipse 40% 60% at 15% 80%,rgba(0,119,182,.08) 0%,transparent 55%)
+    }
+    .article-hero::after{
+      content:"";position:absolute;bottom:0;left:0;right:0;height:60px;pointer-events:none;
+      background:linear-gradient(to bottom,transparent 0%,#020b14 100%)
+    }
+    .article-hero-inner{position:relative;z-index:1;max-width:680px}
+    .article-hero-eyebrow{
+      display:inline-flex;align-items:center;gap:.5rem;
+      background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);
+      border-radius:99px;padding:.28rem .95rem;
+      font-family:var(--fd);font-size:.42rem;font-weight:700;
+      letter-spacing:.2em;text-transform:uppercase;color:#00d4ff;
+      margin-bottom:1rem;backdrop-filter:blur(8px)
+    }
+    .article-hero-eyebrow-dot{
+      width:5px;height:5px;border-radius:50%;
+      background:#00d4ff;animation:pulse 2s ease infinite;flex-shrink:0
+    }
+    .article-hero h1{
+      font-family:'Orbitron',monospace;font-size:clamp(1.5rem,4.5vw,2.6rem);font-weight:900;
+      color:var(--accent-white);letter-spacing:.04em;line-height:1.1;margin-bottom:.75rem;
+      text-shadow:0 2px 24px rgba(0,0,0,.5)
+    }
+    .article-hero h1 span{color:#00d4ff;text-shadow:0 0 20px rgba(0,212,255,.3)}
+    .article-hero-sub{
+      font-size:clamp(.88rem,2vw,1rem);color:var(--text-secondary);
+      line-height:1.65;font-weight:400;max-width:520px;margin:0 auto
+    }
+    .article-breadcrumb{
+      display:flex;align-items:center;gap:.5rem;justify-content:center;
+      margin-bottom:1rem;
+      font-family:var(--fd);font-size:.38rem;letter-spacing:.12em;
+      text-transform:uppercase;color:var(--t3)
+    }
+    .article-breadcrumb a{color:var(--t3);transition:color .2s}
+    .article-breadcrumb a:hover{color:#00d4ff}
+    .article-breadcrumb-sep{opacity:.4}
+
+    /* ══ MAIN CONTENT WRAPPER ════════════════════ */
+    main {
+      padding-top: 80px;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ══ PSE SECTION ══════════════════════════════ */
+    .sw-pse-section {
+      width: 100%;
+      max-width: 900px;
+      padding: 4rem 1.5rem;
+    }
+
+    /* ---------- Cabeçalho da seção ---------- */
+    .sw-pse-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .sw-pse-eyebrow {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--accent-primary);
+      opacity: 0.8;
+      margin-bottom: 0.75rem;
+    }
+
+    .sw-pse-title {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1.5rem, 4vw, 2.4rem);
+      font-weight: 900;
+      color: var(--accent-white);
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+    }
+
+    .sw-pse-title span {
+      color: var(--accent-primary);
+      text-shadow: 0 0 20px var(--glow-pse);
+    }
+
+    .sw-pse-subtitle {
+      font-family: 'Barlow', sans-serif;
+      font-size: 1rem;
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ---------- Grid de níveis ---------- */
+    .sw-pse-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    /* ---------- Card de cada nível PSE ---------- */
+    .sw-pse-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 80px 6px 1fr;
+      align-items: center;
+      gap: 0 1.2rem;
+      padding: 1.1rem 1.4rem 1.1rem 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      cursor: pointer;
+      overflow: hidden;
+      transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+    }
+
+    .sw-pse-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      border-radius: 10px 0 0 10px;
+      background: var(--card-color, var(--accent-primary));
+      transition: width 0.3s ease;
+    }
+
+    .sw-pse-card:hover,
+    .sw-pse-card.active {
+      transform: translateX(4px);
+      border-color: var(--card-color, var(--accent-primary));
+      box-shadow: 0 0 24px rgba(0,0,0,0.4), 4px 0 0 var(--card-color, var(--accent-primary)) inset;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .sw-pse-card:hover::before,
+    .sw-pse-card.active::before {
+      width: 6px;
+    }
+
+    /* ---------- Número do nível ---------- */
+    .sw-pse-number {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 900;
+      color: var(--card-color, var(--accent-primary));
+      text-align: center;
+      line-height: 1;
+      text-shadow: 0 0 14px color-mix(in srgb, var(--card-color, var(--accent-primary)) 50%, transparent);
+      padding-left: 1.2rem;
+      transition: text-shadow 0.3s ease;
+    }
+
+    .sw-pse-card:hover .sw-pse-number,
+    .sw-pse-card.active .sw-pse-number {
+      text-shadow: 0 0 24px var(--card-color, var(--accent-primary));
+    }
+
+    /* ---------- Barra vertical divisória ---------- */
+    .sw-pse-divider {
+      width: 2px;
+      height: 40px;
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        var(--card-color, var(--accent-primary)),
+        transparent
+      );
+      opacity: 0.4;
+      transition: opacity 0.3s ease, height 0.3s ease;
+    }
+
+    .sw-pse-card:hover .sw-pse-divider,
+    .sw-pse-card.active .sw-pse-divider {
+      opacity: 0.9;
+      height: 100%;
+    }
+
+    /* ---------- Conteúdo textual ---------- */
+    .sw-pse-content {
+      padding-right: 0.5rem;
+    }
+
+    .sw-pse-label {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(0.65rem, 1.5vw, 0.8rem);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--card-color, var(--accent-primary));
+      margin-bottom: 0.3rem;
+      transition: color 0.3s ease;
+    }
+
+    .sw-pse-desc {
+      font-family: 'Barlow', sans-serif;
+      font-size: clamp(0.78rem, 1.8vw, 0.92rem);
+      color: var(--text-secondary);
+      line-height: 1.5;
+      transition: color 0.3s ease;
+    }
+
+    /* Descrição expandida (aparece ao clicar) */
+    .sw-pse-extra {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.3s ease;
+      opacity: 0;
+      margin-top: 0;
+    }
+
+    .sw-pse-card.active .sw-pse-extra {
+      max-height: 80px;
+      opacity: 1;
+      margin-top: 0.4rem;
+    }
+
+    .sw-pse-extra-text {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      font-style: italic;
+      padding: 0.4rem 0.6rem;
+      border-left: 2px solid var(--card-color, var(--accent-primary));
+      background: rgba(255,255,255,0.02);
+      border-radius: 0 4px 4px 0;
+    }
+
+    .sw-pse-card:hover .sw-pse-desc {
+      color: var(--text-primary);
+    }
+
+    /* ---------- Chip de intensidade visual ---------- */
+    .sw-pse-intensity {
+      display: flex;
+      gap: 2px;
+      margin-top: 0.4rem;
+    }
+
+    .sw-pse-bar {
+      height: 8px;
+      width: 6px;
+      border-radius: 2px;
+      background: var(--card-color, var(--accent-primary));
+      opacity: 0.2;
+      transition: opacity 0.4s ease, transform 0.2s ease;
+    }
+
+    .sw-pse-bar.filled {
+      opacity: 0.9;
+    }
+
+    .sw-pse-card:hover .sw-pse-bar.filled,
+    .sw-pse-card.active .sw-pse-bar.filled {
+      opacity: 1;
+      transform: scaleY(1.15);
+    }
+
+    /* ---------- Ícone de seta (toggle) ---------- */
+    .sw-pse-toggle {
+      position: absolute;
+      right: 1.2rem;
+      top: 50%;
+      transform: translateY(-50%) rotate(0deg);
+      font-size: 0.75rem;
+      color: var(--card-color, var(--accent-primary));
+      opacity: 0.4;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .sw-pse-card:hover .sw-pse-toggle {
+      opacity: 0.8;
+    }
+
+    .sw-pse-card.active .sw-pse-toggle {
+      transform: translateY(-50%) rotate(180deg);
+      opacity: 1;
+    }
+
+    /* ---------- Nota de rodapé ---------- */
+    .sw-pse-footer {
+      margin-top: 2rem;
+      text-align: center;
+      padding: 1rem 1.5rem;
+      background: rgba(0, 212, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+    }
+
+    .sw-pse-footer p {
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .sw-pse-footer strong {
+      color: var(--accent-primary);
+    }
+
+    /* ══ RESPONSIVIDADE ══════════════════════════ */
+    @media (max-width: 600px) {
+      .sw-pse-card {
+        grid-template-columns: 64px 4px 1fr;
+        gap: 0 0.9rem;
+        padding: 0.9rem 2.5rem 0.9rem 0;
+      }
+
+      .sw-pse-number {
+        font-size: 1.5rem;
+        padding-left: 1rem;
+      }
+
+      .sw-pse-label {
+        font-size: 0.62rem;
+      }
+
+      .sw-pse-toggle {
+        right: 0.8rem;
+        font-size: 0.65rem;
+      }
+    }
+
+    /* ══ ANIMAÇÃO DE ENTRADA ══════════════════════ */
+    .sw-pse-card {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+
+    .sw-pse-card.sw-visible {
+      animation: swSlideIn 0.5s ease forwards;
+    }
+
+    @keyframes swSlideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* ══ FOOTER ══════════════════════════════════ */
+    footer{
+      background:var(--bg3);border-top:1px solid var(--bd);
+      padding:2.2rem 1.5rem;position:relative;z-index:1
+    }
+    .footer-quote{
+      text-align:center;padding:0 1.5rem 2rem;
+      border-bottom:1px solid var(--bd);margin-bottom:1.8rem
+    }
+    .footer-quote-txt{
+      font-family:var(--fd);font-size:clamp(.62rem,1.7vw,.85rem);font-weight:700;
+      color:var(--t2);letter-spacing:.08em;line-height:1.5;font-style:italic
+    }
+    .footer-quote-txt em{color:var(--glow);font-style:normal}
+    .footer-inner{
+      max-width:var(--max);margin:0 auto;
+      display:flex;align-items:center;justify-content:space-between;
+      flex-wrap:wrap;gap:1.2rem
+    }
+    .footer-brand{line-height:1.2}
+    .footer-name{font-family:var(--fd);font-size:.88rem;font-weight:900;color:var(--gold)}
+    .footer-tag{font-size:.44rem;letter-spacing:.16em;text-transform:uppercase;color:var(--t3)}
+    .footer-nav{display:flex;gap:1.5rem;flex-wrap:wrap}
+    .footer-nav a{
+      font-family:var(--fd);font-size:.46rem;letter-spacing:.1em;
+      text-transform:uppercase;color:var(--t3);transition:color .2s
+    }
+    .footer-nav a:hover{color:var(--glow)}
+    .footer-copy{
+      max-width:var(--max);margin:.7rem auto 0;font-size:.52rem;color:var(--t3);
+      text-align:center;padding-top:.7rem;border-top:1px solid var(--bd)
+    }
+    @media(max-width:900px){
+      .footer-inner{flex-direction:column;align-items:center;text-align:center}
+      .footer-nav{justify-content:center}
+    }
+
+    /* ══ WHATSAPP FLOAT ══════════════════════════ */
+    #wa-float{
+      position:fixed;bottom:1.6rem;left:1.6rem;z-index:10000;
+      width:52px;height:52px;border-radius:50%;
+      background:linear-gradient(135deg,#075e54,#25d366);
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 4px 20px rgba(37,211,102,.45);cursor:pointer;
+      text-decoration:none;transition:transform .22s,box-shadow .22s
+    }
+    #wa-float:hover{transform:scale(1.12);box-shadow:0 6px 28px rgba(37,211,102,.65)}
+    #wa-float svg{width:28px;height:28px;fill:#fff}
+
+    /* ══ SCROLL BAR ══════════════════════════════ */
+    #scroll-bar{
+      position:fixed;top:0;left:0;height:3px;width:0%;z-index:9999;
+      background:linear-gradient(90deg,var(--ocean),var(--gd2),var(--glow));
+      transition:width .1s linear;
+      box-shadow:0 0 8px rgba(0,180,216,.6);pointer-events:none
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Progress bar -->
+<div id="scroll-bar"></div>
+
+<!-- ══ NAVBAR ════════════════════════════════ -->
+<header id="navbar" role="banner" aria-label="029Swimming">
+  <a class="brand-link" href="index.html" aria-label="029Swimming — Início">
+    <img class="brand-logo" src="images/logo-029.png" alt="029Swimming">
+  </a>
+  <div class="nav-right">
+    <nav class="nav-links" aria-label="Menu principal">
+      <div class="nav-dropdown" id="navAssessoriaDropdown">
+        <a href="index.html#sobre" class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+          HOME
+          <svg class="nav-dropdown-caret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="3 4.5 6 7.5 9 4.5"/></svg>
+        </a>
+        <div class="nav-dropdown-menu" role="menu">
+          <a href="index.html#sobre" role="menuitem">SOBRE</a>
+          <a href="index.html#cultura" role="menuitem">CULTURA</a>
+        </div>
+      </div>
+      <a href="index.html#professor">Coach</a>
+      <a href="index.html#experiencia">Treinos</a>
+      <div class="nav-dropdown" id="navGaleriaDropdown">
+        <a href="galeria.html" class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+          Galeria
+          <svg class="nav-dropdown-caret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="3 4.5 6 7.5 9 4.5"/></svg>
+        </a>
+        <div class="nav-dropdown-menu" role="menu">
+          <a href="galeria.html#fotos" role="menuitem">FOTOS</a>
+          <a href="galeria.html#videos" role="menuitem">VÍDEOS</a>
+        </div>
+      </div>
+      <a href="blog-assessoria.html" class="active">Blog</a>
+      <a href="index.html#contato">Contato</a>
+    </nav>
+    <button class="nav-search-btn" aria-label="Buscar no site" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/>
+      </svg>
+    </button>
+    <button class="aluno-btn" type="button" aria-label="Acessar Área do Aluno">
+      <svg class="aluno-btn-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+      </svg>
+      <span>Login</span>
+    </button>
+    <button class="nav-burger" id="burger" onclick="toggleMenu()" aria-label="Abrir menu de navegação" type="button" aria-expanded="false" aria-controls="mobMenu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Overlay do drawer -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeMenu()"></div>
+
+<!-- Drawer lateral hamburguer -->
+<div class="mob-menu" id="mobMenu" role="dialog" aria-label="Menu de navegação" aria-modal="true">
+  <div class="mob-menu-header">
+    <span class="mob-menu-title">029 Swimming</span>
+    <button class="mob-menu-close" onclick="closeMenu()" aria-label="Fechar menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+  <a href="index.html#sobre"       onclick="closeMenu()">Quem somos</a>
+  <a href="index.html#professor"   onclick="closeMenu()">Coach</a>
+  <a href="index.html#experiencia" onclick="closeMenu()">Treinos</a>
+  <a href="galeria.html"           onclick="closeMenu()">Galeria</a>
+  <a href="blog-assessoria.html"   onclick="closeMenu()" style="color:var(--glow)">Blog</a>
+  <a href="index.html#contato"     onclick="closeMenu()">Contato</a>
+  <button class="mob-cta" onclick="closeMenu();window.location='index.html#contato'">
+    VEM PRO TIME
+  </button>
+</div>
+
+<!-- ══ ARTICLE HERO ═══════════════════════════ -->
+<div class="article-hero" role="banner">
+  <div class="article-hero-inner">
+    <nav class="article-breadcrumb" aria-label="Navegação estrutural">
+      <a href="index.html">Home</a>
+      <span class="article-breadcrumb-sep">›</span>
+      <a href="blog-assessoria.html">Blog</a>
+      <span class="article-breadcrumb-sep">›</span>
+      <span>Dicas</span>
+    </nav>
+    <div class="article-hero-eyebrow">
+      <span class="article-hero-eyebrow-dot"></span>
+      Treinamento Inteligente
+    </div>
+    <h1>Escala <span>PSE</span></h1>
+    <p class="article-hero-sub">Percepção Subjetiva do Esforço — entenda como cada zona de intensidade afeta seu corpo na água e otimize sua performance com o método do Prof. Michel Victor.</p>
+  </div>
+</div>
+
+<!-- ══ ARTICLE CONTENT ════════════════════════ -->
+<main>
+  <section class="sw-pse-section" id="escala-pse" aria-label="Escala PSE — Percepção Subjetiva do Esforço">
+
+    <!-- Cabeçalho da seção -->
+    <header class="sw-pse-header">
+      <p class="sw-pse-eyebrow">Treinamento inteligente</p>
+      <h2 class="sw-pse-title">Escala <span>PSE</span></h2>
+      <p class="sw-pse-subtitle">
+        Percepção Subjetiva do Esforço — entenda como cada zona de intensidade
+        afeta seu corpo na água. Clique em cada nível para saber mais.
+      </p>
+    </header>
+
+    <!-- Grid com os 6 níveis PSE -->
+    <div class="sw-pse-grid" role="list">
+
+      <!-- NÍVEL 10 — Esforço Máximo -->
+      <div class="sw-pse-card"
+           style="--card-color: var(--pse-10)"
+           role="listitem"
+           tabindex="0"
+           aria-expanded="false"
+           data-level="10">
+        <div class="sw-pse-number">10</div>
+        <div class="sw-pse-divider"></div>
+        <div class="sw-pse-content">
+          <p class="sw-pse-label">Atividade de Esforço Máximo</p>
+          <p class="sw-pse-desc">Quase impossível continuar. Completamente sem fôlego, incapaz de falar.</p>
+          <div class="sw-pse-intensity" aria-hidden="true">
+            <div class="sw-pse-bar filled"></div><div class="sw-pse-bar filled"></div>
+            <div class="sw-pse-bar filled"></div><div class="sw-pse-bar filled"></div>
+            <div class="sw-pse-bar filled"></div><div class="sw-pse-bar filled"></div>
+            <div class="sw-pse-bar filled"></div><div class="sw-pse-bar filled"></div>
+            <div class="sw-pse-bar filled"></div><div class="sw-pse-bar filled"></div>
+          </div>
+          <div class="sw-pse-extra">
+            <p class="sw-pse-extra-text">
+              Usada em tiros de sprint final ou trechos decisivos de prova. Não é possível manter por mais do que alguns segundos.
+            </p>
+          </div>
+        </div>
+        <span class="sw-pse-toggle" aria-hidden="true">▼</span>
+      </div>
+
+      <!-- NÍVEL 9 — Muito Difícil -->
+      <div class="sw-pse-card"
+           style="--card-color: var(--pse-9)"
+           role="listitem"
+           tabindex="0"
+           aria-expanded="false"
+           data-level="9">
+        <div class="sw-pse-number">9</div>
+        <div class="sw-pse-divider"></div>
+        <div class="sw-pse-content">
+          <p class="sw-pse-label">Atividade Muito Difícil</p>
+          <p class="sw-pse-desc">Muito difícil manter a intensidade. Mal consigo respirar e falar apenas algumas palavras.</p>
+          <div class="sw-pse-intensity" aria-hidden="true">
+            <div class="sw-pse-bar filled"></div><div class="sw-pse-bar filled"></div>
+            <div class="sw-pse-bar filled"></div><div class="sw-pse-bar filled"></div>
+            <div class="sw-pse-bar filled"></div><div class="sw-pse-bar filled"></div>
+            <div class="sw-pse-bar filled"></div><div class="sw-pse-bar filled"></div>
+            <div class="sw-pse-bar filled"></div><div class="sw-pse-bar"></div>
+          </div>
+          <div class="sw-pse-extra">
+            <p class="sw-pse-extra-text">
+              Zona de limiar anaeróbico. Ideal para treinos de alta intensidade curtos. Exige recuperação adequada.
+            </p>
+          </div>
+        </div>
+        <span class="sw-pse-toggle" aria-hidden="true">▼</span>
+      </div>
+
+      <!-- NÍVEL 7-8 — Vigorosa -->
+      <div class="sw-pse-card"
+           style="--card-color: var(--pse-78)"
+           role="listitem"
+           tabindex="0"
+           aria-expanded="false"
+           data-level="78">
+        <div class="sw-pse-number">7–8</div>
+        <div class="sw-pse-divider"></div>
+        <div class="sw-pse-content">
+          <p class="sw-pse-label">Atividade Vigorosa</p>
+          <p class="sw-pse-desc">No limite do desconfortável. Falta de ar, consigo falar apenas uma frase.</p>
+          <div class="sw-pse-intensity" aria-hidden="true">
+            <div class="sw-pse-bar filled"></div><div class="sw-pse-bar filled"></div>
+            <div class="sw-pse-bar filled"></div><div class="sw-pse-bar filled"></div>
+            <div class="sw-pse-bar filled"></div><div class="sw-pse-bar filled"></div>
+            <div class="sw-pse-bar filled"></div><div class="sw-pse-bar filled"></div>
+            <div class="sw-pse-bar"></div><div class="sw-pse-bar"></div>
+          </div>
+          <div class="sw-pse-extra">
+            <p class="sw-pse-extra-text">
+              Zona aeróbica de alta intensidade. Muito utilizada em treinos intervalados de natação em mar aberto.
+            </p>
+          </div>
+        </div>
+        <span class="sw-pse-toggle" aria-hidden="true">▼</span>
+      </div>
+
+      <!-- NÍVEL 4-6 — Moderada -->
+      <div class="sw-pse-card"
+           style="--card-color: var(--pse-46)"
+           role="listitem"
+           tabindex="0"
+           aria-expanded="false"
+           data-level="46">
+        <div class="sw-pse-number">4–6</div>
+        <div class="sw-pse-divider"></div>
+        <div class="sw-pse-content">
+          <p class="sw-pse-label">Atividade Moderada</p>
+          <p class="sw-pse-desc">Respiração profunda, posso manter uma conversa curta. Ainda confortável, mas desafiador.</p>
+          <div class="sw-pse-intensity" aria-hidden="true">
+            <div class="sw-pse-bar filled"></div><div class="sw-pse-bar filled"></div>
+            <div class="sw-pse-bar filled"></div><div class="sw-pse-bar filled"></div>
+            <div class="sw-pse-bar filled"></div><div class="sw-pse-bar filled"></div>
+            <div class="sw-pse-bar"></div><div class="sw-pse-bar"></div>
+            <div class="sw-pse-bar"></div><div class="sw-pse-bar"></div>
+          </div>
+          <div class="sw-pse-extra">
+            <p class="sw-pse-extra-text">
+              Zona aeróbica ideal para a maior parte dos treinos contínuos. Ótima para desenvolvimento de base de condicionamento.
+            </p>
+          </div>
+        </div>
+        <span class="sw-pse-toggle" aria-hidden="true">▼</span>
+      </div>
+
+      <!-- NÍVEL 2-3 — Leve -->
+      <div class="sw-pse-card"
+           style="--card-color: var(--pse-23)"
+           role="listitem"
+           tabindex="0"
+           aria-expanded="false"
+           data-level="23">
+        <div class="sw-pse-number">2–3</div>
+        <div class="sw-pse-divider"></div>
+        <div class="sw-pse-content">
+          <p class="sw-pse-label">Atividade Leve</p>
+          <p class="sw-pse-desc">Parece que podemos manter durante horas. Fácil de respirar e manter uma conversa completa.</p>
+          <div class="sw-pse-intensity" aria-hidden="true">
+            <div class="sw-pse-bar filled"></div><div class="sw-pse-bar filled"></div>
+            <div class="sw-pse-bar filled"></div><div class="sw-pse-bar"></div>
+            <div class="sw-pse-bar"></div><div class="sw-pse-bar"></div>
+            <div class="sw-pse-bar"></div><div class="sw-pse-bar"></div>
+            <div class="sw-pse-bar"></div><div class="sw-pse-bar"></div>
+          </div>
+          <div class="sw-pse-extra">
+            <p class="sw-pse-extra-text">
+              Perfeita para aquecimento, recuperação ativa e travessias longas de baixa intensidade em mar aberto.
+            </p>
+          </div>
+        </div>
+        <span class="sw-pse-toggle" aria-hidden="true">▼</span>
+      </div>
+
+      <!-- NÍVEL 1 — Muito Leve -->
+      <div class="sw-pse-card"
+           style="--card-color: var(--pse-1)"
+           role="listitem"
+           tabindex="0"
+           aria-expanded="false"
+           data-level="1">
+        <div class="sw-pse-number">1</div>
+        <div class="sw-pse-divider"></div>
+        <div class="sw-pse-content">
+          <p class="sw-pse-label">Atividade Muito Leve</p>
+          <p class="sw-pse-desc">Quase nenhum esforço percebido. Mais do que descansar, mas bem mais fácil que caminhar rápido.</p>
+          <div class="sw-pse-intensity" aria-hidden="true">
+            <div class="sw-pse-bar filled"></div><div class="sw-pse-bar"></div>
+            <div class="sw-pse-bar"></div><div class="sw-pse-bar"></div>
+            <div class="sw-pse-bar"></div><div class="sw-pse-bar"></div>
+            <div class="sw-pse-bar"></div><div class="sw-pse-bar"></div>
+            <div class="sw-pse-bar"></div><div class="sw-pse-bar"></div>
+          </div>
+          <div class="sw-pse-extra">
+            <p class="sw-pse-extra-text">
+              Usada no início de aulas e treinos introdutórios para adaptar o aluno ao ambiente aquático e trabalhar técnica básica.
+            </p>
+          </div>
+        </div>
+        <span class="sw-pse-toggle" aria-hidden="true">▼</span>
+      </div>
+
+    </div><!-- /.sw-pse-grid -->
+
+    <!-- Nota de rodapé explicativa -->
+    <div class="sw-pse-footer">
+      <p>
+        <strong>Como usar:</strong> Durante os treinos, o Prof. Michel pode pedir que você indique seu nível na escala PSE.
+        Isso guia o ajuste de intensidade e garante que cada aluno treine na zona certa para seus objetivos.
+      </p>
+    </div>
+
+  </section>
+</main>
+
+<!-- ══ FOOTER ════════════════════════════════ -->
+<footer>
+  <div class="footer-quote">
+    <div class="footer-quote-txt">
+      Junte-se à nossa comunidade. <em>Onde o asfalto encontra o horizonte.</em>
+    </div>
+  </div>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-name">029Swimming</div>
+      <div class="footer-tag">Prof. Michel Victor · Assessoria de Natação</div>
+    </div>
+    <nav class="footer-nav" aria-label="Links do rodapé">
+      <a href="index.html#sobre">Quem somos</a>
+      <a href="index.html#professor">Coach</a>
+      <a href="index.html#contato">Contato</a>
+    </nav>
+  </div>
+  <p class="footer-copy">© 2026 Assessoria 029Swimming — Prof. Michel Victor. Todos os direitos reservados.</p>
+</footer>
+
+<!-- WhatsApp flutuante -->
+<a id="wa-float" href="https://wa.me/5511929029029" target="_blank" rel="noopener noreferrer" aria-label="Fale conosco no WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+  </svg>
+</a>
+
+<script>
+  /* ── Scroll progress bar ── */
+  window.addEventListener('scroll', function(){
+    var docH = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docH > 0 ? (window.scrollY / docH * 100) : 0;
+    document.getElementById('scroll-bar').style.width = pct + '%';
+  });
+
+  /* ── Mobile menu ── */
+  function toggleMenu(){
+    var menu    = document.getElementById('mobMenu');
+    var overlay = document.getElementById('drawerOverlay');
+    var burger  = document.getElementById('burger');
+    var isOpen  = menu.classList.toggle('open');
+    burger.classList.toggle('open', isOpen);
+    burger.setAttribute('aria-expanded', isOpen);
+    if(overlay) overlay.classList.toggle('open', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  }
+  function closeMenu(){
+    var menu    = document.getElementById('mobMenu');
+    var overlay = document.getElementById('drawerOverlay');
+    var burger  = document.getElementById('burger');
+    menu.classList.remove('open');
+    if(overlay) overlay.classList.remove('open');
+    burger.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeMenu();
+  });
+
+  /* --------------------------------------------------
+     INTERSECTION OBSERVER
+     Dispara animação de entrada conforme os cards
+     entram na viewport (efeito "aparecer ao rolar")
+  -------------------------------------------------- */
+  const psecards = document.querySelectorAll('.sw-pse-card');
+
+  const pseObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('sw-visible');
+          }, i * 80);
+          pseObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  psecards.forEach(card => pseObserver.observe(card));
+
+  /* --------------------------------------------------
+     TOGGLE (clique / teclado)
+     Expande o texto extra e marca o card como ativo
+  -------------------------------------------------- */
+  psecards.forEach(card => {
+
+    const toggleCard = () => {
+      const isActive = card.classList.contains('active');
+
+      psecards.forEach(c => {
+        c.classList.remove('active');
+        c.setAttribute('aria-expanded', 'false');
+      });
+
+      if (!isActive) {
+        card.classList.add('active');
+        card.setAttribute('aria-expanded', 'true');
+      }
+    };
+
+    card.addEventListener('click', toggleCard);
+
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleCard();
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
