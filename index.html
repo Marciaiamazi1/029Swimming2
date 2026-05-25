@@ -3706,7 +3706,18 @@ HOME
 </section>
 
 
-<!-- [banner "Treino real / Resultado real" removido a pedido] -->
+<!-- BANNER COMUNIDADE — foto real do grupo -->
+<div class="banner-comunidade">
+  <img loading="lazy" alt="Comunidade de nadadores da 029Swimming em treino em águas abertas" src="images/time-em-acao.jpg" style="object-position:50% 28%;">
+  <div class="banner-comunidade-overlay">
+    <div class="banner-comunidade-txt reveal">
+      <div class="s-eye">O time em ação</div>
+      <h2>Treino real.<br><em>Resultado real.</em></h2>
+      <p>Cada sessão na represa é preparação de verdade — ondas, correntes e o grupo que te empurra pra frente.</p>
+      <a href="#contato" class="btn btn-cta-hero">Quero fazer parte</a>
+    </div>
+  </div>
+</div>
 
 
 
@@ -5168,89 +5179,6 @@ setInterval(fetchClima,30*60*1000);
 .cultura-modal-close{position:absolute;top:1rem;right:1rem;z-index:2;width:38px;height:38px;border-radius:50%;background:rgba(2,11,20,.85);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.85);font-size:1.15rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
 .cultura-modal-close:hover{background:#00b4d8;color:#020b14;border-color:#00b4d8;transform:rotate(90deg)}
 @media(max-width:520px){.cultura-modal-frame{border-radius:14px}.cultura-modal-body #missao{padding:2rem 1.2rem!important}}
-
-/* ════════════════════════════════════════════════════════════
-   FUNDO ÚNICO — ELIMINA AS LINHAS DIVISÓRIAS ENTRE SEÇÕES
-   ------------------------------------------------------------
-   As seções alternavam tons de azul próximos (#0a0e1a, #0d1520,
-   #111827); onde um encostava no outro, surgia uma "linha".
-   Aqui forçamos TODAS as seções a usarem o MESMO fundo azul-
-   escuro predominante do site (#0a0e1a). Sem troca de cor = sem
-   fronteira = sem linha. O hero (#inicio) NÃO entra na regra,
-   ficando 100% preservado.                                     */
-
-#sobre, #sobre-narrativo, #experiencia, #objetivos, #modalidades,
-#diferenciais, #depoimentos, #pre-footer, #professor, #contato,
-#interesse, #missao {
-  background: #0a0e1a !important;   /* azul-escuro predominante */
-}
-
-/* body/html na mesma cor: sela emendas de subpixel e dá fundo
-   às seções transparentes.                                     */
-html, body {
-  background: #0a0e1a !important;
-}
-
-/* Remove a borda de 1px no topo do pré-rodapé (linha real).    */
-#pre-footer { border-top: none !important; }
-
-/* ════════════════════════════════════════════════════════════
-   AJUSTE FINO — REMOVE A "ONDINHA"/FAIXA NAS JUNÇÕES DO TOPO
-   ------------------------------------------------------------
-   (1) O gradiente de transição na base do hero (.hero::after)
-   era curto (160px) e com curva dura, criando uma banda visível
-   logo abaixo dos stats. Aqui esticamos e suavizamos a curva
-   para ele se dissolver sem deixar faixa. NÃO altera o conteúdo
-   do hero (vídeo, título, stats) — só o véu de transição.
-   (2) Os brilhos radiais decorativos do #sobre reforçavam a
-   linha na junção QUEM SOMOS → fundo; suavizamos a opacidade
-   deles perto da borda superior.                               */
-
-.hero::after {
-  height: clamp(180px, 26vh, 300px) !important;   /* mais longo = sem banda */
-  background: linear-gradient(
-    180deg,
-    rgba(10,14,26,0)    0%,
-    rgba(10,14,26,.08) 22%,
-    rgba(10,14,26,.22) 42%,
-    rgba(10,14,26,.45) 60%,
-    rgba(10,14,26,.72) 78%,
-    rgba(10,14,26,.92) 91%,
-    #0a0e1a           100%
-  ) !important;
-}
-@media (max-width:640px){
-  .hero::after { height: clamp(140px, 22vh, 220px) !important; }
-}
-
-/* Suaviza os glows do #sobre que marcavam a faixa na junção.   */
-#sobre::before { opacity:.5 !important; }
-
-/* ════════════════════════════════════════════════════════════
-   CARDS FIXOS NO HOVER — remove o efeito de "levantar" (lift)
-   ------------------------------------------------------------
-   Tira o transform translateY (que erguia o card) e a sombra de
-   elevação SOMENTE dos cards de conteúdo. As mudanças sutis de
-   cor/borda no hover são mantidas, então o card ainda sinaliza
-   "mouse aqui", mas permanece fixo no layout. Botões (.btn-*,
-   .nav-cta, .form-btn, .vid-cta etc.) NÃO entram aqui — o
-   feedback de clique deles continua intacto, como combinado.   */
-
-.tri-card:hover,
-.mve-card:hover,
-.dif-card:hover,
-.dep-card:hover,
-.exp-card:hover,
-.letgo-card:hover,
-.galeria-item:hover,
-.carousel-slide:hover,
-.c-item:hover,
-.feat:hover,
-.qs-feat:hover,
-.obj-item:hover {
-  transform: none !important;   /* card não sobe nem desliza mais */
-  box-shadow: none !important;  /* remove a sombra de elevação */
-}
 </style>
 
 <script>
