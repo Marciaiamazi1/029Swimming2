@@ -3126,6 +3126,11 @@ HOME
       </svg>
       <span>Login   </span>
     </button>
+    <button class="nav-burger" id="burger" onclick="toggleMenu()" aria-label="Abrir menu de navegação" type="button" aria-expanded="false" aria-controls="mobMenu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </div>
 </header>
 
@@ -5179,6 +5184,69 @@ setInterval(fetchClima,30*60*1000);
 .cultura-modal-close{position:absolute;top:1rem;right:1rem;z-index:2;width:38px;height:38px;border-radius:50%;background:rgba(2,11,20,.85);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.85);font-size:1.15rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
 .cultura-modal-close:hover{background:#00b4d8;color:#020b14;border-color:#00b4d8;transform:rotate(90deg)}
 @media(max-width:520px){.cultura-modal-frame{border-radius:14px}.cultura-modal-body #missao{padding:2rem 1.2rem!important}}
+
+/* ════════════════════════════════════════════════════════════
+   FUNDO ÚNICO — ELIMINA AS LINHAS DIVISÓRIAS ENTRE SEÇÕES
+   ------------------------------------------------------------
+   As seções alternavam tons de azul próximos (#0a0e1a, #0d1520,
+   #111827); onde um encostava no outro, surgia uma "linha".
+   Aqui forçamos TODAS as seções a usarem o MESMO fundo azul-
+   escuro predominante do site (#0a0e1a). Sem troca de cor = sem
+   fronteira = sem linha. O hero (#inicio) NÃO entra na regra,
+   ficando 100% preservado.                                     */
+
+#sobre, #sobre-narrativo, #experiencia, #objetivos, #modalidades,
+#diferenciais, #depoimentos, #pre-footer, #professor, #contato,
+#interesse, #missao {
+  background: #0a0e1a !important;
+}
+
+html, body {
+  background: #0a0e1a !important;
+}
+
+#pre-footer { border-top: none !important; }
+
+/* ════════════════════════════════════════════════════════════
+   AJUSTE FINO — REMOVE A "ONDINHA"/FAIXA NAS JUNÇÕES DO TOPO  */
+
+.hero::after {
+  height: clamp(180px, 26vh, 300px) !important;
+  background: linear-gradient(
+    180deg,
+    rgba(10,14,26,0)    0%,
+    rgba(10,14,26,.08) 22%,
+    rgba(10,14,26,.22) 42%,
+    rgba(10,14,26,.45) 60%,
+    rgba(10,14,26,.72) 78%,
+    rgba(10,14,26,.92) 91%,
+    #0a0e1a           100%
+  ) !important;
+}
+@media (max-width:640px){
+  .hero::after { height: clamp(140px, 22vh, 220px) !important; }
+}
+
+#sobre::before { opacity:.5 !important; }
+
+/* ════════════════════════════════════════════════════════════
+   CARDS FIXOS NO HOVER — remove o efeito de "levantar" (lift) */
+
+.tri-card:hover,
+.mve-card:hover,
+.dif-card:hover,
+.dep-card:hover,
+.exp-card:hover,
+.letgo-card:hover,
+.galeria-item:hover,
+.carousel-slide:hover,
+.c-item:hover,
+.feat:hover,
+.qs-feat:hover,
+.obj-item:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
 </style>
 
 <script>
