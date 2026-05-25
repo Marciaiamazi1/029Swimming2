@@ -448,7 +448,7 @@ footer{background:var(--bg3);border-top:1px solid var(--bd);padding:2.2rem 1.5re
 @media(max-width:900px){
   /* navbar */
   .nav-cta{display:none}
-  .nav-burger{display:flex} /* 5.1 — garante burger via CSS puro no range 481px–900px */
+  /* .nav-burger oculto neste range — abas visíveis até 561px */
   .nav-left{gap:0;}
   /* grids */
   .sobre-grid,.prof-grid{grid-template-columns:1fr;gap:2.8rem}
@@ -1685,8 +1685,7 @@ footer{background:var(--bg3);border-top:1px solid var(--bd);padding:2.2rem 1.5re
 
 /* ═══ FIM HERO CAROUSEL CSS final ═══════════════════ */
 
-@media(max-width:480px){
-  
+@media(max-width:560px){
   .nav-burger{display:flex}
 }
 
@@ -2401,7 +2400,7 @@ blockquote.dep-card footer.dep-author{display:flex;align-items:center;gap:.75rem
 #navbar .nav-links a::after{content:"";position:absolute;left:50%;bottom:-2px;width:0;height:2px;border-radius:2px;background:#00b4d8;transition:width .25s,left .25s}
 #navbar .nav-links a:hover{color:#00b4d8}
 #navbar .nav-links a:hover::after{width:100%;left:0}
-@media(max-width:860px){#navbar .nav-links{display:none}}
+@media(max-width:560px){#navbar .nav-links{display:none}}
 
 /* ══ Dropdown Galeria ══ */
 #navbar .nav-dropdown{position:relative;pointer-events:auto}
