@@ -3352,6 +3352,7 @@ HOME
 </section>
 
 <!-- ══ FAIXA 029SWIMMING ══ -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dseg@0.46.0/css/dseg.css">
 <style>
 .brand-strip{
   text-align:center;
@@ -3373,21 +3374,29 @@ HOME
   font-size:.68rem;font-weight:700;
   letter-spacing:.28em;text-transform:uppercase;
   color:var(--gold);
-  margin-bottom:.9rem;
+  margin-bottom:1rem;
 }
 .brand-strip-title{
-  font-family:"Orbitron",monospace;
-  font-size:clamp(1.6rem,4.5vw,3rem);
-  font-weight:900;
-  letter-spacing:.06em;
+  display:inline-flex;
+  align-items:baseline;
+  gap:.18em;
   line-height:1;
-  color:var(--t1);
   margin:0;
 }
-.brand-strip-title em{
-  font-style:normal;
+.brand-num{
+  font-family:"DSEG7 Classic","DSEG7 Classic Mini",monospace;
+  font-size:clamp(1.5rem,4vw,2.8rem);
+  font-weight:700;
+  color:var(--t1);
+  letter-spacing:.04em;
+}
+.brand-swim{
+  font-family:'Barlow',sans-serif;
+  font-size:clamp(1.2rem,3.2vw,2.2rem);
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.18em;
   color:var(--glow);
-  text-shadow:0 0 32px rgba(0,212,255,.35);
 }
 .brand-strip-line{
   width:48px;height:2px;
@@ -3399,7 +3408,9 @@ HOME
 
 <div class="brand-strip">
   <span class="brand-strip-eye">Assessoria de Natação em Águas Abertas</span>
-  <h2 class="brand-strip-title">029<em>Swimming</em></h2>
+  <h2 class="brand-strip-title">
+    <span class="brand-num">029</span><span class="brand-swim">Swimming</span>
+  </h2>
   <div class="brand-strip-line"></div>
 </div>
 
@@ -5369,6 +5380,25 @@ html, body {
   transform: none !important;   /* card não sobe nem desliza mais */
   box-shadow: none !important;  /* remove a sombra de elevação */
 }
+
+/* ════════════════════════════════════════════════════════════
+   WHATSAPP FAB — efeito shimmer/ripple no hover
+   ------------------------------------------------------------ */
+.sw-whatsapp-fab {
+  position: relative;
+  overflow: hidden;
+}
+.sw-whatsapp-fab::before {
+  content: '';
+  position: absolute;
+  bottom: -100%;
+  left: 0; right: 0;
+  height: 100%;
+  background: rgba(0, 212, 255, 0.25);
+  transition: bottom 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  border-radius: inherit;
+}
+.sw-whatsapp-fab:hover::before { bottom: 0; }
 </style>
 
 <script>
