@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0a0e1a">
+  <meta name="description" content="Galeria de fotos e vídeos — 029Swimming, assessoria de natação em águas abertas com o Prof. Michel Victor.">
+  <title>Galeria | 029Swimming</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0a0e1a;--bg2:#0d1520;--bg3:#111827;
+      --ocean:#0077b6;--glow:#00d4ff;--gold:#f59e0b;--gd2:#fbbf24;
+      --t1:#e2f4ff;--t2:#94b8cc;--t3:#4a6a7d;
+      --bd:rgba(0,212,255,.15);--bd2:rgba(0,212,255,.22);
+      --fd:"Playfair Display",Georgia,serif;
+      --fb:"Inter",system-ui,sans-serif;
+      --ease:cubic-bezier(.4,0,.2,1);
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--fb);background:var(--bg);color:var(--t1);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    a{text-decoration:none;color:inherit}
+    ::-webkit-scrollbar{width:3px}
+    ::-webkit-scrollbar-thumb{background:rgba(0,212,255,.25);border-radius:3px}
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+      background:radial-gradient(ellipse 70% 55% at 50% 110%,rgba(0,119,182,.16) 0%,transparent 62%)}
+
+    /* ══ NAVBAR ══ */
+    #navbar{all:unset;position:fixed!important;top:0;left:0;right:0;z-index:200;
+      background:transparent!important;border:none!important;box-shadow:none!important;
+      overflow:visible!important;padding:clamp(.85rem,2vw,1.4rem) clamp(1rem,2.5vw,2rem);
+      pointer-events:none;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    #navbar .brand-link{display:inline-flex;align-items:center;text-decoration:none;pointer-events:auto;flex:0 0 auto;transition:transform .25s ease}
+    #navbar .brand-link:hover{transform:scale(1.04)}
+    #navbar .brand-logo{display:block;height:clamp(72px,9vw,110px);width:auto;
+      filter:drop-shadow(0 6px 24px rgba(0,0,0,.65)) drop-shadow(0 1px 2px rgba(0,0,0,.4));
+      user-select:none;-webkit-user-drag:none}
+    @media(max-width:600px){#navbar{padding:.6rem .9rem}#navbar .brand-logo{height:62px}}
+    #navbar .nav-right{display:flex;align-items:center;gap:clamp(.7rem,1.6vw,1.4rem);pointer-events:auto}
+    #navbar .nav-links{display:flex;align-items:center;gap:clamp(.8rem,1.8vw,1.6rem);list-style:none}
+    #navbar .nav-links a{font-family:'Barlow',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.14em;
+      text-transform:uppercase;color:rgba(255,255,255,.92);white-space:nowrap;padding:.35rem 0;
+      position:relative;transition:color .2s ease;text-shadow:0 1px 8px rgba(0,0,0,.55)}
+    #navbar .nav-links a::after{content:"";position:absolute;left:50%;bottom:-2px;width:0;height:2px;
+      border-radius:2px;background:#00d4ff;transition:width .25s,left .25s}
+    #navbar .nav-links a:hover,#navbar .nav-links a.active{color:#00d4ff}
+    #navbar .nav-links a:hover::after,#navbar .nav-links a.active::after{width:100%;left:0}
+    @media(max-width:860px){#navbar .nav-links{display:none}}
+
+    /* Dropdown */
+    #navbar .nav-dropdown{position:relative;pointer-events:auto}
+    #navbar .nav-dropdown-trigger{display:inline-flex;align-items:center;gap:.4rem;cursor:pointer}
+    #navbar .nav-dropdown-caret{width:9px;height:9px;transition:transform .25s ease;opacity:.7}
+    #navbar .nav-dropdown.is-open .nav-dropdown-caret,
+    #navbar .nav-dropdown:hover .nav-dropdown-caret{transform:rotate(180deg);opacity:1}
+    #navbar .nav-dropdown-menu{position:absolute;top:100%;left:50%;
+      transform:translateX(-50%) translateY(-6px);margin-top:.4rem;min-width:96px;
+      background:linear-gradient(160deg,rgba(2,11,20,.96),rgba(6,21,34,.96));
+      backdrop-filter:blur(18px) saturate(140%);border:1px solid rgba(0,180,216,.22);
+      border-radius:8px;padding:.2rem;display:flex;flex-direction:column;gap:.05rem;
+      opacity:0;pointer-events:none;transition:opacity .22s ease,transform .22s cubic-bezier(.2,.8,.3,1);
+      box-shadow:0 16px 40px rgba(0,0,0,.55);z-index:210}
+    #navbar .nav-dropdown:hover .nav-dropdown-menu,
+    #navbar .nav-dropdown.is-open .nav-dropdown-menu{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+    #navbar .nav-dropdown-menu a{font-family:'Barlow',sans-serif;font-size:.72rem;font-weight:700;
+      letter-spacing:.16em;text-transform:uppercase;color:#fff;text-align:center;
+      padding:.3rem .55rem;border-radius:5px;white-space:nowrap;transition:background .2s,color .2s,transform .2s}
+    #navbar .nav-dropdown-menu a::after{display:none}
+    #navbar .nav-dropdown-menu a:hover{background:rgba(0,180,216,.12);color:#00b4d8;transform:scale(1.04)}
+    #navbar .nav-dropdown::before{content:"";position:absolute;top:100%;left:0;right:0;height:1rem;z-index:209}
+
+    /* Search + Aluno */
+    #navbar .nav-search-btn{background:none;border:none;cursor:pointer;padding:.35rem;
+      color:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;
+      pointer-events:auto;filter:drop-shadow(0 1px 8px rgba(0,0,0,.55));transition:color .2s,transform .2s}
+    #navbar .nav-search-btn:hover{color:#00d4ff;transform:scale(1.1)}
+    #navbar .nav-search-btn svg{width:20px;height:20px;display:block}
+    #navbar .aluno-btn{pointer-events:auto;display:inline-flex;align-items:center;gap:.55rem;
+      background:rgba(0,180,216,.12);border:1px solid rgba(0,180,216,.5);color:#00d4ff;
+      padding:.55rem 1.05rem;border-radius:999px;font-family:'Barlow',sans-serif;
+      font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+      cursor:pointer;white-space:nowrap;backdrop-filter:blur(8px);transition:all .25s}
+    #navbar .aluno-btn:hover{background:#00d4ff;color:#0a0e1a;border-color:#00d4ff;
+      transform:translateY(-1px);box-shadow:0 10px 28px rgba(0,180,216,.4)}
+    #navbar .aluno-btn .aluno-btn-ico{width:16px;height:16px;display:block}
+
+    /* Burger */
+    .mob-burger{pointer-events:auto;display:none;flex-direction:column;gap:5px;
+      cursor:pointer;padding:4px;background:none;border:none}
+    .mob-burger span{width:22px;height:2px;background:var(--t1);border-radius:2px;transition:all .25s;display:block}
+    .mob-burger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+    .mob-burger.open span:nth-child(2){opacity:0;transform:translateX(-8px)}
+    .mob-burger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+    @media(max-width:860px){.mob-burger{display:flex}}
+
+    /* Drawer */
+    .drawer-overlay{display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,.55);
+      backdrop-filter:blur(2px);opacity:0;transition:opacity .3s ease}
+    .drawer-overlay.open{display:block;opacity:1}
+    .mob-menu{position:fixed;top:0;right:0;bottom:0;z-index:9999;width:280px;max-width:92vw;
+      background:rgba(10,14,26,.97);backdrop-filter:blur(22px) saturate(160%);
+      border-left:1px solid rgba(0,212,255,.18);display:flex;flex-direction:column;
+      transform:translateX(110%);transition:transform .32s cubic-bezier(.4,0,.2,1);overflow-y:auto}
+    .mob-menu.open{transform:translateX(0)}
+    .mob-menu-header{display:flex;align-items:center;justify-content:space-between;
+      padding:1rem 1.2rem;border-bottom:1px solid rgba(0,212,255,.15);min-height:58px}
+    .mob-menu-title{font-family:var(--fd);font-size:.55rem;font-weight:800;
+      letter-spacing:.15em;text-transform:uppercase;color:#00d4ff}
+    .mob-menu-close{background:none;border:none;cursor:pointer;padding:.3rem;color:rgba(255,255,255,.7);
+      display:flex;align-items:center;justify-content:center;transition:color .2s;border-radius:6px}
+    .mob-menu-close:hover{color:#fff;background:rgba(255,255,255,.08)}
+    .mob-menu a{font-family:'Barlow',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.12em;
+      text-transform:uppercase;color:var(--t2);padding:1rem 1.6rem;text-align:left;
+      border-bottom:1px solid rgba(0,212,255,.08);transition:color .2s,padding-left .2s,background .2s;display:block}
+    .mob-menu a:hover{color:#00d4ff;background:rgba(0,212,255,.07);padding-left:2rem}
+    .mob-cta{margin:1.4rem 1.2rem;font-family:'Barlow',sans-serif;font-size:.62rem;font-weight:800;
+      letter-spacing:.1em;text-transform:uppercase;padding:.9rem 1.6rem;border-radius:50px;
+      border:none;cursor:pointer;background:linear-gradient(135deg,#f59e0b,#fbbf24);color:#0a0e1a;
+      box-shadow:0 3px 16px rgba(240,165,0,.4);transition:all .2s;display:block;text-align:center}
+
+    /* ══ PAGE HEADER ══ */
+    .page-header{padding:9rem 1.5rem 2.5rem;text-align:center;position:relative;z-index:1}
+    .page-header-eye{font-family:'Barlow',sans-serif;font-size:.7rem;font-weight:700;
+      letter-spacing:.25em;text-transform:uppercase;color:#f59e0b;margin-bottom:.8rem}
+    .page-header h1{font-family:var(--fd);font-size:clamp(2rem,5vw,3.2rem);font-weight:700;
+      color:var(--t1);line-height:1.15;margin-bottom:.6rem}
+    .page-header h1 em{font-style:italic;color:#00d4ff}
+    .page-header p{color:var(--t2);font-size:.95rem;max-width:480px;margin:0 auto}
+
+    /* ══ TABS ══ */
+    .gallery-tabs{display:flex;justify-content:center;border-bottom:1px solid var(--bd);
+      margin:0 0 2.5rem;position:relative;z-index:1}
+    .gallery-tab{font-family:'Barlow',sans-serif;font-size:.7rem;font-weight:700;
+      letter-spacing:.18em;text-transform:uppercase;color:var(--t2);
+      padding:.85rem 2.2rem;border:none;background:none;cursor:pointer;position:relative;transition:color .25s}
+    .gallery-tab::after{content:"";position:absolute;bottom:-1px;left:0;right:0;height:2px;
+      background:#00d4ff;transform:scaleX(0);transition:transform .25s}
+    .gallery-tab.active{color:#00d4ff}
+    .gallery-tab.active::after{transform:scaleX(1)}
+
+    /* ══ WAVE SLIDER ══ */
+    .tab-section{display:none;position:relative;z-index:1}
+    .tab-section.active{display:block}
+
+    .wave-slider{position:relative;width:100%;height:clamp(340px,72vh,780px);
+      overflow:hidden;background:#050c18}
+
+    .wave-slide{position:absolute;inset:0;opacity:0;z-index:0}
+    .wave-slide.active{opacity:1;z-index:2}
+    .wave-slide.below{opacity:1;z-index:1}
+
+    .wave-slide img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+
+    .wave-slide::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;
+      background:linear-gradient(to bottom,rgba(10,14,26,.3) 0%,transparent 25%,transparent 72%,rgba(10,14,26,.6) 100%)}
+
+    /* Arrows */
+    .wave-arrow{position:absolute;top:50%;z-index:10;transform:translateY(-50%);
+      width:50px;height:50px;border-radius:50%;background:rgba(0,0,0,.38);
+      backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.22);color:#fff;
+      cursor:pointer;display:flex;align-items:center;justify-content:center;
+      transition:all .25s;user-select:none}
+    .wave-arrow:hover{background:rgba(0,212,255,.22);border-color:rgba(0,212,255,.6);
+      transform:translateY(-50%) scale(1.09)}
+    .wave-arrow.prev{left:1.4rem}
+    .wave-arrow.next{right:1.4rem}
+    @media(max-width:480px){.wave-arrow{width:40px;height:40px}.wave-arrow.prev{left:.7rem}.wave-arrow.next{right:.7rem}}
+
+    /* Dots */
+    .wave-dots{position:absolute;bottom:1.4rem;left:50%;transform:translateX(-50%);
+      z-index:10;display:flex;gap:.55rem}
+    .wave-dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.35);
+      cursor:pointer;transition:all .3s}
+    .wave-dot.active{background:#00d4ff;transform:scale(1.35);box-shadow:0 0 10px rgba(0,212,255,.7)}
+
+    /* Progress bar */
+    .wave-progress{position:absolute;bottom:0;left:0;height:3px;
+      background:linear-gradient(90deg,#00d4ff,#f59e0b);z-index:10}
+
+    /* ══ VIDEOS placeholder ══ */
+    .videos-placeholder{display:flex;flex-direction:column;align-items:center;
+      justify-content:center;padding:5rem 1.5rem;text-align:center;gap:1rem}
+    .videos-placeholder-icon{width:76px;height:76px;border-radius:50%;
+      background:rgba(0,212,255,.07);border:1px solid var(--bd);
+      display:flex;align-items:center;justify-content:center;color:#00d4ff;margin-bottom:.5rem}
+    .videos-placeholder h3{font-family:var(--fd);font-size:1.6rem;font-weight:700;color:var(--t1)}
+    .videos-placeholder p{color:var(--t2);font-size:.9rem;max-width:360px}
+
+    /* ══ BACK HOME ══ */
+    .back-home{display:flex;justify-content:center;padding:3rem 1.5rem 4.5rem;position:relative;z-index:1}
+    .back-home a{display:inline-flex;align-items:center;gap:.5rem;font-family:'Barlow',sans-serif;
+      font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+      color:var(--t2);border:1px solid var(--bd);padding:.75rem 1.8rem;
+      border-radius:999px;transition:all .25s}
+    .back-home a:hover{color:#00d4ff;border-color:rgba(0,212,255,.5);background:rgba(0,212,255,.06)}
+  </style>
+</head>
+<body>
+
+<!-- ══ NAVBAR ══ -->
+<header id="navbar" role="banner" aria-label="029Swimming">
+  <a class="brand-link" href="index.html" aria-label="029Swimming — Início">
+    <img class="brand-logo" src="images/logo-029.png" alt="029Swimming">
+  </a>
+  <div class="nav-right">
+    <nav class="nav-links" aria-label="Menu principal">
+      <div class="nav-dropdown" id="navAssessoriaDropdown">
+        <a href="index.html#sobre" class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+          HOME
+          <svg class="nav-dropdown-caret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="3 4.5 6 7.5 9 4.5"/></svg>
+        </a>
+        <div class="nav-dropdown-menu" role="menu">
+          <a href="index.html#sobre" role="menuitem">SOBRE</a>
+          <a href="index.html#cultura" role="menuitem">CULTURA</a>
+        </div>
+      </div>
+      <a href="index.html#professor">Coach</a>
+      <a href="index.html#experiencia">Treinos</a>
+      <div class="nav-dropdown" id="navGaleriaDropdown">
+        <a href="galeria.html" class="nav-dropdown-trigger active" aria-haspopup="true" aria-expanded="false" aria-current="page">
+          Galeria
+          <svg class="nav-dropdown-caret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="3 4.5 6 7.5 9 4.5"/></svg>
+        </a>
+        <div class="nav-dropdown-menu" role="menu">
+          <a href="galeria.html#fotos" role="menuitem">FOTOS</a>
+          <a href="galeria.html#videos" role="menuitem">VÍDEOS</a>
+        </div>
+      </div>
+      <a href="blog-assessoria.html">Blog</a>
+      <a href="index.html#contato">Contato</a>
+    </nav>
+    <button class="nav-search-btn" aria-label="Buscar" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/>
+      </svg>
+    </button>
+    <button class="aluno-btn" type="button" aria-label="Área do Aluno" onclick="window.location='index.html'">
+      <svg class="aluno-btn-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+      </svg>
+      <span>Login</span>
+    </button>
+    <button class="mob-burger" id="burger" onclick="toggleMenu()" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Overlay drawer -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeMenu()"></div>
+
+<!-- Menu mobile -->
+<div class="mob-menu" id="mobMenu" role="dialog" aria-label="Menu de navegação" aria-modal="true">
+  <div class="mob-menu-header">
+    <span class="mob-menu-title">029 Swimming</span>
+    <button class="mob-menu-close" onclick="closeMenu()" aria-label="Fechar menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+  <a href="index.html#sobre" onclick="closeMenu()">Quem somos</a>
+  <a href="index.html#professor" onclick="closeMenu()">Coach</a>
+  <a href="index.html#experiencia" onclick="closeMenu()">Treinos</a>
+  <a href="galeria.html#fotos" onclick="closeMenu()">Fotos</a>
+  <a href="galeria.html#videos" onclick="closeMenu()">Vídeos</a>
+  <a href="index.html#contato" onclick="closeMenu()">Contato</a>
+  <button class="mob-cta" onclick="closeMenu();window.location='index.html#contato'">VEM PRO TIME</button>
+</div>
+
+<!-- ══ PAGE HEADER ══ -->
+<div class="page-header">
+  <p class="page-header-eye">029Swimming</p>
+  <h1>Nossa <em>Galeria</em></h1>
+  <p>Momentos, treinos e conquistas dos nossos atletas nas águas abertas.</p>
+</div>
+
+<!-- ══ TABS ══ -->
+<div class="gallery-tabs">
+  <button class="gallery-tab active" data-tab="fotos">Fotos</button>
+  <button class="gallery-tab" data-tab="videos">Vídeos</button>
+</div>
+
+<!-- ══ FOTOS ══ -->
+<section id="fotos" class="tab-section active">
+  <div class="wave-slider" id="waveSlider">
+
+    <div class="wave-slide active" data-index="0">
+      <img src="Fotos/WhatsApp%20Image%202026-04-27%20at%2020.34.07.jpeg" alt="029Swimming — Foto 1" loading="eager">
+    </div>
+    <div class="wave-slide" data-index="1">
+      <img src="Fotos/WhatsApp%20Image%202026-04-27%20at%2020.34.23.jpeg" alt="029Swimming — Foto 2" loading="lazy">
+    </div>
+    <div class="wave-slide" data-index="2">
+      <img src="Fotos/WhatsApp%20Image%202026-04-27%20at%2020.34.32.jpeg" alt="029Swimming — Foto 3" loading="lazy">
+    </div>
+
+    <button class="wave-arrow prev" id="wavePrev" aria-label="Foto anterior">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="wave-arrow next" id="waveNext" aria-label="Próxima foto">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
+    </button>
+
+    <div class="wave-dots" id="waveDots">
+      <div class="wave-dot active" data-dot="0"></div>
+      <div class="wave-dot" data-dot="1"></div>
+      <div class="wave-dot" data-dot="2"></div>
+    </div>
+
+    <div class="wave-progress" id="waveProgress"></div>
+  </div>
+</section>
+
+<!-- ══ VÍDEOS ══ -->
+<section id="videos" class="tab-section">
+  <div class="videos-placeholder">
+    <div class="videos-placeholder-icon">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="5 3 19 12 5 21 5 3"/>
+      </svg>
+    </div>
+    <h3>Vídeos em breve</h3>
+    <p>Estamos preparando conteúdos exclusivos dos nossos treinos e provas em águas abertas.</p>
+  </div>
+</section>
+
+<!-- Voltar -->
+<div class="back-home">
+  <a href="index.html">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    Voltar ao site
+  </a>
+</div>
+
+<script>
+/* ══ WAVE SLIDER ═══════════════════════════════════════════════════════ */
+(function(){
+  var slides   = Array.from(document.querySelectorAll('.wave-slide'));
+  var dots     = Array.from(document.querySelectorAll('.wave-dot'));
+  var bar      = document.getElementById('waveProgress');
+  var TOTAL    = slides.length;
+  var AUTO_MS  = 5000;
+  var current  = 0;
+  var animating= false;
+  var autoTimer= null;
+
+  function ease(t){ return t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; }
+
+  function waveClip(prog){
+    var e   = ease(prog);
+    var cx  = 100 - e * 116;   /* sweeps from 100% → -16% */
+    var amp = 7.5;              /* wave amplitude in % */
+    var n   = 26;               /* points along the edge */
+    var freq= 2.8;              /* wave cycles */
+    var pts = ['0% 0%'];
+    for(var i=0;i<=n;i++){
+      var y = (i/n)*100;
+      var x = cx + Math.sin((i/n)*Math.PI*2*freq)*amp;
+      pts.push(x.toFixed(2)+'% '+y.toFixed(2)+'%');
+    }
+    pts.push('0% 100%');
+    return 'polygon('+pts.join(', ')+')';
+  }
+
+  function syncDots(){
+    dots.forEach(function(d,i){ d.classList.toggle('active', i===current); });
+  }
+
+  function startBar(){
+    bar.style.transition = 'none';
+    bar.style.width = '0%';
+    bar.offsetWidth; /* reflow */
+    bar.style.transition = 'width '+AUTO_MS+'ms linear';
+    bar.style.width = '100%';
+    autoTimer = setTimeout(function(){ goTo((current+1)%TOTAL); }, AUTO_MS);
+  }
+
+  function stopBar(){
+    clearTimeout(autoTimer);
+    var w = parseFloat(getComputedStyle(bar).width);
+    var pw= bar.parentElement.offsetWidth;
+    bar.style.transition = 'none';
+    bar.style.width = (w/pw*100).toFixed(1)+'%';
+  }
+
+  function goTo(next){
+    if(animating || next===current) return;
+    animating = true;
+    stopBar();
+
+    var from = slides[current];
+    var to   = slides[next];
+
+    to.classList.add('below');
+    to.style.zIndex   = '1';
+    from.style.zIndex = '2';
+
+    var dur   = 1350;
+    var start = performance.now();
+
+    function frame(now){
+      var prog = Math.min((now-start)/dur, 1);
+      from.style.clipPath = waveClip(prog);
+      if(prog < 1){
+        requestAnimationFrame(frame);
+      } else {
+        from.classList.remove('active');
+        from.style.clipPath = '';
+        from.style.zIndex   = '';
+        to.classList.remove('below');
+        to.classList.add('active');
+        to.style.zIndex = '';
+        current  = next;
+        animating= false;
+        syncDots();
+        startBar();
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  /* arrows */
+  document.getElementById('wavePrev').addEventListener('click', function(){
+    if(!animating) goTo((current-1+TOTAL)%TOTAL);
+  });
+  document.getElementById('waveNext').addEventListener('click', function(){
+    if(!animating) goTo((current+1)%TOTAL);
+  });
+
+  /* dots */
+  dots.forEach(function(d){
+    d.addEventListener('click', function(){
+      var idx = parseInt(d.dataset.dot);
+      if(!animating && idx!==current) goTo(idx);
+    });
+  });
+
+  /* keyboard */
+  document.addEventListener('keydown', function(e){
+    if(e.key==='ArrowLeft'  && !animating) goTo((current-1+TOTAL)%TOTAL);
+    if(e.key==='ArrowRight' && !animating) goTo((current+1)%TOTAL);
+  });
+
+  /* touch swipe */
+  var tx=0;
+  var slider=document.getElementById('waveSlider');
+  slider.addEventListener('touchstart',function(e){ tx=e.touches[0].clientX; },{passive:true});
+  slider.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-tx;
+    if(Math.abs(dx)>50){
+      if(!animating) goTo(dx<0 ? (current+1)%TOTAL : (current-1+TOTAL)%TOTAL);
+    }
+  },{passive:true});
+
+  startBar();
+})();
+
+/* ══ TABS ════════════════════════════════════════════════════════════= */
+document.querySelectorAll('.gallery-tab').forEach(function(tab){
+  tab.addEventListener('click', function(){
+    var target = tab.dataset.tab;
+    document.querySelectorAll('.gallery-tab').forEach(function(t){ t.classList.remove('active'); });
+    document.querySelectorAll('.tab-section').forEach(function(s){ s.classList.remove('active'); });
+    tab.classList.add('active');
+    document.getElementById(target).classList.add('active');
+    history.replaceState(null,'','#'+target);
+  });
+});
+(function(){
+  var hash = location.hash.replace('#','');
+  if(hash==='videos'||hash==='fotos'){
+    var btn = document.querySelector('[data-tab="'+hash+'"]');
+    if(btn) btn.click();
+  }
+})();
+
+/* ══ MOBILE MENU ═════════════════════════════════════════════════════= */
+function toggleMenu(){
+  var m=document.getElementById('mobMenu');
+  var o=document.getElementById('drawerOverlay');
+  var b=document.getElementById('burger');
+  var open=m.classList.toggle('open');
+  b.classList.toggle('open',open);
+  if(o) o.classList.toggle('open',open);
+  document.body.style.overflow=open?'hidden':'';
+}
+function closeMenu(){
+  document.getElementById('mobMenu').classList.remove('open');
+  var o=document.getElementById('drawerOverlay');
+  if(o) o.classList.remove('open');
+  document.getElementById('burger').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeMenu(); });
+
+/* ══ DROPDOWNS ═══════════════════════════════════════════════════════= */
+['navGaleriaDropdown','navAssessoriaDropdown'].forEach(function(id){
+  var dd=document.getElementById(id);
+  if(!dd) return;
+  var trigger=dd.querySelector('.nav-dropdown-trigger');
+  function isTouch(){ return window.matchMedia('(max-width:860px)').matches||('ontouchstart' in window); }
+  trigger.addEventListener('click',function(e){
+    if(isTouch()&&!dd.classList.contains('is-open')){
+      e.preventDefault();
+      dd.classList.add('is-open');
+      trigger.setAttribute('aria-expanded','true');
+    }
+  });
+  document.addEventListener('click',function(e){
+    if(!dd.contains(e.target)){
+      dd.classList.remove('is-open');
+      trigger.setAttribute('aria-expanded','false');
+    }
+  });
+});
+</script>
+
+</body>
+</html>

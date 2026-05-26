@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <!-- Preload do vídeo do hero — começa o download na primeira oportunidade -->
-<link rel="preload" as="video" href="video/video-029swimming.mp4" type="video/mp4" fetchpriority="high">
-<link rel="preload" as="image" href="Hero%20Section/Foto0.png" fetchpriority="high">
+<link rel="preload" as="video" href="videos/hero.mp4?v=2" type="video/mp4" fetchpriority="high">
+<link rel="preload" as="image" href="videos/hero-poster.jpg" fetchpriority="high">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#020b14">
 <meta name="description" content="029Swimming: assessoria de natação em águas abertas com o Prof. Michel Victor. Treinamento personalizado para open water, travessias e provas oficiais. Atendimento online e presencial em São Paulo.">
@@ -91,10 +91,10 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
   box-shadow:0 3px 16px rgba(0,180,216,.35);transition:all .2s;white-space:nowrap;flex-shrink:0;
 }
 .nav-cta:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,180,216,.6)}
-/* .nav-cta — visível por padrão no desktop; ocultado em ≤900px via media query na linha ~450 */
+.nav-cta{display:none!important}
 /* Burger mobile */
-.nav-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none;flex-shrink:0}
-/* #nav-links removido — os links usam classe .nav-links, controlada em #navbar .nav-links (linha ~2399) */
+.nav-burger{display:flex;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none;flex-shrink:0}
+#nav-links{display:none!important}
 .nav-burger span{width:22px;height:2px;background:var(--t1);border-radius:2px;transition:all .25s;display:block}
 /* Burger animado */
 .nav-burger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
@@ -425,22 +425,38 @@ section{padding:var(--sp) 1.5rem;position:relative}
 .btn-wa:hover{opacity:.92;transform:translateY(-2px);box-shadow:0 5px 18px rgba(37,211,102,.4)}
 
 /* ══ FOOTER ══════════════════════════════════ */
-footer{background:var(--bg3);border-top:1px solid var(--bd);padding:2.2rem 1.5rem}
-.footer-quote{text-align:center;padding:0 1.5rem 2rem;border-bottom:1px solid var(--bd);margin-bottom:1.8rem}
-.footer-quote-txt{font-family:var(--fd);font-size:clamp(.62rem,1.7vw,.85rem);font-weight:700;color:var(--t2);letter-spacing:.08em;line-height:1.5;font-style:italic}
-.footer-quote-txt em{color:var(--glow);font-style:normal}
-.footer-inner{max-width:var(--max);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.2rem}
-.footer-brand{line-height:1.2}
-.footer-name{font-family:var(--fd);font-size:.88rem;font-weight:900;color:var(--glow)}
-.footer-tag{font-size:.44rem;letter-spacing:.16em;text-transform:uppercase;color:var(--t3)}
-.footer-nav{display:flex;gap:1.5rem;flex-wrap:wrap}
-.footer-nav a{font-family:var(--fd);font-size:.46rem;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);transition:color .2s}
-.footer-nav a:hover{color:var(--glow)}
-.footer-social{display:flex;gap:.5rem}
-.fsoc{width:34px;height:34px;border-radius:9px;overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .2s,box-shadow .2s;text-decoration:none}
-.fsoc:hover{transform:translateY(-2px);box-shadow:0 5px 14px rgba(0,0,0,.4)}
-.fsoc-ig{background:linear-gradient(135deg,#405de6,#e1306c,#f77737)}
-.footer-copy{max-width:var(--max);margin:.7rem auto 0;font-size:.52rem;color:var(--t3);text-align:center;padding-top:.7rem;border-top:1px solid var(--bd)}
+footer{background:var(--bg2);border-top:1px solid var(--bd);position:relative;z-index:1}
+.footer-glow-line{height:1px;background:linear-gradient(90deg,transparent 0%,var(--glow) 50%,transparent 100%);opacity:.35}
+.footer-body{max-width:var(--max);margin:0 auto;padding:3.5rem 2rem 2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem 4rem;align-items:start}
+@media(max-width:680px){.footer-body{grid-template-columns:1fr;gap:2.5rem;padding:2.5rem 1.5rem 2rem}}
+
+/* Coluna nav */
+.footer-col-nav{}
+.footer-logo-wrap{margin-bottom:1.2rem}
+.footer-logo{height:clamp(52px,7vw,70px);width:auto;filter:drop-shadow(0 4px 16px rgba(0,0,0,.5));display:block}
+.footer-tagline{font-family:var(--fb);font-size:.78rem;color:var(--t3);letter-spacing:.04em;line-height:1.5;margin-bottom:1.8rem;max-width:220px}
+.footer-section-label{font-family:'Barlow',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.9rem}
+.footer-nav-links{display:flex;flex-direction:column;gap:.3rem}
+.footer-nav-links a{font-family:var(--fb);font-size:.85rem;font-weight:500;color:var(--t2);padding:.3rem 0;position:relative;transition:color .22s,padding-left .22s;display:inline-block}
+.footer-nav-links a::before{content:"";position:absolute;left:-12px;top:50%;transform:translateY(-50%);width:0;height:1.5px;background:var(--glow);transition:width .22s;border-radius:2px}
+.footer-nav-links a:hover{color:var(--glow);padding-left:4px}
+.footer-nav-links a:hover::before{width:8px}
+
+/* Coluna contato */
+.footer-col-contact{}
+.footer-contacts{display:flex;flex-direction:column;gap:.7rem;margin-top:0}
+.fci{display:flex;align-items:center;gap:.9rem;padding:.75rem 1rem;border-radius:12px;background:rgba(0,212,255,.04);border:1px solid rgba(0,212,255,.08);text-decoration:none;color:inherit;transition:all .22s}
+.fci:hover{background:rgba(0,212,255,.09);border-color:rgba(0,212,255,.25);transform:translateX(4px)}
+.fci-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.fci-wa{background:linear-gradient(135deg,#075e54,#25d366)}
+.fci-ig{background:linear-gradient(135deg,#405de6,#e1306c,#f77737)}
+.fci-mail{background:linear-gradient(135deg,#0077b6,#00d4ff)}
+.fci-label{font-family:'Barlow',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);line-height:1}
+.fci-val{font-family:var(--fb);font-size:.85rem;font-weight:500;color:var(--t1);margin-top:.18rem;line-height:1.2}
+
+/* Copyright */
+.footer-copy{max-width:var(--max);margin:0 auto;padding:.9rem 2rem 1.6rem;font-family:var(--fb);font-size:.72rem;color:var(--t3);text-align:center;border-top:1px solid var(--bd)}
+@media(max-width:480px){.footer-copy{padding:.9rem 1.5rem 1.4rem;font-size:.65rem}}
 
 /* ══ RESPONSIVE — corrigido e completo ════════
    Mobile-first desde 600px, tablet 900px
@@ -448,7 +464,7 @@ footer{background:var(--bg3);border-top:1px solid var(--bd);padding:2.2rem 1.5re
 @media(max-width:900px){
   /* navbar */
   .nav-cta{display:none}
-  /* .nav-burger oculto neste range — abas visíveis até 561px */
+  .nav-burger{display:flex} /* 5.1 — garante burger via CSS puro no range 481px–900px */
   .nav-left{gap:0;}
   /* grids */
   .sobre-grid,.prof-grid{grid-template-columns:1fr;gap:2.8rem}
@@ -456,8 +472,8 @@ footer{background:var(--bg3);border-top:1px solid var(--bd);padding:2.2rem 1.5re
   .mve-grid,.dif-cards,.tri-grid{grid-template-columns:1fr 1fr}
   .contact-grid{grid-template-columns:1fr}
   /* footer */
-  .footer-inner{flex-direction:column;align-items:center;text-align:center}
-  .footer-nav,.footer-social{justify-content:center}
+  .footer-nav-links a{font-size:.9rem}
+  .fci-val{font-size:.82rem}
   /* sobre img */
   .sobre-img img{height:320px}
 }
@@ -1685,7 +1701,8 @@ footer{background:var(--bg3);border-top:1px solid var(--bd);padding:2.2rem 1.5re
 
 /* ═══ FIM HERO CAROUSEL CSS final ═══════════════════ */
 
-@media(max-width:560px){
+@media(max-width:480px){
+  
   .nav-burger{display:flex}
 }
 
@@ -2400,7 +2417,7 @@ blockquote.dep-card footer.dep-author{display:flex;align-items:center;gap:.75rem
 #navbar .nav-links a::after{content:"";position:absolute;left:50%;bottom:-2px;width:0;height:2px;border-radius:2px;background:#00b4d8;transition:width .25s,left .25s}
 #navbar .nav-links a:hover{color:#00b4d8}
 #navbar .nav-links a:hover::after{width:100%;left:0}
-@media(max-width:560px){#navbar .nav-links{display:none}}
+@media(max-width:860px){#navbar .nav-links{display:none}}
 
 /* ══ Dropdown Galeria ══ */
 #navbar .nav-dropdown{position:relative;pointer-events:auto}
@@ -3125,11 +3142,6 @@ HOME
       </svg>
       <span>Login   </span>
     </button>
-    <button class="nav-burger" id="burger" onclick="toggleMenu()" aria-label="Abrir menu de navegação" type="button" aria-expanded="false" aria-controls="mobMenu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
   </div>
 </header>
 
@@ -3150,8 +3162,6 @@ HOME
   <a href="#sobre"        onclick="closeMenu()">Quem somos</a>
   <a href="#professor"    onclick="closeMenu()">Coach</a>
   <a href="#experiencia"  onclick="closeMenu()">Treinos</a>
-  <a href="galeria.html"  onclick="closeMenu()">Galeria</a>
-  <a href="blog-assessoria.html" onclick="closeMenu()">Blog</a>
   <a href="#contato"      onclick="closeMenu()">Contato</a>
   <button class="mob-cta" onclick="closeMenu();document.getElementById('contato').scrollIntoView({behavior:'smooth'})">
     VEM PRO TIME
@@ -3170,12 +3180,12 @@ HOME
   <div class="hc-track" id="hcTrack" aria-hidden="true">
     <video id="heroVideo" class="hero-video"
            autoplay muted loop playsinline preload="auto"
-           src="video/video-029swimming.mp4"
-           poster="Hero%20Section/Foto0.png"
+           src="videos/hero.mp4?v=2"
+           poster="videos/hero-poster.jpg"
            fetchpriority="high"
            disablepictureinpicture disableremoteplayback
            aria-label="Vídeo de natação em águas abertas — 029Swimming"
-           style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;background:#020b14 url('Hero%20Section/Foto0.png') center/cover no-repeat;filter:none;transform:translateZ(0);will-change:transform;backface-visibility:hidden;">
+           style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;background:#020b14 url('videos/hero-poster.jpg') center/cover no-repeat;filter:none;transform:translateZ(0);will-change:transform;backface-visibility:hidden;">
     </video>
     <script>
     // Garante que o vídeo do hero dispare o autoplay o quanto antes,
@@ -3712,6 +3722,7 @@ HOME
 </section>
 
 
+<!-- [banner "Treino real / Resultado real" removido a pedido] -->
 
 
 
@@ -3725,28 +3736,78 @@ HOME
 </h2></div>
   <div class="carousel-outer"><div class="carousel-track" id="carouselTrack">
   </div></div>
-  <div class="carousel-controls"><button class="carousel-btn" onclick="prevSlide()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg></button><div class="carousel-dots" id="carouselDots"><button class="carousel-dot active" onclick="goToSlide(0)"></button><button class="carousel-dot" onclick="goToSlide(1)"></button><button class="carousel-dot" onclick="goToSlide(2)"></button><button class="carousel-dot" onclick="goToSlide(3)"></button><button class="carousel-dot" onclick="goToSlide(4)"></button><button class="carousel-dot" onclick="goToSlide(5)"></button><button class="carousel-dot" onclick="goToSlide(6)"></button><button class="carousel-dot" onclick="goToSlide(7)"></button><button class="carousel-dot" onclick="goToSlide(8)"></button></div><button class="carousel-btn" onclick="nextSlide()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button></div>
 </section>
 <footer>
-  <div class="footer-quote">
-    <div class="footer-quote-txt">
-      Junte-se à nossa comunidade. <em>Onde o asfalto encontra o horizonte.</em>
+  <div class="footer-glow-line"></div>
+  <div class="footer-body">
+
+    <!-- Coluna 1: Navegação -->
+    <div class="footer-col-nav">
+      <div class="footer-logo-wrap">
+        <img class="footer-logo" src="images/logo-029.png" alt="029Swimming">
+      </div>
+      <p class="footer-tagline">Assessoria de Natação em Águas Abertas — Prof. Michel Victor</p>
+      <p class="footer-section-label">Menu</p>
+      <nav class="footer-nav-links" aria-label="Links do rodapé">
+        <a href="#inicio">Home</a>
+        <a href="#professor">Coach</a>
+        <a href="#experiencia">Treinos</a>
+        <a href="galeria.html">Galeria</a>
+        <a href="blog-assessoria.html">Blog</a>
+        <a href="#contato">Contato</a>
+      </nav>
     </div>
-  </div>
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <div class="footer-name">029Swimming</div>
-      <div class="footer-tag">Prof. Michel Victor · Assessoria de Natação</div>
+
+    <!-- Coluna 2: Contatos -->
+    <div class="footer-col-contact">
+      <p class="footer-section-label">Fale Conosco</p>
+      <div class="footer-contacts">
+
+        <a class="fci" href="https://wa.me/5511948208667?text=Olá+Prof.+Michel!+Vi+o+site+e+tenho+interesse." target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+          <div class="fci-icon fci-wa">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 175.216 175.552" width="20" height="20"><defs><linearGradient id="fwag" x1="85.915%" y1="0%" x2="14.084%" y2="100%"><stop offset="0%" stop-color="#57d163"/><stop offset="100%" stop-color="#23b33a"/></linearGradient></defs><path fill="#fff" d="M87.6 0C39.3 0 0 39.3 0 87.6c0 15.6 4.1 30.2 11.3 42.8L0 175.5l46.6-12.2C59 170.5 73 174.3 87.6 174.3c48.3 0 87.6-39.3 87.6-87.6S135.9 0 87.6 0z"/><path fill="#25d366" d="M129.7 121.7c-2 5.6-9.9 10.3-16.2 11.6-4.3.9-9.9 1.6-28.8-6.2-24.2-10-39.7-34.6-40.9-36.2-1.2-1.6-9.9-13.2-9.9-25.2s6.2-17.8 8.5-20.3c2-2.2 5.3-3.2 8.5-3.2.9 0 1.9 0 2.7.1 2.3.1 3.5.2 5 3.9 2 4.6 6.8 16.6 7.4 17.8.6 1.2 1.2 2.8.4 4.4-.8 1.6-1.4 2.6-2.7 4-.9 1-2.1 2.3-3 3.2-1.2 1.2-2.5 2.5-1.1 4.8 1.4 2.3 6.2 10.2 13.2 16.5 9.1 8.1 16.6 10.6 19.2 11.7 2 .9 4.3.7 5.8-.8 1.9-2 4.2-5.3 6.6-8.6 1.7-2.4 3.8-2.7 6.1-1.9 2.3.8 14.7 6.9 17.2 8.2 2.5 1.2 4.2 1.9 4.8 2.9.7 1.1.7 6.2-1.3 11.8z"/></svg>
+          </div>
+          <div>
+            <div class="fci-label">WhatsApp</div>
+            <div class="fci-val">(11) 94820-8667</div>
+          </div>
+        </a>
+
+        <a class="fci" href="https://instagram.com/assessoria_029swmming__" target="_blank" rel="noopener noreferrer" aria-label="Instagram Assessoria">
+          <div class="fci-icon fci-ig">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" width="20" height="20"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </div>
+          <div>
+            <div class="fci-label">Instagram Assessoria</div>
+            <div class="fci-val">@assessoria_029swmming__</div>
+          </div>
+        </a>
+
+        <a class="fci" href="https://instagram.com/prof_michelvictor" target="_blank" rel="noopener noreferrer" aria-label="Instagram do Coach">
+          <div class="fci-icon fci-ig">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" width="20" height="20"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </div>
+          <div>
+            <div class="fci-label">Instagram do Coach</div>
+            <div class="fci-val">@Prof_michelvictor</div>
+          </div>
+        </a>
+
+        <a class="fci" href="mailto:michelvictor99@gmail.com" aria-label="E-mail">
+          <div class="fci-icon fci-mail">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" width="20" height="20"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </div>
+          <div>
+            <div class="fci-label">E-mail</div>
+            <div class="fci-val">michelvictor99@gmail.com</div>
+          </div>
+        </a>
+
+      </div>
     </div>
-    <nav class="footer-nav">
-      <a href="#sobre">Quem somos</a>
-                  <a href="#professor">Coach</a>
-      <a href="#contato">Contato</a>
-      
-    </nav>
-    
+
   </div>
-  <p class="footer-copy">© 2026 Assessoria 029Swimming — Prof. Michel Victor. Todos os direitos reservados.</p>
+  <div class="footer-copy">© 2026 Assessoria 029Swimming — Prof. Michel Victor. Todos os direitos reservados.</div>
 </footer>
 
 <script>
@@ -5187,20 +5248,32 @@ setInterval(fetchClima,30*60*1000);
 #sobre, #sobre-narrativo, #experiencia, #objetivos, #modalidades,
 #diferenciais, #depoimentos, #pre-footer, #professor, #contato,
 #interesse, #missao {
-  background: #0a0e1a !important;
+  background: #0a0e1a !important;   /* azul-escuro predominante */
 }
 
+/* body/html na mesma cor: sela emendas de subpixel e dá fundo
+   às seções transparentes.                                     */
 html, body {
   background: #0a0e1a !important;
 }
 
+/* Remove a borda de 1px no topo do pré-rodapé (linha real).    */
 #pre-footer { border-top: none !important; }
 
 /* ════════════════════════════════════════════════════════════
-   AJUSTE FINO — REMOVE A "ONDINHA"/FAIXA NAS JUNÇÕES DO TOPO  */
+   AJUSTE FINO — REMOVE A "ONDINHA"/FAIXA NAS JUNÇÕES DO TOPO
+   ------------------------------------------------------------
+   (1) O gradiente de transição na base do hero (.hero::after)
+   era curto (160px) e com curva dura, criando uma banda visível
+   logo abaixo dos stats. Aqui esticamos e suavizamos a curva
+   para ele se dissolver sem deixar faixa. NÃO altera o conteúdo
+   do hero (vídeo, título, stats) — só o véu de transição.
+   (2) Os brilhos radiais decorativos do #sobre reforçavam a
+   linha na junção QUEM SOMOS → fundo; suavizamos a opacidade
+   deles perto da borda superior.                               */
 
 .hero::after {
-  height: clamp(180px, 26vh, 300px) !important;
+  height: clamp(180px, 26vh, 300px) !important;   /* mais longo = sem banda */
   background: linear-gradient(
     180deg,
     rgba(10,14,26,0)    0%,
@@ -5216,10 +5289,18 @@ html, body {
   .hero::after { height: clamp(140px, 22vh, 220px) !important; }
 }
 
+/* Suaviza os glows do #sobre que marcavam a faixa na junção.   */
 #sobre::before { opacity:.5 !important; }
 
 /* ════════════════════════════════════════════════════════════
-   CARDS FIXOS NO HOVER — remove o efeito de "levantar" (lift) */
+   CARDS FIXOS NO HOVER — remove o efeito de "levantar" (lift)
+   ------------------------------------------------------------
+   Tira o transform translateY (que erguia o card) e a sombra de
+   elevação SOMENTE dos cards de conteúdo. As mudanças sutis de
+   cor/borda no hover são mantidas, então o card ainda sinaliza
+   "mouse aqui", mas permanece fixo no layout. Botões (.btn-*,
+   .nav-cta, .form-btn, .vid-cta etc.) NÃO entram aqui — o
+   feedback de clique deles continua intacto, como combinado.   */
 
 .tri-card:hover,
 .mve-card:hover,
@@ -5233,8 +5314,8 @@ html, body {
 .feat:hover,
 .qs-feat:hover,
 .obj-item:hover {
-  transform: none !important;
-  box-shadow: none !important;
+  transform: none !important;   /* card não sobe nem desliza mais */
+  box-shadow: none !important;  /* remove a sombra de elevação */
 }
 </style>
 
