@@ -3350,6 +3350,53 @@ HOME
 
 </section>
 
+<!-- ══ BOAS-VINDAS 029SWIMMING ══ -->
+<style>
+#boas-vindas{background:var(--bg2);padding:var(--sp) 1.5rem}
+.bv-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:4rem;align-items:center;max-width:var(--max);margin:0 auto}
+.bv-foto-wrap{position:relative;flex-shrink:0}
+.bv-foto{border-radius:20px 6px 20px 6px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.5);border:1px solid var(--bd2)}
+.bv-foto img{width:100%;height:460px;object-fit:cover;object-position:center top;display:block;transition:transform .5s ease}
+.bv-foto:hover img{transform:scale(1.03)}
+.bv-badge{position:absolute;top:15%;right:-18px;background:linear-gradient(180deg,var(--ocean),var(--glow));border-radius:10px;padding:1.3rem .75rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;box-shadow:0 6px 28px rgba(0,180,216,.5);min-height:150px}
+.bv-badge-n{font-family:var(--fd);font-size:1.7rem;font-weight:900;color:#fff;line-height:1}
+.bv-badge-txt{font-family:var(--fd);font-size:.36rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.88);writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg)}
+.bv-eyebrow{font-family:var(--fd);font-size:.46rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--glow);margin-bottom:.85rem;display:flex;align-items:center;gap:.5rem}
+.bv-eyebrow::before{content:"";display:block;width:22px;height:2px;background:var(--glow);flex-shrink:0}
+.bv-title{font-family:var(--fd);font-size:clamp(1.4rem,3vw,2.2rem);font-weight:900;color:var(--t1);line-height:1.15;margin-bottom:1.3rem}
+.bv-title em{color:var(--glow);font-style:normal}
+.bv-p{font-size:.88rem;color:var(--t2);line-height:1.82;margin-bottom:.9rem}
+.bv-p-destaque{font-size:.92rem;color:var(--t1);font-weight:500;line-height:1.7;margin-bottom:.9rem;padding-left:.9rem;border-left:2px solid var(--glow)}
+.bv-cta{margin-top:1.6rem}
+@media(max-width:900px){.bv-grid{grid-template-columns:1fr;gap:2.5rem}.bv-badge{top:auto;bottom:-16px;right:-10px}.bv-foto img{height:320px}}
+@media(max-width:600px){.bv-foto img{height:260px}.bv-foto{border-radius:14px 4px 14px 4px}.bv-badge{right:-8px;bottom:-12px}}
+</style>
+<section id="boas-vindas">
+  <div class="container">
+    <div class="bv-grid">
+      <div class="bv-foto-wrap reveal-l">
+        <div class="bv-foto">
+          <img src="images/quem-somos.png" alt="Atleta 029Swimming em treino de natação em águas abertas" loading="lazy" decoding="async">
+        </div>
+        <div class="bv-badge">
+          <span class="bv-badge-n">10+</span>
+          <span class="bv-badge-txt">Anos de Experiência</span>
+        </div>
+      </div>
+      <div class="bv-content reveal">
+        <div class="bv-eyebrow">BEM-VINDO À 029SWIMMING</div>
+        <h2 class="bv-title">Pronto Para <em>Superar Seus Limites</em> em Águas Abertas?</h2>
+        <p class="bv-p">Na 029Swimming, transformamos treino em performance real. Desenvolvemos atletas para enfrentar mares, represas e desafios de águas abertas com técnica, resistência e segurança. Nossa metodologia combina preparação física, estratégia e experiência prática para elevar sua evolução dentro e fora da água.</p>
+        <p class="bv-p-destaque">Treine com propósito. Nade com confiança. Viva a experiência das águas abertas.</p>
+        <p class="bv-p">Cada braçada aproxima você do próximo desafio... Treinos personalizados, acompanhamento técnico especializado e uma comunidade apaixonada por superação, performance e liberdade no mar.</p>
+        <div class="bv-cta">
+          <a href="#sobre" class="btn btn-primary">SAIBA MAIS</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ══ FAIXA 029SWIMMING ══ -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dseg@0.46.0/css/dseg.css">
 <style>
