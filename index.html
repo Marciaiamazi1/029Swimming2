@@ -15,13 +15,12 @@
 <meta property="og:site_name" content="029Swimming">
 <meta property="og:title" content="029Swimming | Assessoria de Natação em Águas Abertas">
 <meta property="og:description" content="Treinamento personalizado de natação em águas abertas com o Prof. Michel Victor. Online e presencial em São Paulo.">
-<meta property="og:image" content="../Hero%20Section/Foto0.png">
+<meta property="og:image" content="/images/Foto0.png">
+<link rel="icon" type="image/png" href="/images/logo-029.png">
 <meta property="og:url" content="https://029swimming.com.br/">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<!-- 029Swimming Design System — Playfair Display (titulos) + Inter (corpo) -->
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Barlow:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ══ TOKENS ══════════════════════════════════ */
 :root{
@@ -5356,35 +5355,10 @@ html, body {
 #sobre::before { opacity:.5 !important; }
 
 /* ════════════════════════════════════════════════════════════
-   CARDS FIXOS NO HOVER — remove o efeito de "levantar" (lift)
-   ------------------------------------------------------------
-   Tira o transform translateY (que erguia o card) e a sombra de
-   elevação SOMENTE dos cards de conteúdo. As mudanças sutis de
-   cor/borda no hover são mantidas, então o card ainda sinaliza
-   "mouse aqui", mas permanece fixo no layout. Botões (.btn-*,
-   .nav-cta, .form-btn, .vid-cta etc.) NÃO entram aqui — o
-   feedback de clique deles continua intacto, como combinado.   */
-
-.tri-card:hover,
-.mve-card:hover,
-.dif-card:hover,
-.dep-card:hover,
-.exp-card:hover,
-.letgo-card:hover,
-.galeria-item:hover,
-.carousel-slide:hover,
-.c-item:hover,
-.feat:hover,
-.qs-feat:hover,
-.obj-item:hover {
-  transform: none !important;   /* card não sobe nem desliza mais */
-  box-shadow: none !important;  /* remove a sombra de elevação */
-}
-
-/* ════════════════════════════════════════════════════════════
    WHATSAPP FAB — efeito shimmer/ripple no hover
    ------------------------------------------------------------ */
 .sw-whatsapp-fab {
+  position: relative;
   overflow: hidden;
 }
 .sw-whatsapp-fab::before {
