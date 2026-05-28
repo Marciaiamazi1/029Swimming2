@@ -4065,6 +4065,158 @@ HOME
   .exp-flip-inner { transition: transform 0.01s; }
 }
 
+/* ═══════════════════════════════════════════════════════════
+   CARD PREMIUM — Técnica e Evolução (.exp-flip--tecnica)
+   ═══════════════════════════════════════════════════════════ */
+
+/* Container: altura premium, leve elevação no hover */
+.exp-flip--tecnica {
+  height: clamp(420px, 35vw, 480px);
+  transition: transform .3s cubic-bezier(.25,.46,.45,.94),
+              box-shadow .3s cubic-bezier(.25,.46,.45,.94);
+}
+.exp-flip--tecnica:hover,
+.exp-flip--tecnica:focus-within {
+  transform: translateY(-8px);
+  box-shadow: 0 28px 60px rgba(0,80,160,.35), 0 0 0 1px rgba(0,180,216,.15);
+}
+
+/* Inner: flip mais suave e lento para efeito premium */
+.exp-flip--tecnica .exp-flip-inner {
+  transition: transform .8s cubic-bezier(.4,0,.2,1);
+}
+
+/* ── FRENTE: navy profundo + glow cyan ── */
+.exp-flip--tecnica .exp-flip-front {
+  background: linear-gradient(160deg, #010e1f 0%, #021627 45%, #041e38 100%);
+  border-color: rgba(0,180,216,.2);
+  gap: 1.5rem;
+}
+
+/* Ícone: círculo outline com glow suave */
+.exp-flip--tecnica .exp-flip-front .exp-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(0,180,216,.05);
+  border: 1.5px solid rgba(0,180,216,.4);
+  box-shadow: 0 0 28px rgba(0,180,216,.18),
+              inset 0 0 18px rgba(0,180,216,.04);
+}
+.exp-flip--tecnica .exp-flip-front .exp-icon svg {
+  width: 30px;
+  height: 30px;
+  filter: drop-shadow(0 0 7px rgba(0,180,216,.55));
+}
+
+/* Título e hint da frente */
+.exp-flip--tecnica .exp-flip-front-title {
+  color: #fff;
+  font-size: .92rem;
+  letter-spacing: .05em;
+  text-shadow: 0 2px 12px rgba(0,0,0,.5);
+}
+.exp-flip--tecnica .exp-flip-front-hint {
+  color: rgba(0,180,216,.7);
+  letter-spacing: 3px;
+}
+
+/* ── VERSO: imagem + overlay + conteúdo ── */
+.exp-flip--tecnica .exp-flip-back {
+  background: #010e1f;
+  border-color: rgba(0,180,216,.2);
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  box-shadow: inset 0 0 40px rgba(0,119,182,.12);
+}
+
+/* Camada da imagem — ocupa 100% e faz zoom suave quando visível */
+.exp-back-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.exp-back-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transform: scale(1.0);
+  transition: transform .9s cubic-bezier(.25,.46,.45,.94);
+  will-change: transform;
+}
+.exp-flip--tecnica:hover .exp-back-bg img,
+.exp-flip--tecnica:focus-within .exp-back-bg img {
+  transform: scale(1.08);
+}
+
+/* Overlay azul-marinho semi-transparente */
+.exp-back-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    170deg,
+    rgba(1,14,31,.62) 0%,
+    rgba(2,20,45,.55) 40%,
+    rgba(1,14,31,.72) 100%
+  );
+  z-index: 1;
+}
+
+/* Gradiente extra na base para garantir leitura do texto */
+.exp-back-overlay::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 65%;
+  background: linear-gradient(to top, rgba(1,10,24,.85) 0%, transparent 100%);
+}
+
+/* Conteúdo do verso — posicionado sobre overlay */
+.exp-back-content {
+  position: relative;
+  z-index: 2;
+  padding: 1.6rem 1.4rem 1.8rem;
+  width: 100%;
+}
+.exp-flip--tecnica .exp-flip-back-title {
+  color: #fff;
+  font-size: .82rem;
+  margin-bottom: .7rem;
+  text-shadow: 0 2px 14px rgba(0,0,0,.7);
+  -webkit-line-clamp: unset;
+}
+.exp-flip--tecnica .exp-flip-back-txt {
+  color: rgba(255,255,255,.84);
+  line-height: 1.72;
+  text-shadow: 0 1px 8px rgba(0,0,0,.55);
+  -webkit-line-clamp: unset;
+  overflow: visible;
+  display: block;
+}
+
+/* Glow discreto nas bordas do card */
+.exp-flip--tecnica .exp-flip-face {
+  box-shadow: 0 0 0 1px rgba(0,180,216,.1),
+              0 8px 32px rgba(0,0,0,.45);
+}
+
+/* ── Responsive ── */
+@media(max-width:900px) {
+  .exp-flip--tecnica { height: clamp(380px, 42vw, 460px); }
+}
+@media(max-width:480px) {
+  .exp-flip--tecnica { height: 420px; max-width: 360px; margin: 0 auto; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .exp-flip--tecnica,
+  .exp-flip--tecnica .exp-flip-inner,
+  .exp-flip--tecnica .exp-back-bg img { transition-duration: .01s !important; }
+}
+
 /* ══ QUOTE BANNER ────────────────────────────────────────── */
 .quote-banner {
   background: linear-gradient(135deg, #0a1e35, rgba(0,100,180,.85));
@@ -4627,9 +4779,9 @@ footer {
     </div>
     <div class="exp-grid">
 
-      <article class="exp-flip reveal d1" tabindex="0" aria-label="Técnica e Evolução">
+      <article class="exp-flip exp-flip--tecnica reveal d1" tabindex="0" aria-label="Técnica e Evolução">
         <div class="exp-flip-inner">
-          <!-- FRENTE: ícone + título (compacto) -->
+          <!-- FRENTE: navy profundo + ícone cyan com glow -->
           <div class="exp-flip-face exp-flip-front">
             <div class="exp-icon" aria-hidden="true">
               <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -4643,10 +4795,16 @@ footer {
             <h3 class="exp-flip-front-title">Técnica e Evolução</h3>
             <span class="exp-flip-front-hint">Passe o mouse</span>
           </div>
-          <!-- VERSO: descrição completa -->
+          <!-- VERSO: imagem de fundo + overlay + conteúdo -->
           <div class="exp-flip-face exp-flip-back">
-            <h3 class="exp-flip-back-title">Técnica e Evolução</h3>
-            <p class="exp-flip-back-txt">Cada braçada analisada e corrigida. O Prof. Michel Victor acompanha sua evolução de forma individual, ajustando o plano a cada etapa do seu desenvolvimento na natação.</p>
+            <div class="exp-back-bg" aria-hidden="true">
+              <img src="images/tecnica-evolucao-bg.jpg" alt="" loading="eager" decoding="async">
+            </div>
+            <div class="exp-back-overlay"></div>
+            <div class="exp-back-content">
+              <h3 class="exp-flip-back-title">Técnica e Evolução</h3>
+              <p class="exp-flip-back-txt">Cada braçada analisada e corrigida. O Prof. Michel Victor acompanha sua evolução de forma individual, ajustando o plano a cada etapa do seu desenvolvimento na natação.</p>
+            </div>
           </div>
         </div>
       </article>
