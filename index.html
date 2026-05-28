@@ -727,12 +727,23 @@ footer{background-color:var(--bg2);background-image:linear-gradient(rgba(2,11,20
 #wa-float svg{width:28px;height:28px;fill:#fff}
 @keyframes waPulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.45)}50%{box-shadow:0 4px 28px rgba(37,211,102,.75),0 0 0 8px rgba(37,211,102,.12)}}
 /* ── Reveal ── */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .6s cubic-bezier(.25,.46,.45,.94),transform .6s cubic-bezier(.25,.46,.45,.94);will-change:opacity,transform}
 .reveal.visible{opacity:1;transform:translateY(0)}
-.reveal-l{opacity:0;transform:translateX(-32px);transition:opacity .7s ease,transform .7s ease}
+.reveal-l{opacity:0;transform:translateX(-30px);transition:opacity .6s cubic-bezier(.25,.46,.45,.94),transform .6s cubic-bezier(.25,.46,.45,.94)}
 .reveal-l.visible{opacity:1;transform:translateX(0)}
-.reveal-r{opacity:0;transform:translateX(32px);transition:opacity .7s ease,transform .7s ease}
+.reveal-r{opacity:0;transform:translateX(30px);transition:opacity .6s cubic-bezier(.25,.46,.45,.94),transform .6s cubic-bezier(.25,.46,.45,.94)}
 .reveal-r.visible{opacity:1;transform:translateX(0)}
+/* ── Cascade delays d1–d6 */
+.reveal.d1,.reveal-l.d1,.reveal-r.d1{transition-delay:0ms}
+.reveal.d2,.reveal-l.d2,.reveal-r.d2{transition-delay:120ms}
+.reveal.d3,.reveal-l.d3,.reveal-r.d3{transition-delay:240ms}
+.reveal.d4,.reveal-l.d4,.reveal-r.d4{transition-delay:360ms}
+.reveal.d5,.reveal-l.d5,.reveal-r.d5{transition-delay:480ms}
+.reveal.d6,.reveal-l.d6,.reveal-r.d6{transition-delay:600ms}
+/* ── prefers-reduced-motion: só fade, sem slide nem delay */
+@media(prefers-reduced-motion:reduce){
+  .reveal,.reveal-l,.reveal-r{transform:none!important;transition:opacity .3s linear!important;transition-delay:0ms!important}
+}
 /* ── Microinterações ── */
 .dep-card{transition:border-color .25s,transform .25s,box-shadow .25s!important}
 .dep-card:hover{transform:translateY(-6px)!important;box-shadow:0 16px 40px rgba(0,0,0,.35)!important;border-color:rgba(0,180,216,.35)!important}
