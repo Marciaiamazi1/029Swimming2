@@ -15,13 +15,12 @@
 <meta property="og:site_name" content="029Swimming">
 <meta property="og:title" content="029Swimming | Assessoria de Natação em Águas Abertas">
 <meta property="og:description" content="Treinamento personalizado de natação em águas abertas com o Prof. Michel Victor. Online e presencial em São Paulo.">
-<meta property="og:image" content="../Hero%20Section/Foto0.png">
+<meta property="og:image" content="/images/Foto0.png">
+<link rel="icon" type="image/png" href="/images/logo-029.png">
 <meta property="og:url" content="https://029swimming.com.br/">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<!-- 029Swimming Design System — Playfair Display (titulos) + Inter (corpo) -->
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Barlow:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ══ TOKENS ══════════════════════════════════ */
 :root{
@@ -173,6 +172,29 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
   z-index:0;
   /* Leve zoom para esconder bordas durante animação */
   transform:scale(1.05);
+}
+
+/* ════════════════════════════════════════════════════════════
+   FIX: garantir visibilidade do vídeo do Hero
+   - O HTML usa classe .hero-video (sem -bg), mas o CSS antigo só
+     definia .hero-video-bg. Esta regra garante que .hero-video
+     sempre seja renderizado, independente de classes/JS auxiliares.
+   - !important só nas propriedades críticas (display + opacity)
+     pra sobrescrever qualquer regra que tenha escondido o elemento.
+   ════════════════════════════════════════════════════════════ */
+.hero .hero-video,
+.hero-video {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 0 !important;
+  pointer-events: none;
 }
 
 /* Overlay escuro + gradiente para legibilidade */
@@ -425,7 +447,7 @@ section{padding:var(--sp) 1.5rem;position:relative}
 .btn-wa:hover{opacity:.92;transform:translateY(-2px);box-shadow:0 5px 18px rgba(37,211,102,.4)}
 
 /* ══ FOOTER ══════════════════════════════════ */
-footer{background:var(--bg2);border-top:1px solid var(--bd);position:relative;z-index:1}
+footer{background-color:var(--bg2);background-image:linear-gradient(rgba(2,11,20,.60),rgba(2,11,20,.75)),url('/images/footer-bg.png');background-size:auto,cover;background-position:center,center top;border-top:1px solid var(--bd);position:relative;z-index:1}
 .footer-glow-line{height:1px;background:linear-gradient(90deg,transparent 0%,var(--glow) 50%,transparent 100%);opacity:.35}
 .footer-body{max-width:var(--max);margin:0 auto;padding:3.5rem 2rem 2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem 4rem;align-items:start}
 @media(max-width:680px){.footer-body{grid-template-columns:1fr;gap:2.5rem;padding:2.5rem 1.5rem 2rem}}
@@ -3351,6 +3373,1077 @@ HOME
 
 </section>
 
+<!-- ══ GOGRIN REDESIGN — CSS ══════════════════════════════════
+     Reestruturação visual completa das seções abaixo do hero.
+     Inspirado no estilo Gogrin: layouts limpos, cards modernos,
+     grids bem estruturados, espaçamentos generosos, dark theme.
+     HERO SECTION E SEUS FILHOS NÃO SÃO ALTERADOS.
+     ═══════════════════════════════════════════════════════════ -->
+<style id="gogrin-redesign">
+
+/* ── TOKENS GOGRIN ─────────────────────────────────────────── */
+:root {
+  --sp-gogrin: clamp(5rem, 8vw, 7rem);
+  --card-radius: 20px;
+  --card-pad: 2rem 1.8rem;
+  --section-eyebrow-ls: .22em;
+}
+
+/* ── BASE SEÇÃO — padding generoso ─────────────────────────── */
+#boas-vindas, #sobre, #sobre-narrativo, #experiencia,
+#diferenciais, #depoimentos, #pre-footer {
+  padding: var(--sp-gogrin) 1.5rem;
+}
+
+/* ── EYEBROW padrão atualizado ─────────────────────────────── */
+.s-eye {
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: var(--section-eyebrow-ls);
+  text-transform: uppercase;
+  color: var(--glow);
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  margin-bottom: .8rem;
+}
+.s-eye::before {
+  content: "";
+  width: 28px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--ocean), var(--glow));
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* ── TÍTULOS de seção ─────────────────────────────────────── */
+.s-h2 {
+  font-family: var(--fd);
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 900;
+  color: var(--t1);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+.s-h2 em { color: var(--glow); font-style: normal; }
+
+/* ── LEAD text padrão ─────────────────────────────────────── */
+.s-lead {
+  font-size: 1rem;
+  color: var(--t2);
+  line-height: 1.85;
+  max-width: 560px;
+}
+
+/* ══ BOAS-VINDAS ─────────────────────────────────────────── */
+#boas-vindas {
+  background: var(--bg2);
+  position: relative;
+  overflow: hidden;
+}
+#boas-vindas::before {
+  content: "";
+  position: absolute;
+  top: -200px; right: -150px;
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,180,216,.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.bv-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: clamp(2.5rem, 5vw, 5rem);
+  align-items: center;
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.bv-foto-wrap { position: relative; flex-shrink: 0; }
+.bv-foto {
+  border-radius: 24px 8px 24px 8px;
+  overflow: hidden;
+  box-shadow: 0 32px 72px rgba(0,0,0,.55);
+  border: 1px solid rgba(0,180,216,.2);
+}
+.bv-foto img {
+  width: 100%;
+  height: clamp(340px, 45vw, 520px);
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transition: transform .6s ease;
+}
+.bv-foto:hover img { transform: scale(1.03); }
+.bv-badge {
+  position: absolute;
+  top: 18%;
+  right: -22px;
+  background: linear-gradient(160deg, var(--ocean), var(--glow));
+  border-radius: 16px;
+  padding: 1.4rem .9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .7rem;
+  box-shadow: 0 8px 32px rgba(0,180,216,.55);
+  min-height: 160px;
+}
+.bv-badge-n {
+  font-family: var(--fd);
+  font-size: 2rem;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+}
+.bv-badge-txt {
+  font-family: var(--fd);
+  font-size: .38rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.9);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+}
+/* Linha decorativa */
+.bv-foto-wrap::after {
+  content: "";
+  position: absolute;
+  bottom: -8px; left: 24px;
+  width: 60%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--ocean), var(--glow), transparent);
+  border-radius: 2px;
+}
+
+/* Conteúdo lado direito */
+.bv-eyebrow {
+  font-family: var(--fd);
+  font-size: .52rem;
+  font-weight: 700;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--glow);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+.bv-eyebrow::before {
+  content: "";
+  display: block;
+  width: 28px; height: 2px;
+  background: linear-gradient(90deg, var(--ocean), var(--glow));
+  flex-shrink: 0;
+}
+.bv-title {
+  font-family: var(--fd);
+  font-size: clamp(1.6rem, 3.2vw, 2.5rem);
+  font-weight: 900;
+  color: var(--t1);
+  line-height: 1.1;
+  margin-bottom: 1.6rem;
+  letter-spacing: -0.01em;
+}
+.bv-title em { color: var(--glow); font-style: normal; }
+.bv-p {
+  font-size: 1rem;
+  color: var(--t2);
+  line-height: 1.85;
+  margin-bottom: 1rem;
+}
+.bv-p-destaque {
+  font-size: 1.02rem;
+  color: var(--t1);
+  font-weight: 500;
+  line-height: 1.75;
+  margin-bottom: 1rem;
+  padding: .9rem 1.1rem;
+  border-left: 3px solid var(--glow);
+  background: rgba(0,180,216,.05);
+  border-radius: 0 10px 10px 0;
+}
+.bv-cta { margin-top: 2rem; }
+.bv-cta .btn {
+  padding: .9rem 2.2rem;
+  border-radius: 10px;
+  font-size: .6rem;
+}
+@media(max-width:900px) {
+  .bv-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .bv-badge { top: auto; bottom: -20px; right: -10px; }
+  .bv-foto img { height: 340px; }
+}
+@media(max-width:600px) {
+  .bv-foto img { height: 270px; }
+  .bv-foto { border-radius: 16px 5px 16px 5px; }
+  .bv-badge { right: -8px; bottom: -12px; padding: 1rem .7rem; min-height: 130px; }
+  .bv-badge-n { font-size: 1.6rem; }
+}
+
+/* ══ BRAND STRIP ─────────────────────────────────────────── */
+.brand-strip {
+  text-align: center;
+  padding: 3.2rem 1.5rem 3.5rem;
+  background: var(--bg);
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+.brand-strip::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 5%; right: 5%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,212,255,.3), transparent);
+}
+.brand-strip::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 5%; right: 5%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,212,255,.15), transparent);
+}
+.brand-strip-eye {
+  display: block;
+  font-family: var(--fb);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.1rem;
+}
+.brand-strip-title {
+  display: inline-flex;
+  align-items: baseline;
+  gap: .18em;
+  line-height: 1;
+  margin: 0;
+}
+.brand-num {
+  font-family: "DSEG7 Classic", "DSEG7 Classic Mini", monospace;
+  font-size: clamp(1.6rem, 4.5vw, 3rem);
+  font-weight: 700;
+  color: var(--t1);
+  letter-spacing: .04em;
+}
+.brand-swim {
+  font-family: var(--fb);
+  font-size: clamp(1.3rem, 3.5vw, 2.4rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .2em;
+  color: var(--glow);
+}
+.brand-strip-line {
+  width: 56px; height: 2px;
+  background: linear-gradient(90deg, var(--ocean), var(--glow));
+  border-radius: 2px;
+  margin: 1.4rem auto 0;
+}
+
+/* ══ SOBRE — Quem somos (qs-*) ──────────────────────────── */
+#sobre {
+  background: var(--bg2);
+  position: relative;
+  overflow: hidden;
+}
+/* Mantém o layout qs-wrap existente — apenas refina detalhes */
+.qs-wrap {
+  max-width: 1160px;
+  margin: 0 auto;
+  gap: clamp(2.5rem, 5vw, 5rem);
+}
+.qs-eyebrow {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .22em;
+  margin-bottom: 1.2rem;
+}
+.qs-eyebrow::before {
+  width: 32px; height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--gd2));
+}
+.qs-title {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 900;
+  line-height: 1.08;
+  margin: 0 0 1.6rem;
+  letter-spacing: -0.015em;
+}
+.qs-lead {
+  font-size: clamp(.95rem, 1.4vw, 1.05rem);
+  line-height: 1.85;
+  margin: 0 0 1.2rem;
+}
+.qs-feats {
+  gap: 1.2rem;
+  margin: 2rem 0 2.4rem;
+}
+.qs-feat {
+  padding: 1.1rem 1.2rem;
+  border-radius: 16px;
+  border: 1px solid var(--sw-border);
+  background: rgba(255,255,255,.02);
+}
+.qs-feat-ico {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  background: rgba(0,212,255,.1);
+}
+.qs-feat-ico svg { width: 20px; height: 20px; }
+.qs-feat-tit { font-size: .95rem; font-weight: 700; margin-bottom: .2rem; }
+.qs-feat-txt { font-size: .86rem; line-height: 1.6; }
+.qs-btn {
+  padding: .95rem 1.9rem;
+  border-radius: 50px;
+  font-size: .95rem;
+  font-weight: 700;
+}
+.qs-badge { border-radius: 18px; padding: .95rem 1.2rem; }
+.qs-badge-num { font-size: 1.9rem; font-weight: 900; }
+.qs-badge-label { font-size: .72rem; }
+
+/* ══ SOBRE NARRATIVO ────────────────────────────────────── */
+#sobre-narrativo {
+  background: var(--bg3);
+  position: relative;
+  overflow: hidden;
+}
+#sobre-narrativo::before {
+  content: "";
+  position: absolute;
+  top: -100px; right: -80px;
+  width: 420px; height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,180,216,.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.narrativo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2.5rem, 5vw, 5rem);
+  align-items: center;
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.narrativo-label {
+  font-family: var(--fd);
+  font-size: .54rem;
+  font-weight: 700;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--glow);
+  margin-bottom: .8rem;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+.narrativo-label::before {
+  content: "";
+  display: block;
+  width: 32px; height: 2px;
+  background: linear-gradient(90deg, var(--ocean), var(--glow));
+  flex-shrink: 0;
+}
+.narrativo-title {
+  font-family: var(--fd);
+  font-size: clamp(1.6rem, 3.8vw, 2.8rem);
+  font-weight: 900;
+  font-style: italic;
+  color: var(--t1);
+  line-height: 1.1;
+  margin-bottom: .8rem;
+  text-transform: uppercase;
+  letter-spacing: -.01em;
+}
+.narrativo-title em { color: var(--glow); font-style: italic; }
+.narrativo-txt {
+  font-size: 1rem;
+  color: var(--t2);
+  line-height: 1.85;
+  margin-bottom: 1.1rem;
+}
+.narrativo-txt strong { color: var(--t1); font-weight: 600; }
+/* Foto narrativo: moldura mais elegante */
+.narrativo-img-wrap {
+  border-radius: 28px 8px 28px 8px !important;
+  box-shadow: 0 32px 70px rgba(0,0,0,.5) !important;
+  border: 1px solid rgba(0,180,216,.18) !important;
+  overflow: hidden;
+  position: relative;
+}
+/* Linha decorativa à esquerda da foto */
+.narrativo-img-wrap::before {
+  content: "";
+  position: absolute;
+  left: -3px; top: 15%;
+  width: 3px; height: 55%;
+  background: linear-gradient(to bottom, var(--ocean), var(--glow));
+  border-radius: 2px;
+  z-index: 2;
+}
+.narrativo-img-wrap img {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  object-position: 50% 35%;
+  display: block;
+  filter: brightness(.93);
+  transition: transform .5s ease;
+}
+.narrativo-img-wrap:hover img { transform: scale(1.03); }
+@media(max-width:900px) {
+  .narrativo-grid { grid-template-columns: 1fr; gap: 2.8rem; }
+}
+@media(max-width:600px) {
+  .narrativo-img-wrap { border-radius: 18px 5px 18px 5px !important; }
+}
+
+/* ══ EXPERIÊNCIA ─────────────────────────────────────────── */
+#experiencia {
+  background: var(--bg);
+  padding: var(--sp-gogrin) 0;
+  position: relative;
+}
+/* Linha de luz radial no topo */
+#experiencia::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(0,180,216,.3) 50%, transparent 100%);
+}
+.exp-header {
+  margin-bottom: 3rem;
+  text-align: center;
+  padding: 0 1.5rem;
+}
+.exp-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.6rem;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+.exp-card {
+  background: linear-gradient(160deg, var(--bg3), var(--bg4));
+  border: 1px solid var(--bd);
+  border-radius: var(--card-radius);
+  padding: 2.2rem 1.8rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  transition: border-color .3s, transform .3s, box-shadow .3s;
+  position: relative;
+  overflow: hidden;
+}
+/* Linha colorida no topo do card — sempre visível */
+.exp-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--ocean), var(--glow));
+  border-radius: 2px 2px 0 0;
+}
+.exp-card:hover {
+  border-color: rgba(0,180,216,.4);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(0,0,0,.32);
+}
+.exp-icon {
+  width: 64px; height: 64px;
+  background: rgba(0,180,216,.08);
+  border: 1px solid rgba(0,180,216,.2);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .3s, transform .3s;
+}
+.exp-card:hover .exp-icon {
+  background: rgba(0,180,216,.16);
+  transform: scale(1.06);
+}
+.exp-icon svg { width: 38px; height: 38px; }
+.exp-tit {
+  font-family: var(--fd);
+  font-size: .82rem;
+  font-weight: 800;
+  color: var(--t1);
+  letter-spacing: .03em;
+  line-height: 1.25;
+}
+.exp-txt {
+  font-size: .87rem;
+  color: var(--t2);
+  line-height: 1.8;
+  flex: 1;
+}
+@media(max-width:900px) {
+  .exp-grid { grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+}
+@media(max-width:900px) {
+  .exp-flip { height: 280px; }
+}
+@media(max-width:480px) {
+  .exp-grid { grid-template-columns: 1fr; padding: 0 1rem; gap: 1rem; }
+  .exp-card { padding: 1.8rem 1.4rem 1.6rem; }
+  .exp-flip { height: 260px; max-width: 360px; margin: 0 auto; }
+}
+
+/* ════════════════════════════════════════════════════════════
+   FLIP 3D CARDS — versão compacta para a seção Metodologia
+   - Substituem o .exp-card mantendo MESMO tamanho visual e mesma
+     paleta (usa as variáveis CSS existentes: --bg3, --bg4, --bd,
+     --ocean, --glow, --t1, --t2, --fd, --card-radius)
+   - perspective + transform-style: preserve-3d criam o efeito 3D
+   - backface-visibility: hidden esconde o lado "espelhado" durante
+     a rotação (sem isso, você veria texto invertido)
+   ════════════════════════════════════════════════════════════ */
+
+/* Container externo - apenas define a "câmera" 3D e altura fixa
+   Altura fixa garante que TODOS os cards fiquem do mesmo tamanho,
+   independente do conteúdo de cada um (que era o que você pediu). */
+.exp-flip {
+  perspective: 1200px;
+  height: 300px;                    /* compacto - menor que o card original */
+  cursor: pointer;
+  position: relative;
+}
+
+/* Elemento que de fato rotaciona ao passar o mouse */
+.exp-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Gatilho do hover (desktop) e focus (teclado) — vira 180° */
+.exp-flip:hover .exp-flip-inner,
+.exp-flip:focus-within .exp-flip-inner {
+  transform: rotateY(180deg);
+}
+
+/* Faces (frente e verso) ocupam o mesmo espaço, sobrepostas */
+.exp-flip-face {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;  /* prefixo p/ Safari antigo */
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--bd);
+  background: linear-gradient(160deg, var(--bg3), var(--bg4));
+}
+
+/* Linha colorida no topo (mantém identidade visual do site) */
+.exp-flip-face::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--ocean), var(--glow));
+  z-index: 2;
+}
+
+/* ===== FRENTE ===== ícone + título (compacto e centralizado) */
+.exp-flip-front {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.5rem 1.2rem;
+  gap: 1rem;
+}
+
+/* Reutiliza o estilo do .exp-icon original (mesmo box azul-translúcido) */
+.exp-flip-front .exp-icon {
+  width: 64px;
+  height: 64px;
+  background: rgba(0,180,216,.08);
+  border: 1px solid rgba(0,180,216,.2);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .3s, transform .3s;
+}
+
+/* Pequeno feedback visual no ícone quando o mouse se aproxima */
+.exp-flip:hover .exp-flip-front .exp-icon {
+  background: rgba(0,180,216,.16);
+  transform: scale(1.06);
+}
+
+.exp-flip-front .exp-icon svg {
+  width: 38px;
+  height: 38px;
+}
+
+.exp-flip-front-title {
+  font-family: var(--fd);
+  font-size: .9rem;
+  font-weight: 800;
+  color: var(--t1);
+  letter-spacing: .03em;
+  line-height: 1.3;
+  margin: 0;
+}
+
+/* Hint discreta indicando que o card é interativo */
+.exp-flip-front-hint {
+  font-size: .65rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--t2);
+  opacity: .6;
+  margin-top: .3rem;
+}
+
+/* ===== VERSO ===== descrição completa (texto principal) */
+.exp-flip-back {
+  transform: rotateY(180deg);       /* começa virado p/ ficar correto ao girar */
+  padding: 1.5rem 1.3rem;
+  justify-content: center;
+  background: linear-gradient(160deg, var(--bg4), var(--bg3));  /* gradiente invertido */
+}
+
+.exp-flip-back-title {
+  font-family: var(--fd);
+  font-size: .82rem;
+  font-weight: 800;
+  color: var(--ocean);
+  letter-spacing: .03em;
+  line-height: 1.25;
+  margin: 0 0 .8rem;
+}
+
+.exp-flip-back-txt {
+  font-size: .8rem;
+  color: var(--t2);
+  line-height: 1.65;
+  margin: 0;
+  /* Limita altura do texto se for muito longo (não escapa do card) */
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ===== ACESSIBILIDADE ===== */
+
+/* Foco visível para navegação por teclado */
+.exp-flip:focus { outline: none; }
+.exp-flip:focus-visible .exp-flip-face {
+  box-shadow: 0 0 0 3px rgba(0,180,216,.5);
+}
+
+/* Respeita usuários que preferem menos animação no SO */
+@media (prefers-reduced-motion: reduce) {
+  .exp-flip-inner { transition: transform 0.01s; }
+}
+
+/* ══ QUOTE BANNER ────────────────────────────────────────── */
+.quote-banner {
+  background: linear-gradient(135deg, #0a1e35, rgba(0,100,180,.85));
+  padding: 2.8rem 1.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.quote-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 80% at 20% 50%, rgba(0,180,216,.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 80% 50%, rgba(0,119,182,.07) 0%, transparent 60%);
+}
+.quote-text {
+  font-family: var(--fd);
+  font-size: clamp(.9rem, 2.6vw, 1.45rem);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: .04em;
+  line-height: 1.45;
+  max-width: 720px;
+  margin: 0 auto;
+  position: relative;
+}
+.quote-text em { color: var(--gd2); font-style: italic; }
+
+/* ══ DIFERENCIAIS ────────────────────────────────────────── */
+#diferenciais {
+  background: var(--bg2);
+  position: relative;
+}
+#diferenciais::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,180,216,.2), transparent);
+}
+.dif-intro {
+  text-align: center;
+  margin-bottom: 3.2rem;
+}
+.dif-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.8rem;
+  align-items: stretch;
+}
+.dif-card {
+  background: linear-gradient(160deg, var(--bg3), var(--bg4));
+  border: 1px solid var(--bd);
+  border-radius: var(--card-radius);
+  padding: 2.4rem 2rem 2rem;
+  text-align: center;
+  transition: border-color .3s, transform .3s, box-shadow .3s;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/* Linha colorida topo — sempre visível */
+.dif-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--ocean), var(--glow));
+  border-radius: 2px 2px 0 0;
+}
+.dif-card::after { display: none; }
+.dif-card:hover {
+  border-color: rgba(0,180,216,.4);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 52px rgba(0,0,0,.35);
+}
+.dif-ico-wrap {
+  width: 64px; height: 64px;
+  border-radius: 18px;
+  background: rgba(0,180,216,.08);
+  border: 1px solid rgba(0,180,216,.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin-bottom: 1.4rem;
+  transition: background .3s, transform .3s;
+}
+.dif-ico-wrap svg { width: 28px; height: 28px; }
+.dif-card:hover .dif-ico-wrap {
+  background: rgba(0,180,216,.18);
+  transform: scale(1.08);
+}
+.dif-tit {
+  font-family: var(--fd);
+  font-size: .82rem;
+  font-weight: 800;
+  color: var(--t1);
+  margin-bottom: .7rem;
+  line-height: 1.25;
+  letter-spacing: .02em;
+}
+.dif-txt {
+  font-size: .87rem;
+  color: var(--t2);
+  line-height: 1.8;
+  flex: 1;
+}
+@media(max-width:900px) {
+  .dif-cards { grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+}
+@media(max-width:600px) {
+  .dif-cards { grid-template-columns: 1fr; }
+  .dif-card { padding: 2rem 1.6rem 1.8rem; }
+}
+
+/* ══ DEPOIMENTOS ─────────────────────────────────────────── */
+#depoimentos {
+  background: var(--bg);
+  position: relative;
+}
+#depoimentos::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,180,216,.2), transparent);
+}
+.dep-intro {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.dep-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.6rem;
+}
+.dep-card {
+  background: linear-gradient(160deg, var(--bg2), var(--bg3));
+  border: 1px solid var(--bd);
+  border-radius: var(--card-radius);
+  padding: 2.2rem 1.8rem 1.8rem;
+  transition: border-color .25s, transform .25s, box-shadow .25s;
+  position: relative;
+  overflow: hidden;
+}
+/* Linha colorida no topo */
+.dep-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--ocean), var(--glow));
+  border-radius: 2px 2px 0 0;
+}
+.dep-card:hover {
+  border-color: rgba(0,180,216,.38);
+  transform: translateY(-6px) !important;
+  box-shadow: 0 18px 48px rgba(0,0,0,.35) !important;
+}
+.dep-stars {
+  color: var(--gold);
+  font-size: .78rem;
+  letter-spacing: .12em;
+  margin-bottom: .8rem;
+  display: flex;
+  gap: .1rem;
+}
+.dep-txt {
+  font-size: .87rem;
+  color: var(--t2);
+  line-height: 1.8;
+  font-style: italic;
+  margin-bottom: 1.4rem;
+  flex: 1;
+}
+.dep-author {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-top: 0;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--bd);
+}
+.dep-ava {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--fd);
+  font-size: .62rem;
+  font-weight: 700;
+  border: 2px solid rgba(0,180,216,.2);
+}
+.dep-name {
+  font-family: var(--fd);
+  font-size: .62rem;
+  font-weight: 800;
+  color: var(--t1);
+  display: block;
+  margin-bottom: .15rem;
+}
+.dep-role {
+  font-size: .56rem;
+  color: var(--t3);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+@media(max-width:900px) { .dep-grid { grid-template-columns: 1fr 1fr; gap: 1.2rem; } }
+@media(max-width:600px) { .dep-grid { grid-template-columns: 1fr; } }
+
+/* ══ PRE-FOOTER (carrossel) ──────────────────────────────── */
+#pre-footer {
+  background: var(--bg3);
+  padding: clamp(4rem, 6vw, 5.5rem) 0 clamp(3rem, 5vw, 4rem);
+  overflow: hidden;
+  border-top: 1px solid var(--bd);
+}
+.pf-header {
+  text-align: center;
+  padding: 0 1.5rem;
+  margin-bottom: 2.8rem;
+}
+.pf-eyebrow {
+  font-family: var(--fd);
+  font-size: .52rem;
+  font-weight: 700;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--glow);
+  margin-bottom: .6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+}
+.pf-eyebrow::before, .pf-eyebrow::after {
+  content: "";
+  display: block;
+  width: 20px; height: 1.5px;
+  background: var(--glow);
+  border-radius: 2px;
+}
+.pf-title {
+  font-family: var(--fd);
+  font-size: clamp(1.3rem, 3.2vw, 2.2rem);
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  color: var(--t1);
+  line-height: 1.1;
+}
+.pf-title em { color: var(--gd2); font-style: italic; }
+/* Carrossel: refinamentos */
+.carousel-slide {
+  border-radius: 20px 6px 20px 6px;
+  border: 1px solid rgba(0,180,216,.12);
+  box-shadow: 0 10px 32px rgba(0,0,0,.4);
+}
+.carousel-slide:hover { transform: translateY(-5px); }
+.carousel-slide img {
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  object-position: center top;
+}
+.carousel-btn {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid var(--bd2);
+}
+.carousel-dot { transition: all .3s; }
+.carousel-dot.active { background: var(--glow); width: 22px; border-radius: 4px; }
+
+/* ══ FOOTER ──────────────────────────────────────────────── */
+footer {
+  background-color: var(--bg2);
+  background-image: linear-gradient(rgba(2,11,20,.65), rgba(2,11,20,.80)), url('/images/footer-bg.png');
+  background-size: auto, cover;
+  background-position: center, center top;
+}
+.footer-body {
+  padding: 4rem 2rem 3rem;
+}
+.fci {
+  padding: .85rem 1.1rem;
+  border-radius: 14px;
+  transition: all .25s;
+}
+.fci-val { font-size: .88rem; }
+.footer-nav-links a { font-size: .9rem; }
+
+/* ══ BOTÕES GLOBAIS — refinamento Gogrin ────────────────── */
+.btn {
+  padding: .85rem 2rem;
+  border-radius: 10px;
+  font-size: .58rem;
+  letter-spacing: .1em;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--ocean), var(--glow));
+  color: #fff;
+  box-shadow: 0 4px 22px rgba(0,180,216,.38);
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  top: 0; left: -100%; width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent);
+  transition: left .4s ease;
+}
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0,180,216,.6);
+}
+.btn-primary:hover::before { left: 100%; }
+.btn-cta {
+  padding: .95rem 2.3rem;
+  border-radius: 10px;
+  font-size: .6rem;
+}
+
+/* ══ SECTION INTRO centralizada — padrão ────────────────── */
+.section-intro-center {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.section-intro-center .s-eye {
+  justify-content: center;
+}
+.section-intro-center .s-lead {
+  margin: .6rem auto 0;
+  text-align: center;
+}
+
+/* ══ RESPONSIVIDADE GERAL ────────────────────────────────── */
+@media(max-width:900px) {
+  #boas-vindas, #sobre, #sobre-narrativo, #experiencia,
+  #diferenciais, #depoimentos, #pre-footer {
+    padding: clamp(4rem, 7vw, 6rem) 1.5rem;
+  }
+  #experiencia { padding: clamp(4rem, 7vw, 6rem) 0; }
+  #pre-footer { padding: clamp(3.5rem, 6vw, 5rem) 0; }
+}
+@media(max-width:600px) {
+  #boas-vindas, #sobre, #sobre-narrativo, #experiencia,
+  #diferenciais, #depoimentos, #pre-footer {
+    padding: 3.5rem 1.1rem;
+  }
+  #experiencia { padding: 3.5rem 0; }
+  #pre-footer { padding: 3rem 0; }
+  .dif-card::before, .exp-card::before, .dep-card::before {
+    height: 2.5px;
+  }
+}
+</style>
+
+<!-- ══ BOAS-VINDAS 029SWIMMING ══ -->
+<section id="boas-vindas">
+  <div class="container">
+    <div class="bv-grid">
+      <div class="bv-foto-wrap reveal-l">
+        <div class="bv-foto">
+          <img src="images/quem-somos.png" alt="Atleta 029Swimming em treino de natação em águas abertas" loading="lazy" decoding="async">
+        </div>
+        <div class="bv-badge">
+          <span class="bv-badge-n">10+</span>
+          <span class="bv-badge-txt">Anos de Experiência</span>
+        </div>
+      </div>
+      <div class="bv-content reveal">
+        <div class="bv-eyebrow">Bem-vindo à 029Swimming</div>
+        <h2 class="bv-title">Sua Evolução <em>Começa</em><br>em Águas Abertas</h2>
+        <p class="bv-p">Na 029Swimming, transformamos treino em performance real. Desenvolvemos atletas para enfrentar mares, represas e desafios de águas abertas com técnica, resistência e segurança. Nossa metodologia combina preparação física, estratégia e experiência prática para elevar sua evolução dentro e fora da água.</p>
+        <p class="bv-p-destaque">Treine com propósito. Nade com confiança. Viva a experiência das águas abertas.</p>
+        <p class="bv-p">Cada braçada aproxima você do próximo desafio. Treinos personalizados, acompanhamento técnico especializado e uma comunidade apaixonada por superação, performance e liberdade no mar.</p>
+        <div class="bv-cta">
+          <a href="#sobre" class="btn btn-primary">Saiba mais</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ══ FAIXA 029SWIMMING ══ -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dseg@0.46.0/css/dseg.css">
 <style>
@@ -3516,10 +4609,10 @@ HOME
 
       <!-- Coluna foto -->
       <div class="reveal-r">
-        <div class="narrativo-img-wrap" style="position:relative;border-radius:20px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.45);border:1px solid rgba(0,180,216,.15);">
-          <img loading="lazy" src="images/nossa-historia.jpg" alt="Atletas da 029Swimming em treino de natação em águas abertas com o Prof. Michel Victor" style="width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 35%;display:block;filter:brightness(.92);">
-          <div style="position:absolute;bottom:0;left:0;right:0;padding:.8rem 1.1rem;background:linear-gradient(to top,rgba(2,11,20,.88) 0%,transparent 100%);">
-            <span style="font-family:var(--fd);font-size:.44rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.8);">Prof. Michel Victor · 029Swimming</span>
+        <div class="narrativo-img-wrap">
+          <img loading="lazy" src="images/nossa-historia.jpg" alt="Atletas da 029Swimming em treino de natação em águas abertas com o Prof. Michel Victor">
+          <div style="position:absolute;bottom:0;left:0;right:0;padding:1rem 1.2rem;background:linear-gradient(to top,rgba(2,11,20,.92) 0%,transparent 100%);">
+            <span style="font-family:var(--fd);font-size:.48rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.85);">Prof. Michel Victor · 029Swimming</span>
           </div>
         </div>
       </div>
@@ -3540,63 +4633,97 @@ HOME
     <div class="exp-header reveal">
       <div class="s-eye" style="justify-content:center">Metodologia</div>
       <h2 class="s-h2" style="text-align:center">Experiência <em>029Swimming</em></h2>
-      <p class="s-lead" style="text-align:center;margin:.4rem auto 0">Treinos pensados para evolução, segurança e confiança em águas abertas.</p>
+      <p class="s-lead" style="text-align:center;margin:.6rem auto 0;max-width:520px">Treinos pensados para evolução, segurança e confiança em águas abertas.</p>
     </div>
     <div class="exp-grid">
 
-      <article class="exp-card reveal d1">
-        <div class="exp-icon" aria-hidden="true">
-          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="24" cy="24" r="22" stroke="var(--glow)" stroke-width="1.5" fill="var(--gp)"/>
-            <path d="M10 30c3-3 6-3 9 0s6 3 9 0 6-3 9 0" stroke="var(--glow)" stroke-width="2" stroke-linecap="round" fill="none"/>
-            <path d="M10 24c3-3 6-3 9 0s6 3 9 0 6-3 9 0" stroke="var(--ocean)" stroke-width="2" stroke-linecap="round" fill="none"/>
-            <circle cx="24" cy="17" r="3" fill="var(--glow)"/>
-            <path d="M24 20v6" stroke="var(--glow)" stroke-width="2" stroke-linecap="round"/>
-          </svg>
+      <article class="exp-flip reveal d1" tabindex="0" aria-label="Técnica e Evolução">
+        <div class="exp-flip-inner">
+          <!-- FRENTE: ícone + título (compacto) -->
+          <div class="exp-flip-face exp-flip-front">
+            <div class="exp-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="24" cy="24" r="22" stroke="var(--glow)" stroke-width="1.5" fill="var(--gp)"/>
+                <path d="M10 30c3-3 6-3 9 0s6 3 9 0 6-3 9 0" stroke="var(--glow)" stroke-width="2" stroke-linecap="round" fill="none"/>
+                <path d="M10 24c3-3 6-3 9 0s6 3 9 0 6-3 9 0" stroke="var(--ocean)" stroke-width="2" stroke-linecap="round" fill="none"/>
+                <circle cx="24" cy="17" r="3" fill="var(--glow)"/>
+                <path d="M24 20v6" stroke="var(--glow)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3 class="exp-flip-front-title">Técnica e Evolução</h3>
+            <span class="exp-flip-front-hint">Passe o mouse</span>
+          </div>
+          <!-- VERSO: descrição completa -->
+          <div class="exp-flip-face exp-flip-back">
+            <h3 class="exp-flip-back-title">Técnica e Evolução</h3>
+            <p class="exp-flip-back-txt">Cada braçada analisada e corrigida. O Prof. Michel Victor acompanha sua evolução de forma individual, ajustando o plano a cada etapa do seu desenvolvimento na natação.</p>
+          </div>
         </div>
-        <h3 class="exp-tit">Técnica e Evolução</h3>
-        <p class="exp-txt">Cada braçada analisada e corrigida. O Prof. Michel Victor acompanha sua evolução de forma individual, ajustando o plano a cada etapa do seu desenvolvimento na natação.</p>
       </article>
 
-      <article class="exp-card reveal d2">
-        <div class="exp-icon" aria-hidden="true">
-          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="24" cy="24" r="22" stroke="var(--glow)" stroke-width="1.5" fill="var(--gp)"/>
-            <path d="M24 13l2.5 7h7.5l-6 4.5 2.5 7-6.5-4.5-6.5 4.5 2.5-7-6-4.5h7.5z" fill="none" stroke="var(--glow)" stroke-width="1.8" stroke-linejoin="round"/>
-            <path d="M15 37c0-5 4-9 9-9s9 4 9 9" stroke="var(--ocean)" stroke-width="2" stroke-linecap="round" fill="none"/>
-          </svg>
+      <article class="exp-flip reveal d2" tabindex="0" aria-label="Segurança em Águas Abertas">
+        <div class="exp-flip-inner">
+          <div class="exp-flip-face exp-flip-front">
+            <div class="exp-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="24" cy="24" r="22" stroke="var(--glow)" stroke-width="1.5" fill="var(--gp)"/>
+                <path d="M24 13l2.5 7h7.5l-6 4.5 2.5 7-6.5-4.5-6.5 4.5 2.5-7-6-4.5h7.5z" fill="none" stroke="var(--glow)" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M15 37c0-5 4-9 9-9s9 4 9 9" stroke="var(--ocean)" stroke-width="2" stroke-linecap="round" fill="none"/>
+              </svg>
+            </div>
+            <h3 class="exp-flip-front-title">Segurança em Águas Abertas</h3>
+            <span class="exp-flip-front-hint">Passe o mouse</span>
+          </div>
+          <div class="exp-flip-face exp-flip-back">
+            <h3 class="exp-flip-back-title">Segurança em Águas Abertas</h3>
+            <p class="exp-flip-back-txt">Aprenda a ler correntezas, navegar com precisão e manter controle mental em qualquer condição. Nadar no mar exige mais do que força — exige preparo real para natação em águas abertas.</p>
+          </div>
         </div>
-        <h3 class="exp-tit">Segurança em Águas Abertas</h3>
-        <p class="exp-txt">Aprenda a ler correntezas, navegar com precisão e manter controle mental em qualquer condição. Nadar no mar exige mais do que força — exige preparo real para natação em águas abertas.</p>
       </article>
 
-      <article class="exp-card reveal d3">
-        <div class="exp-icon" aria-hidden="true">
-          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="24" cy="24" r="22" stroke="var(--glow)" stroke-width="1.5" fill="var(--gp)"/>
-            <circle cx="24" cy="24" r="10" stroke="var(--ocean)" stroke-width="1.5" fill="none"/>
-            <circle cx="24" cy="24" r="5" stroke="var(--glow)" stroke-width="1.8" fill="none"/>
-            <circle cx="24" cy="24" r="1.5" fill="var(--glow)"/>
-            <path d="M24 12v4M24 32v4M12 24h4M32 24h4" stroke="var(--glow)" stroke-width="2" stroke-linecap="round"/>
-          </svg>
+      <article class="exp-flip reveal d3" tabindex="0" aria-label="Preparação para Desafios">
+        <div class="exp-flip-inner">
+          <div class="exp-flip-face exp-flip-front">
+            <div class="exp-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="24" cy="24" r="22" stroke="var(--glow)" stroke-width="1.5" fill="var(--gp)"/>
+                <circle cx="24" cy="24" r="10" stroke="var(--ocean)" stroke-width="1.5" fill="none"/>
+                <circle cx="24" cy="24" r="5" stroke="var(--glow)" stroke-width="1.8" fill="none"/>
+                <circle cx="24" cy="24" r="1.5" fill="var(--glow)"/>
+                <path d="M24 12v4M24 32v4M12 24h4M32 24h4" stroke="var(--glow)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3 class="exp-flip-front-title">Preparação para Desafios</h3>
+            <span class="exp-flip-front-hint">Passe o mouse</span>
+          </div>
+          <div class="exp-flip-face exp-flip-back">
+            <h3 class="exp-flip-back-title">Preparação para Desafios</h3>
+            <p class="exp-flip-back-txt">De travessias a provas oficiais de treinamento de natação open water, o planejamento de temporada é feito sob medida. Você chega no dia da prova pronto — técnica, físico e cabeça alinhados.</p>
+          </div>
         </div>
-        <h3 class="exp-tit">Preparação para Desafios</h3>
-        <p class="exp-txt">De travessias a provas oficiais de treinamento de natação open water, o planejamento de temporada é feito sob medida. Você chega no dia da prova pronto — técnica, físico e cabeça alinhados.</p>
       </article>
 
-      <article class="exp-card reveal d4">
-        <div class="exp-icon" aria-hidden="true">
-          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="24" cy="24" r="22" stroke="var(--glow)" stroke-width="1.5" fill="var(--gp)"/>
-            <circle cx="17" cy="20" r="4.5" fill="none" stroke="var(--glow)" stroke-width="1.8"/>
-            <circle cx="31" cy="20" r="4.5" fill="none" stroke="var(--glow)" stroke-width="1.8"/>
-            <path d="M9 36c0-4.4 3.6-8 8-8" stroke="var(--ocean)" stroke-width="2" stroke-linecap="round" fill="none"/>
-            <path d="M31 28c4.4 0 8 3.6 8 8" stroke="var(--ocean)" stroke-width="2" stroke-linecap="round" fill="none"/>
-            <path d="M19 28c1.5-.4 3.1-.4 5 0" stroke="var(--glow)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-          </svg>
+      <article class="exp-flip reveal d4" tabindex="0" aria-label="Comunidade e Acompanhamento">
+        <div class="exp-flip-inner">
+          <div class="exp-flip-face exp-flip-front">
+            <div class="exp-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="24" cy="24" r="22" stroke="var(--glow)" stroke-width="1.5" fill="var(--gp)"/>
+                <circle cx="17" cy="20" r="4.5" fill="none" stroke="var(--glow)" stroke-width="1.8"/>
+                <circle cx="31" cy="20" r="4.5" fill="none" stroke="var(--glow)" stroke-width="1.8"/>
+                <path d="M9 36c0-4.4 3.6-8 8-8" stroke="var(--ocean)" stroke-width="2" stroke-linecap="round" fill="none"/>
+                <path d="M31 28c4.4 0 8 3.6 8 8" stroke="var(--ocean)" stroke-width="2" stroke-linecap="round" fill="none"/>
+                <path d="M19 28c1.5-.4 3.1-.4 5 0" stroke="var(--glow)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+              </svg>
+            </div>
+            <h3 class="exp-flip-front-title">Comunidade e Acompanhamento</h3>
+            <span class="exp-flip-front-hint">Passe o mouse</span>
+          </div>
+          <div class="exp-flip-face exp-flip-back">
+            <h3 class="exp-flip-back-title">Comunidade e Acompanhamento</h3>
+            <p class="exp-flip-back-txt">Faça parte de um grupo que se motiva junto. Treinos em equipe, suporte contínuo e a presença real do professor — porque resultado vem com consistência e comunidade 029Swimming.</p>
+          </div>
         </div>
-        <h3 class="exp-tit">Comunidade e Acompanhamento</h3>
-        <p class="exp-txt">Faça parte de um grupo que se motiva junto. Treinos em equipe, suporte contínuo e a presença real do professor — porque resultado vem com consistência e comunidade 029Swimming.</p>
       </article>
 
     </div>
@@ -3608,76 +4735,6 @@ HOME
     </div>
   </div>
 </section>
-<!-- OBJETIVOS DA ASSESSORIA -->
-<section id="objetivos">
-  <div class="container">
-    <div class="obj-grid">
-
-      <!-- Título coluna esquerda -->
-      <div class="obj-title-col reveal-l">
-        <div class="narrativo-label" style="margin-bottom:.8rem">O que nos move</div>
-        <h2 class="obj-title"><em>Objetivos</em></h2>
-        <div class="obj-title-line"></div>
-      </div>
-
-      <!-- Lista de objetivos -->
-      <div class="obj-list reveal-r">
-
-        <div class="obj-item">
-          <div class="obj-icon">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-          </div>
-          <div>
-            <div class="obj-item-title">Evolução com método</div>
-            <div class="obj-item-txt">Cada atleta recebe um plano construído do zero para o seu nível, objetivo e calendário de provas. Sem treino genérico.</div>
-          </div>
-        </div>
-
-        <div class="obj-item">
-          <div class="obj-icon">
-            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <div>
-            <div class="obj-item-title">Comunidade real</div>
-            <div class="obj-item-txt">Integração entre atletas de diferentes níveis e cidades. Ambiente que incentiva, respeita e celebra cada conquista.</div>
-          </div>
-        </div>
-
-        <div class="obj-item">
-          <div class="obj-icon">
-            <svg viewBox="0 0 24 24"><polyline points="14.5 17.5 3 22 3 7 14.5 2.5 14.5 17.5"/><line x1="14.5" y1="2.5" x2="21" y2="5"/><line x1="21" y1="5" x2="21" y2="20"/><line x1="14.5" y1="17.5" x2="21" y2="20"/></svg>
-          </div>
-          <div>
-            <div class="obj-item-title">Presença nas provas</div>
-            <div class="obj-item-txt">O Prof. Michel acompanha nas competições — da largada à análise pós-prova. Porque o resultado se constrói antes e depois da água.</div>
-          </div>
-        </div>
-
-        <div class="obj-item">
-          <div class="obj-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 2 C4 9 4 13 12 22 C20 13 20 9 12 2Z"/></svg>
-          </div>
-          <div>
-            <div class="obj-item-title">Segurança e confiança</div>
-            <div class="obj-item-txt">Treinos em águas abertas com estrutura, acompanhamento e responsabilidade. Você foca na performance — a segurança é nossa.</div>
-          </div>
-        </div>
-
-        <div class="obj-item">
-          <div class="obj-icon">
-            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          </div>
-          <div>
-            <div class="obj-item-title">Resultados reais</div>
-            <div class="obj-item-txt">+85 provas apoiadas, +120 atletas formados, pódios em competições oficiais. A evolução não é promessa — é histórico.</div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- QUOTE BANNER -->
 <div class="quote-banner">
   <div class="quote-text">
@@ -3689,42 +4746,13 @@ HOME
 
 
 
-<!-- TREINOS / MODALIDADES -->
-<section id="modalidades">
-  <div class="container">
-    <div style="text-align:center;margin-bottom:.5rem" class="reveal">
-      <div class="s-eye" style="justify-content:center">O que oferecemos</div>
-      <h2 class="s-h2" style="text-align:center">Assessoria de <em>Natação</em></h2>
-      <p class="s-lead" style="margin:0 auto;text-align:center">
-        Treinos estruturados para nadadores e triatletas que querem evoluir com método
-      </p>
-    </div>
-    <div class="mod-single reveal">
-      <div class="mod-tit">Plano Individualizado — Online ou Presencial</div>
-      <div class="mod-desc">
-        Cada atleta recebe um plano construído do zero para o seu objetivo, nível e calendário de provas.
-        Sem treinos genéricos. Só o que faz sentido para você chegar no pico quando importa.
-      </div>
-      <div class="mod-topics">
-        <div class="mod-topic">Técnica de nado e sighting</div>
-        <div class="mod-topic">Força e condicionamento aquático</div>
-        <div class="mod-topic">Resistência e gestão de pace</div>
-        <div class="mod-topic">Treinos online e presencial</div>
-        <div class="mod-topic">Treinos na represa</div>
-        <div class="mod-topic">Periodização para provas</div>
-      </div>
-      <a href="#contato" class="btn btn-cta">Agende uma conversa</a>
-    </div>
-  </div>
-</section>
-
 <!-- DIFERENCIAIS -->
 <section id="diferenciais">
   <div class="container">
     <div class="dif-intro reveal">
       <div class="s-eye" style="justify-content:center">Por que a 029Swimming</div>
       <h2 class="s-h2" style="text-align:center">O que nos <em>diferencia</em></h2>
-      <p class="s-lead" style="margin:.5rem auto 0;text-align:center">Mais que aulas, uma assessoria que acompanha você do treino à prova</p>
+      <p class="s-lead" style="margin:.6rem auto 0;text-align:center;max-width:500px">Mais que aulas, uma assessoria que acompanha você do treino à prova</p>
     </div>
     <div class="dif-cards">
       <div class="dif-card reveal d1">
@@ -3753,7 +4781,7 @@ HOME
     <div class="dep-intro reveal">
       <div class="s-eye" style="justify-content:center">Comunidade 029Swimming</div>
       <h2 class="s-h2" style="text-align:center">Junte-se a quem já <em>conquistou o mar</em></h2>
-      <p class="s-lead" style="margin:.4rem auto 0;text-align:center;font-size:.82rem">Onde o asfalto encontra o horizonte</p>
+      <p class="s-lead" style="margin:.6rem auto 0;text-align:center;max-width:460px">Resultados reais de quem treina com método, comprometimento e o acompanhamento do Prof. Michel Victor.</p>
     </div>
     <div class="dep-grid">
       <blockquote class="dep-card reveal d1">
@@ -3781,6 +4809,12 @@ HOME
         </footer>
       </blockquote>
     </div>
+    <div style="text-align:center;margin-top:3rem" class="reveal">
+      <a href="#contato" class="btn btn-primary" style="display:inline-flex;align-items:center;gap:.55rem;padding:.95rem 2.4rem">
+        Quero fazer parte da comunidade
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -3794,9 +4828,10 @@ HOME
 
 <!-- PRE-FOOTER -->
 <section id="pre-footer">
-  <div class="pf-header reveal"><div class="pf-eyebrow">
-</div><h2 class="pf-title">
-</h2></div>
+  <div class="pf-header reveal">
+    <div class="pf-eyebrow">Nossa Galeria</div>
+    <h2 class="pf-title">Momentos que <em>inspiram</em></h2>
+  </div>
   <div class="carousel-outer"><div class="carousel-track" id="carouselTrack">
   </div></div>
 </section>
@@ -3980,16 +5015,32 @@ function startHeroTimer(){
 }
 document.addEventListener("DOMContentLoaded",startHeroTimer);
 
-/* Vídeo de fundo: carrega após 1s para não bloquear LCP  */
+/* Vídeo de fundo: garantir reprodução após load
+   FIX: HTML usa .hero-video (sem -bg), então atualizamos o seletor.
+   Tentamos primeiro pela classe correta; se não achar, fallback p/ classe legada. */
 window.addEventListener("load",()=>{
-  const video=document.querySelector(".hero-video-bg");
+  const video=document.querySelector(".hero-video, .hero-video-bg, #heroVideo");
   if(!video)return;
-  // Ativa preload depois que a página carregou
+  // Garante propriedades críticas para o autoplay
+  video.muted=true;
+  video.playsInline=true;
   video.preload="auto";
   // Quando o vídeo estiver pronto, exibir suavemente
   video.addEventListener("canplay",()=>{
     video.style.opacity="1";
+    video.style.visibility="visible";
   },{once:true});
+  // Tenta dar play (caso o autoplay tenha sido bloqueado pelo navegador)
+  const tryPlay=()=>{
+    const p=video.play();
+    if(p&&p.catch)p.catch(()=>{
+      // Se bloqueado, tenta no primeiro toque/clique do usuário
+      const resume=()=>{video.play().catch(()=>{});document.removeEventListener("click",resume);document.removeEventListener("touchstart",resume);};
+      document.addEventListener("click",resume,{once:true});
+      document.addEventListener("touchstart",resume,{once:true});
+    });
+  };
+  tryPlay();
 });
 
 
@@ -5356,35 +6407,10 @@ html, body {
 #sobre::before { opacity:.5 !important; }
 
 /* ════════════════════════════════════════════════════════════
-   CARDS FIXOS NO HOVER — remove o efeito de "levantar" (lift)
-   ------------------------------------------------------------
-   Tira o transform translateY (que erguia o card) e a sombra de
-   elevação SOMENTE dos cards de conteúdo. As mudanças sutis de
-   cor/borda no hover são mantidas, então o card ainda sinaliza
-   "mouse aqui", mas permanece fixo no layout. Botões (.btn-*,
-   .nav-cta, .form-btn, .vid-cta etc.) NÃO entram aqui — o
-   feedback de clique deles continua intacto, como combinado.   */
-
-.tri-card:hover,
-.mve-card:hover,
-.dif-card:hover,
-.dep-card:hover,
-.exp-card:hover,
-.letgo-card:hover,
-.galeria-item:hover,
-.carousel-slide:hover,
-.c-item:hover,
-.feat:hover,
-.qs-feat:hover,
-.obj-item:hover {
-  transform: none !important;   /* card não sobe nem desliza mais */
-  box-shadow: none !important;  /* remove a sombra de elevação */
-}
-
-/* ════════════════════════════════════════════════════════════
    WHATSAPP FAB — efeito shimmer/ripple no hover
    ------------------------------------------------------------ */
 .sw-whatsapp-fab {
+  position: relative;
   overflow: hidden;
 }
 .sw-whatsapp-fab::before {
