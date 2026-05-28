@@ -6612,36 +6612,40 @@ html, body {
      Nada no hero, layout ou conteúdo é alterado.
      ═══════════════════════════════════════════════════════════ -->
 <style id="liquid-glass">
+/*
+  Técnica correta para glass sobre qualquer cor:
+  isolation:isolate cria stacking context próprio.
+  z-index:-1 no ::after fica ACIMA do background mas
+  ABAIXO do conteúdo (texto/ícones) — sem cobrir nada.
+*/
 .liquid-glass{
   position:relative!important;
-  overflow:hidden!important;
   isolation:isolate;
 }
-/* Camada de vidro: gradiente diagonal + inset highlights */
 .liquid-glass::after{
   content:"";
   position:absolute;
   inset:0;
   border-radius:inherit;
   pointer-events:none;
+  z-index:-1;
+  /* Gradiente de vidro: clarear canto superior + escurecer inferior */
   background:linear-gradient(
-    140deg,
-    rgba(255,255,255,.26) 0%,
-    rgba(255,255,255,.07) 30%,
-    transparent 55%,
-    rgba(0,0,0,.05) 100%
+    135deg,
+    rgba(255,255,255,.28) 0%,
+    rgba(255,255,255,.10) 28%,
+    transparent 52%,
+    rgba(0,0,0,.10) 100%
   );
+  /* Inset highlights: borda de luz no topo + sombra na base */
   box-shadow:
-    inset  1.5px  1.5px .5px rgba(255,255,255,.32),
-    inset -1px   -1px  .5px rgba(0,0,0,.20);
-  mix-blend-mode:overlay;
-  z-index:10;
+    inset  2px  2px 1px rgba(255,255,255,.38),
+    inset -1.5px -1.5px 1px rgba(0,0,0,.28),
+    0 0 18px rgba(0,180,216,.18);
   transition:opacity .3s ease;
 }
-/* Hover: sheen recua ligeiramente para dar feedback visual */
-.liquid-glass:hover::after,
-.liquid-glass:focus-visible::after{
-  opacity:.6;
+.liquid-glass:hover::after{
+  opacity:.65;
 }
 </style>
 
