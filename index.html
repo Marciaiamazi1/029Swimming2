@@ -3122,6 +3122,35 @@ footer{ border-top: 1px solid var(--sw-border); }
   .hero::after{ height: 110px; }
 }
 </style>
+
+<script type="module">
+import { animate, inView, stagger } from "https://cdn.jsdelivr.net/npm/motion@latest/+esm";
+
+// ── "O que nos diferencia" — fade + slide up por card ──
+inView(
+  "#diferenciais .dif-card",
+  ({ target }) => {
+    animate(target, { opacity: [0, 1], y: [30, 0] }, {
+      duration: 0.6,
+      ease: [0.25, 0.46, 0.45, 0.94]
+    });
+  },
+  { amount: 0.25 }
+);
+
+// ── Metodologia — stagger em cascata (0.12s entre cada card) ──
+inView(
+  "#experiencia .exp-grid",
+  () => {
+    animate(
+      "#experiencia .exp-flip",
+      { opacity: [0, 1], y: [30, 0] },
+      { duration: 0.6, delay: stagger(0.12), ease: [0.25, 0.46, 0.45, 0.94] }
+    );
+  },
+  { amount: 0.15 }
+);
+</script>
 </head>
 <body>
 <div id="scroll-bar"></div>
