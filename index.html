@@ -6604,5 +6604,87 @@ html, body {
   });
 })();
 </script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     LIQUID GLASS — sheen premium em todos os botões
+     Técnica: mix-blend-mode:overlay garante que o gradiente de
+     vidro se sobreponha sem cobrir texto, cor ou ícone existente.
+     Nada no hero, layout ou conteúdo é alterado.
+     ═══════════════════════════════════════════════════════════ -->
+<style id="liquid-glass">
+.liquid-glass{
+  position:relative!important;
+  overflow:hidden!important;
+  isolation:isolate;
+}
+/* Camada de vidro: gradiente diagonal + inset highlights */
+.liquid-glass::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  background:linear-gradient(
+    140deg,
+    rgba(255,255,255,.26) 0%,
+    rgba(255,255,255,.07) 30%,
+    transparent 55%,
+    rgba(0,0,0,.05) 100%
+  );
+  box-shadow:
+    inset  1.5px  1.5px .5px rgba(255,255,255,.32),
+    inset -1px   -1px  .5px rgba(0,0,0,.20);
+  mix-blend-mode:overlay;
+  z-index:10;
+  transition:opacity .3s ease;
+}
+/* Hover: sheen recua ligeiramente para dar feedback visual */
+.liquid-glass:hover::after,
+.liquid-glass:focus-visible::after{
+  opacity:.6;
+}
+</style>
+
+<!-- SVG filter: distorção líquida (Chrome/Edge — progressive enhancement) -->
+<svg id="lg-filter-svg" aria-hidden="true" focusable="false"
+     style="position:absolute;width:0;height:0;overflow:hidden;pointer-events:none">
+  <defs>
+    <filter id="lg-filter" x="0%" y="0%" width="100%" height="100%"
+            color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.05 0.05"
+                    numOctaves="1" seed="1" result="noise"/>
+      <feGaussianBlur in="noise" stdDeviation="2" result="blurred"/>
+      <feDisplacementMap in="SourceGraphic" in2="blurred"
+                         scale="70" xChannelSelector="R" yChannelSelector="B"
+                         result="displaced"/>
+      <feGaussianBlur in="displaced" stdDeviation="4" result="final"/>
+      <feComposite in="final" in2="final" operator="over"/>
+    </filter>
+  </defs>
+</svg>
+
+<script>
+(function(){
+  /* Botões utilitários/ícone que NÃO recebem o efeito */
+  var SKIP = [
+    '#wa-float','#chat-btn','#chat-send','#chat-close',
+    '.nav-burger','.mob-menu-close','.faq-q',
+    '.hc-prev','.hc-next','.hc-dot',
+    '.nav-search-btn','.hc-progress-fill'
+  ].join(',');
+
+  /* Todos os botões e links de ação do site */
+  var SEL = [
+    'a.btn','button.form-btn',
+    'a.hpx-cta-big','.mob-cta',
+    '.qs-btn','.btn-wa',
+    '.aluno-btn','.section-cta a'
+  ].join(',');
+
+  document.querySelectorAll(SEL).forEach(function(el){
+    if(!el.matches(SKIP)) el.classList.add('liquid-glass');
+  });
+})();
+</script>
 </body>
 </html>
