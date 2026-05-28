@@ -3126,11 +3126,26 @@ footer{ border-top: 1px solid var(--sw-border); }
 <script type="module">
 import { animate, inView, stagger } from "https://cdn.jsdelivr.net/npm/motion@latest/+esm";
 
+/*
+  Contexto: os elementos .reveal já têm dois IntersectionObservers
+  CSS rodando (obs adiciona .on, obs2 adiciona .visible).
+  Para Motion ter controle exclusivo, setamos inline styles antes
+  que qualquer observer CSS os ative — inline style tem precedência
+  sobre classe CSS, então .on e .visible não mudam mais a opacidade.
+  O animate() sem "from" lê o estado atual (0) automaticamente.
+*/
+document
+  .querySelectorAll("#diferenciais .dif-card, #experiencia .exp-flip")
+  .forEach(el => {
+    el.style.opacity = "0";
+    el.style.transform = "translateY(30px)";
+  });
+
 // ── "O que nos diferencia" — fade + slide up por card ──
 inView(
   "#diferenciais .dif-card",
   ({ target }) => {
-    animate(target, { opacity: [0, 1], y: [30, 0] }, {
+    animate(target, { opacity: 1, y: 0 }, {
       duration: 0.6,
       ease: [0.25, 0.46, 0.45, 0.94]
     });
@@ -3144,7 +3159,7 @@ inView(
   () => {
     animate(
       "#experiencia .exp-flip",
-      { opacity: [0, 1], y: [30, 0] },
+      { opacity: 1, y: 0 },
       { duration: 0.6, delay: stagger(0.12), ease: [0.25, 0.46, 0.45, 0.94] }
     );
   },
