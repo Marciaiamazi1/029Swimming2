@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#020b14">
+<title>Treinos na Represa | 029Swimming</title>
+<link rel="icon" type="image/png" href="/images/logo-029.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#020b14;--bg2:#040f1e;--bg3:#071828;
+  --ocean:#0077b6;--glow:#00b4d8;--gold:#f0a500;
+  --t1:#e8f4fd;--t2:#7aaecc;--t3:#3a6a8a;
+  --bd:rgba(0,180,216,.1);--bd2:rgba(0,180,216,.2);
+  --fd:"Orbitron",monospace;--fb:"Barlow",sans-serif;
+  --r:14px;--max:860px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--bg);color:var(--t1);-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:0}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 70% 55% at 50% 110%,rgba(0,119,182,.16) 0%,transparent 62%)}
+a{text-decoration:none;color:inherit}
+
+/* NAVBAR SIMPLES */
+.page-nav{width:100%;background:rgba(2,11,20,.92);border-bottom:1px solid var(--bd);backdrop-filter:blur(18px);position:sticky;top:0;z-index:100;padding:.7rem 1.5rem;display:flex;align-items:center;gap:1rem;}
+.back-btn{font-family:var(--fd);font-size:.55rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--glow);display:flex;align-items:center;gap:.5rem;padding:.45rem .9rem;border:1px solid var(--bd2);border-radius:8px;transition:all .2s;}
+.back-btn:hover{background:rgba(0,180,216,.1);border-color:var(--glow);}
+.page-nav-brand{font-family:var(--fd);font-size:.65rem;font-weight:800;color:var(--t2);letter-spacing:.08em;margin-left:auto;}
+
+/* HERO DA PÁGINA */
+.page-hero{width:100%;max-width:var(--max);margin:4rem auto 2.5rem;padding:0 1.5rem;text-align:center;position:relative;z-index:1;}
+.page-icon{font-size:3.5rem;margin-bottom:1.2rem;display:block;}
+.page-eyebrow{font-family:var(--fd);font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--glow);margin-bottom:.8rem;}
+.page-title{font-family:var(--fd);font-size:clamp(1.6rem,5vw,2.8rem);font-weight:900;color:var(--t1);line-height:1.15;margin-bottom:1.2rem;}
+.page-lead{font-size:1.05rem;color:var(--t2);line-height:1.7;max-width:640px;margin:0 auto 2.5rem;}
+
+/* CARD CONTEÚDO */
+.page-card{background:rgba(4,15,30,.7);border:1px solid var(--bd2);border-radius:var(--r);padding:2.5rem 2rem;max-width:var(--max);width:100%;margin:0 auto 2rem;position:relative;z-index:1;}
+.page-card p{font-size:1rem;color:var(--t2);line-height:1.75;margin-bottom:1rem;}
+.page-card p:last-child{margin-bottom:0;}
+
+/* CONTEÚDO PRINCIPAL */
+.page-content{width:100%;max-width:var(--max);padding:0 1.5rem 5rem;position:relative;z-index:1;}
+
+/* CTA */
+.page-cta{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--fd);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.85rem 2rem;border-radius:10px;background:linear-gradient(135deg,var(--ocean),var(--glow));color:#fff;box-shadow:0 4px 20px rgba(0,180,216,.35);transition:all .25s;margin-top:1.5rem;}
+.page-cta:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,180,216,.55);}
+</style>
+</head>
+<body>
+
+<nav class="page-nav">
+  <a href="index.html" class="back-btn">&#8592; Voltar</a>
+  <span class="page-nav-brand">029Swimming</span>
+</nav>
+
+<div class="page-hero">
+  <span class="page-icon">&#127754;</span>
+  <p class="page-eyebrow">029Swimming</p>
+  <h1 class="page-title">Treinos na Represa</h1>
+  <p class="page-lead">Prepare-se para as águas abertas em um ambiente real e desafiador.</p>
+</div>
+
+<div class="page-content">
+  <div class="page-card">
+    <p>Conteúdo placeholder — será atualizado em breve.</p>
+    <p>Entre em contato para saber mais sobre esta modalidade de assessoria.</p>
+    <a href="index.html#contato" class="page-cta">Fale com a gente &#8594;</a>
+  </div>
+</div>
+
+</body>
+</html>
