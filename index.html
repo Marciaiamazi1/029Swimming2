@@ -174,29 +174,6 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
   transform:scale(1.05);
 }
 
-/* ════════════════════════════════════════════════════════════
-   FIX: garantir visibilidade do vídeo do Hero
-   - O HTML usa classe .hero-video (sem -bg), mas o CSS antigo só
-     definia .hero-video-bg. Esta regra garante que .hero-video
-     sempre seja renderizado, independente de classes/JS auxiliares.
-   - !important só nas propriedades críticas (display + opacity)
-     pra sobrescrever qualquer regra que tenha escondido o elemento.
-   ════════════════════════════════════════════════════════════ */
-.hero .hero-video,
-.hero-video {
-  position: absolute !important;
-  inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  object-position: center !important;
-  display: block !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  z-index: 0 !important;
-  pointer-events: none;
-}
-
 /* Overlay escuro + gradiente para legibilidade */
 .hero-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(to bottom,rgba(2,11,20,.65) 0%,rgba(2,11,20,.45) 45%,rgba(2,11,20,.55) 70%,rgba(2,11,20,.80) 100%)}
 
@@ -727,23 +704,12 @@ footer{background-color:var(--bg2);background-image:linear-gradient(rgba(2,11,20
 #wa-float svg{width:28px;height:28px;fill:#fff}
 @keyframes waPulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.45)}50%{box-shadow:0 4px 28px rgba(37,211,102,.75),0 0 0 8px rgba(37,211,102,.12)}}
 /* ── Reveal ── */
-.reveal{opacity:0;transform:translateY(30px);transition:opacity .6s cubic-bezier(.25,.46,.45,.94),transform .6s cubic-bezier(.25,.46,.45,.94);will-change:opacity,transform}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
-.reveal-l{opacity:0;transform:translateX(-30px);transition:opacity .6s cubic-bezier(.25,.46,.45,.94),transform .6s cubic-bezier(.25,.46,.45,.94)}
+.reveal-l{opacity:0;transform:translateX(-32px);transition:opacity .7s ease,transform .7s ease}
 .reveal-l.visible{opacity:1;transform:translateX(0)}
-.reveal-r{opacity:0;transform:translateX(30px);transition:opacity .6s cubic-bezier(.25,.46,.45,.94),transform .6s cubic-bezier(.25,.46,.45,.94)}
+.reveal-r{opacity:0;transform:translateX(32px);transition:opacity .7s ease,transform .7s ease}
 .reveal-r.visible{opacity:1;transform:translateX(0)}
-/* ── Cascade delays d1–d6 */
-.reveal.d1,.reveal-l.d1,.reveal-r.d1{transition-delay:0ms}
-.reveal.d2,.reveal-l.d2,.reveal-r.d2{transition-delay:120ms}
-.reveal.d3,.reveal-l.d3,.reveal-r.d3{transition-delay:240ms}
-.reveal.d4,.reveal-l.d4,.reveal-r.d4{transition-delay:360ms}
-.reveal.d5,.reveal-l.d5,.reveal-r.d5{transition-delay:480ms}
-.reveal.d6,.reveal-l.d6,.reveal-r.d6{transition-delay:600ms}
-/* ── prefers-reduced-motion: só fade, sem slide nem delay */
-@media(prefers-reduced-motion:reduce){
-  .reveal,.reveal-l,.reveal-r{transform:none!important;transition:opacity .3s linear!important;transition-delay:0ms!important}
-}
 /* ── Microinterações ── */
 .dep-card{transition:border-color .25s,transform .25s,box-shadow .25s!important}
 .dep-card:hover{transform:translateY(-6px)!important;box-shadow:0 16px 40px rgba(0,0,0,.35)!important;border-color:rgba(0,180,216,.35)!important}
@@ -2608,10 +2574,11 @@ blockquote.dep-card footer.dep-author{display:flex;align-items:center;gap:.75rem
 .qs-wrap{
   position:relative;
   z-index:1;
-  max-width:1180px;
+  max-width:780px;
   margin:0 auto;
   display:grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  /* coluna única — foto removida */
+  grid-template-columns: 1fr;
   gap: clamp(2rem, 5vw, 4.5rem);
   align-items:center;
 }
@@ -3122,50 +3089,6 @@ footer{ border-top: 1px solid var(--sw-border); }
   .hero::after{ height: 110px; }
 }
 </style>
-
-<script type="module">
-import { animate, inView, stagger } from "https://cdn.jsdelivr.net/npm/motion@latest/+esm";
-
-/*
-  Contexto: os elementos .reveal já têm dois IntersectionObservers
-  CSS rodando (obs adiciona .on, obs2 adiciona .visible).
-  Para Motion ter controle exclusivo, setamos inline styles antes
-  que qualquer observer CSS os ative — inline style tem precedência
-  sobre classe CSS, então .on e .visible não mudam mais a opacidade.
-  O animate() sem "from" lê o estado atual (0) automaticamente.
-*/
-document
-  .querySelectorAll("#diferenciais .dif-card, #experiencia .exp-flip")
-  .forEach(el => {
-    el.style.opacity = "0";
-    el.style.transform = "translateY(30px)";
-  });
-
-// ── "O que nos diferencia" — fade + slide up por card ──
-inView(
-  "#diferenciais .dif-card",
-  ({ target }) => {
-    animate(target, { opacity: 1, y: 0 }, {
-      duration: 0.6,
-      ease: [0.25, 0.46, 0.45, 0.94]
-    });
-  },
-  { amount: 0.25 }
-);
-
-// ── Metodologia — stagger em cascata (0.12s entre cada card) ──
-inView(
-  "#experiencia .exp-grid",
-  () => {
-    animate(
-      "#experiencia .exp-flip",
-      { opacity: 1, y: 0 },
-      { duration: 0.6, delay: stagger(0.12), ease: [0.25, 0.46, 0.45, 0.94] }
-    );
-  },
-  { amount: 0.15 }
-);
-</script>
 </head>
 <body>
 <div id="scroll-bar"></div>
@@ -3513,6 +3436,11 @@ HOME
   align-items: center;
   max-width: var(--max);
   margin: 0 auto;
+}
+/* Grid sem foto: conteúdo centralizado em coluna única */
+.bv-grid--sem-foto {
+  grid-template-columns: 1fr;
+  max-width: 780px;
 }
 .bv-foto-wrap { position: relative; flex-shrink: 0; }
 .bv-foto {
@@ -3944,321 +3872,9 @@ HOME
 @media(max-width:900px) {
   .exp-grid { grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
 }
-@media(max-width:900px) {
-  .exp-flip { height: 280px; }
-}
 @media(max-width:480px) {
   .exp-grid { grid-template-columns: 1fr; padding: 0 1rem; gap: 1rem; }
   .exp-card { padding: 1.8rem 1.4rem 1.6rem; }
-  .exp-flip { height: 260px; max-width: 360px; margin: 0 auto; }
-}
-
-/* ════════════════════════════════════════════════════════════
-   FLIP 3D CARDS — versão compacta para a seção Metodologia
-   - Substituem o .exp-card mantendo MESMO tamanho visual e mesma
-     paleta (usa as variáveis CSS existentes: --bg3, --bg4, --bd,
-     --ocean, --glow, --t1, --t2, --fd, --card-radius)
-   - perspective + transform-style: preserve-3d criam o efeito 3D
-   - backface-visibility: hidden esconde o lado "espelhado" durante
-     a rotação (sem isso, você veria texto invertido)
-   ════════════════════════════════════════════════════════════ */
-
-/* Container externo - apenas define a "câmera" 3D e altura fixa
-   Altura fixa garante que TODOS os cards fiquem do mesmo tamanho,
-   independente do conteúdo de cada um (que era o que você pediu). */
-.exp-flip {
-  perspective: 1200px;
-  height: 300px;                    /* compacto - menor que o card original */
-  cursor: pointer;
-  position: relative;
-}
-
-/* Elemento que de fato rotaciona ao passar o mouse */
-.exp-flip-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-style: preserve-3d;
-  will-change: transform;
-}
-
-/* Gatilho do hover (desktop) e focus (teclado) — vira 180° */
-.exp-flip:hover .exp-flip-inner,
-.exp-flip:focus-within .exp-flip-inner {
-  transform: rotateY(180deg);
-}
-
-/* Faces (frente e verso) ocupam o mesmo espaço, sobrepostas */
-.exp-flip-face {
-  position: absolute;
-  inset: 0;
-  border-radius: var(--card-radius);
-  overflow: hidden;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;  /* prefixo p/ Safari antigo */
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--bd);
-  background: linear-gradient(160deg, var(--bg3), var(--bg4));
-}
-
-/* Linha colorida no topo (mantém identidade visual do site) */
-.exp-flip-face::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--ocean), var(--glow));
-  z-index: 2;
-}
-
-/* ===== FRENTE ===== ícone + título (compacto e centralizado) */
-.exp-flip-front {
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 1.5rem 1.2rem;
-  gap: 1rem;
-}
-
-/* Reutiliza o estilo do .exp-icon original (mesmo box azul-translúcido) */
-.exp-flip-front .exp-icon {
-  width: 64px;
-  height: 64px;
-  background: rgba(0,180,216,.08);
-  border: 1px solid rgba(0,180,216,.2);
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background .3s, transform .3s;
-}
-
-/* Pequeno feedback visual no ícone quando o mouse se aproxima */
-.exp-flip:hover .exp-flip-front .exp-icon {
-  background: rgba(0,180,216,.16);
-  transform: scale(1.06);
-}
-
-.exp-flip-front .exp-icon svg {
-  width: 38px;
-  height: 38px;
-}
-
-.exp-flip-front-title {
-  font-family: var(--fd);
-  font-size: .9rem;
-  font-weight: 800;
-  color: var(--t1);
-  letter-spacing: .03em;
-  line-height: 1.3;
-  margin: 0;
-}
-
-/* Hint discreta indicando que o card é interativo */
-.exp-flip-front-hint {
-  font-size: .65rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--t2);
-  opacity: .6;
-  margin-top: .3rem;
-}
-
-/* ===== VERSO ===== descrição completa (texto principal) */
-.exp-flip-back {
-  transform: rotateY(180deg);       /* começa virado p/ ficar correto ao girar */
-  padding: 1.5rem 1.3rem;
-  justify-content: center;
-  background: linear-gradient(160deg, var(--bg4), var(--bg3));  /* gradiente invertido */
-}
-
-.exp-flip-back-title {
-  font-family: var(--fd);
-  font-size: .82rem;
-  font-weight: 800;
-  color: var(--ocean);
-  letter-spacing: .03em;
-  line-height: 1.25;
-  margin: 0 0 .8rem;
-}
-
-.exp-flip-back-txt {
-  font-size: .8rem;
-  color: var(--t2);
-  line-height: 1.65;
-  margin: 0;
-  /* Limita altura do texto se for muito longo (não escapa do card) */
-  display: -webkit-box;
-  -webkit-line-clamp: 7;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* ===== ACESSIBILIDADE ===== */
-
-/* Foco visível para navegação por teclado */
-.exp-flip:focus { outline: none; }
-.exp-flip:focus-visible .exp-flip-face {
-  box-shadow: 0 0 0 3px rgba(0,180,216,.5);
-}
-
-/* Respeita usuários que preferem menos animação no SO */
-@media (prefers-reduced-motion: reduce) {
-  .exp-flip-inner { transition: transform 0.01s; }
-}
-
-/* ═══════════════════════════════════════════════════════════
-   CARD PREMIUM — Técnica e Evolução (.exp-flip--tecnica)
-   ═══════════════════════════════════════════════════════════ */
-
-/* Container: altura premium, leve elevação no hover */
-.exp-flip--tecnica {
-  height: clamp(420px, 35vw, 480px);
-  transition: transform .3s cubic-bezier(.25,.46,.45,.94),
-              box-shadow .3s cubic-bezier(.25,.46,.45,.94);
-}
-.exp-flip--tecnica:hover,
-.exp-flip--tecnica:focus-within {
-  transform: translateY(-8px);
-  box-shadow: 0 28px 60px rgba(0,80,160,.35), 0 0 0 1px rgba(0,180,216,.15);
-}
-
-/* Inner: flip mais suave e lento para efeito premium */
-.exp-flip--tecnica .exp-flip-inner {
-  transition: transform .8s cubic-bezier(.4,0,.2,1);
-}
-
-/* ── FRENTE: navy profundo + glow cyan ── */
-.exp-flip--tecnica .exp-flip-front {
-  background: linear-gradient(160deg, #010e1f 0%, #021627 45%, #041e38 100%);
-  border-color: rgba(0,180,216,.2);
-  gap: 1.5rem;
-}
-
-/* Ícone: círculo outline com glow suave */
-.exp-flip--tecnica .exp-flip-front .exp-icon {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: rgba(0,180,216,.05);
-  border: 1.5px solid rgba(0,180,216,.4);
-  box-shadow: 0 0 28px rgba(0,180,216,.18),
-              inset 0 0 18px rgba(0,180,216,.04);
-}
-.exp-flip--tecnica .exp-flip-front .exp-icon svg {
-  width: 30px;
-  height: 30px;
-  filter: drop-shadow(0 0 7px rgba(0,180,216,.55));
-}
-
-/* Título e hint da frente */
-.exp-flip--tecnica .exp-flip-front-title {
-  color: #fff;
-  font-size: .92rem;
-  letter-spacing: .05em;
-  text-shadow: 0 2px 12px rgba(0,0,0,.5);
-}
-.exp-flip--tecnica .exp-flip-front-hint {
-  color: rgba(0,180,216,.7);
-  letter-spacing: 3px;
-}
-
-/* ── VERSO: imagem + overlay + conteúdo ── */
-.exp-flip--tecnica .exp-flip-back {
-  background: #010e1f;
-  border-color: rgba(0,180,216,.2);
-  padding: 0;
-  overflow: hidden;
-  display: flex;
-  align-items: flex-end;
-  box-shadow: inset 0 0 40px rgba(0,119,182,.12);
-}
-
-/* Camada da imagem — ocupa 100% e faz zoom suave quando visível */
-.exp-back-bg {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-}
-.exp-back-bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-  transform: scale(1.0);
-  transition: transform .9s cubic-bezier(.25,.46,.45,.94);
-  will-change: transform;
-}
-.exp-flip--tecnica:hover .exp-back-bg img,
-.exp-flip--tecnica:focus-within .exp-back-bg img {
-  transform: scale(1.08);
-}
-
-/* Overlay azul-marinho semi-transparente */
-.exp-back-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    170deg,
-    rgba(1,14,31,.62) 0%,
-    rgba(2,20,45,.55) 40%,
-    rgba(1,14,31,.72) 100%
-  );
-  z-index: 1;
-}
-
-/* Gradiente extra na base para garantir leitura do texto */
-.exp-back-overlay::after {
-  content: "";
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 65%;
-  background: linear-gradient(to top, rgba(1,10,24,.85) 0%, transparent 100%);
-}
-
-/* Conteúdo do verso — posicionado sobre overlay */
-.exp-back-content {
-  position: relative;
-  z-index: 2;
-  padding: 1.6rem 1.4rem 1.8rem;
-  width: 100%;
-}
-.exp-flip--tecnica .exp-flip-back-title {
-  color: #fff;
-  font-size: .82rem;
-  margin-bottom: .7rem;
-  text-shadow: 0 2px 14px rgba(0,0,0,.7);
-  -webkit-line-clamp: unset;
-}
-.exp-flip--tecnica .exp-flip-back-txt {
-  color: rgba(255,255,255,.84);
-  line-height: 1.72;
-  text-shadow: 0 1px 8px rgba(0,0,0,.55);
-  -webkit-line-clamp: unset;
-  overflow: visible;
-  display: block;
-}
-
-/* Glow discreto nas bordas do card */
-.exp-flip--tecnica .exp-flip-face {
-  box-shadow: 0 0 0 1px rgba(0,180,216,.1),
-              0 8px 32px rgba(0,0,0,.45);
-}
-
-/* ── Responsive ── */
-@media(max-width:900px) {
-  .exp-flip--tecnica { height: clamp(380px, 42vw, 460px); }
-}
-@media(max-width:480px) {
-  .exp-flip--tecnica { height: 420px; max-width: 360px; margin: 0 auto; }
-}
-@media(prefers-reduced-motion:reduce) {
-  .exp-flip--tecnica,
-  .exp-flip--tecnica .exp-flip-inner,
-  .exp-flip--tecnica .exp-back-bg img { transition-duration: .01s !important; }
 }
 
 /* ══ QUOTE BANNER ────────────────────────────────────────── */
@@ -4627,16 +4243,7 @@ footer {
 <!-- ══ BOAS-VINDAS 029SWIMMING ══ -->
 <section id="boas-vindas">
   <div class="container">
-    <div class="bv-grid">
-      <div class="bv-foto-wrap reveal-l">
-        <div class="bv-foto">
-          <img src="images/quem-somos-vertical.jpg" alt="Atleta nadando em águas abertas ao amanhecer - 029Swimming Prof. Michel Victor" loading="lazy" decoding="async" width="1156" height="1446">
-        </div>
-        <div class="bv-badge">
-          <span class="bv-badge-n">10+</span>
-          <span class="bv-badge-txt">Anos de Experiência</span>
-        </div>
-      </div>
+    <div class="bv-grid bv-grid--sem-foto">
       <div class="bv-content reveal">
         <div class="bv-eyebrow">Bem-vindo à 029Swimming</div>
         <h2 class="bv-title">Sua Evolução <em>Começa</em><br>em Águas Abertas</h2>
@@ -4710,25 +4317,6 @@ footer {
 <section id="sobre" aria-labelledby="qs-title">
   <div class="qs-wrap">
 
-    <!-- Foto + decoração + cards flutuantes -->
-    <div class="qs-photo-stage reveal-l">
-      <div class="qs-photo">
-        <img src="images/quem-somos-vertical.jpg"
-             alt="Atleta nadando em águas abertas ao amanhecer - 029Swimming Prof. Michel Victor"
-             loading="lazy" decoding="async" width="1156" height="1446">
-      </div>
-
-      <div class="qs-badge" aria-hidden="false">
-        <span class="qs-badge-num">+8</span>
-        <span class="qs-badge-label">Anos de experiência</span>
-      </div>
-
-      <div class="qs-tag" aria-hidden="false">
-        <span class="qs-tag-dot"></span>
-        <span class="qs-tag-txt"><strong>+120</strong>&nbsp;atletas formados</span>
-      </div>
-    </div>
-
     <!-- Conteúdo -->
     <div class="qs-content reveal-r">
       <div class="qs-eyebrow">Quem somos</div>
@@ -4746,6 +4334,27 @@ footer {
         você é um atleta com objetivo real.
       </p>
 
+      <div class="qs-feats">
+        <div class="qs-feat">
+          <div class="qs-feat-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <div class="qs-feat-body">
+            <div class="qs-feat-tit">Gestão de Energia</div>
+            <div class="qs-feat-txt">Pace inteligente para provas longas e treinos progressivos.</div>
+          </div>
+        </div>
+
+        <div class="qs-feat">
+          <div class="qs-feat-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <div class="qs-feat-body">
+            <div class="qs-feat-tit">Acompanhamento Próximo</div>
+            <div class="qs-feat-txt">Contato direto com o professor durante toda a sua jornada.</div>
+          </div>
+        </div>
+      </div>
 
       <div class="qs-ctas">
         <a href="#contato" class="qs-btn qs-btn-primary">
@@ -4815,99 +4424,59 @@ footer {
     </div>
     <div class="exp-grid">
 
-      <article class="exp-flip exp-flip--tecnica reveal d1" tabindex="0" aria-label="Técnica e Evolução">
-        <div class="exp-flip-inner">
-          <!-- FRENTE: navy profundo + ícone cyan com glow -->
-          <div class="exp-flip-face exp-flip-front">
-            <div class="exp-icon" aria-hidden="true">
-              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="24" cy="24" r="22" stroke="var(--glow)" stroke-width="1.5" fill="var(--gp)"/>
-                <path d="M10 30c3-3 6-3 9 0s6 3 9 0 6-3 9 0" stroke="var(--glow)" stroke-width="2" stroke-linecap="round" fill="none"/>
-                <path d="M10 24c3-3 6-3 9 0s6 3 9 0 6-3 9 0" stroke="var(--ocean)" stroke-width="2" stroke-linecap="round" fill="none"/>
-                <circle cx="24" cy="17" r="3" fill="var(--glow)"/>
-                <path d="M24 20v6" stroke="var(--glow)" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <h3 class="exp-flip-front-title">Técnica e Evolução</h3>
-            <span class="exp-flip-front-hint">Passe o mouse</span>
-          </div>
-          <!-- VERSO: imagem de fundo + overlay + conteúdo -->
-          <div class="exp-flip-face exp-flip-back">
-            <div class="exp-back-bg" aria-hidden="true">
-              <img src="images/tecnica-evolucao-bg.jpg" alt="" loading="eager" decoding="async">
-            </div>
-            <div class="exp-back-overlay"></div>
-            <div class="exp-back-content">
-              <h3 class="exp-flip-back-title">Técnica e Evolução</h3>
-              <p class="exp-flip-back-txt">Cada braçada analisada e corrigida. O Prof. Michel Victor acompanha sua evolução de forma individual, ajustando o plano a cada etapa do seu desenvolvimento na natação.</p>
-            </div>
-          </div>
+      <article class="exp-card reveal d1">
+        <div class="exp-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="24" cy="24" r="22" stroke="var(--glow)" stroke-width="1.5" fill="var(--gp)"/>
+            <path d="M10 30c3-3 6-3 9 0s6 3 9 0 6-3 9 0" stroke="var(--glow)" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <path d="M10 24c3-3 6-3 9 0s6 3 9 0 6-3 9 0" stroke="var(--ocean)" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <circle cx="24" cy="17" r="3" fill="var(--glow)"/>
+            <path d="M24 20v6" stroke="var(--glow)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
         </div>
+        <h3 class="exp-tit">Técnica e Evolução</h3>
+        <p class="exp-txt">Cada braçada analisada e corrigida. O Prof. Michel Victor acompanha sua evolução de forma individual, ajustando o plano a cada etapa do seu desenvolvimento na natação.</p>
       </article>
 
-      <article class="exp-flip reveal d2" tabindex="0" aria-label="Segurança em Águas Abertas">
-        <div class="exp-flip-inner">
-          <div class="exp-flip-face exp-flip-front">
-            <div class="exp-icon" aria-hidden="true">
-              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="24" cy="24" r="22" stroke="var(--glow)" stroke-width="1.5" fill="var(--gp)"/>
-                <path d="M24 13l2.5 7h7.5l-6 4.5 2.5 7-6.5-4.5-6.5 4.5 2.5-7-6-4.5h7.5z" fill="none" stroke="var(--glow)" stroke-width="1.8" stroke-linejoin="round"/>
-                <path d="M15 37c0-5 4-9 9-9s9 4 9 9" stroke="var(--ocean)" stroke-width="2" stroke-linecap="round" fill="none"/>
-              </svg>
-            </div>
-            <h3 class="exp-flip-front-title">Segurança em Águas Abertas</h3>
-            <span class="exp-flip-front-hint">Passe o mouse</span>
-          </div>
-          <div class="exp-flip-face exp-flip-back">
-            <h3 class="exp-flip-back-title">Segurança em Águas Abertas</h3>
-            <p class="exp-flip-back-txt">Aprenda a ler correntezas, navegar com precisão e manter controle mental em qualquer condição. Nadar no mar exige mais do que força — exige preparo real para natação em águas abertas.</p>
-          </div>
+      <article class="exp-card reveal d2">
+        <div class="exp-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="24" cy="24" r="22" stroke="var(--glow)" stroke-width="1.5" fill="var(--gp)"/>
+            <path d="M24 13l2.5 7h7.5l-6 4.5 2.5 7-6.5-4.5-6.5 4.5 2.5-7-6-4.5h7.5z" fill="none" stroke="var(--glow)" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M15 37c0-5 4-9 9-9s9 4 9 9" stroke="var(--ocean)" stroke-width="2" stroke-linecap="round" fill="none"/>
+          </svg>
         </div>
+        <h3 class="exp-tit">Segurança em Águas Abertas</h3>
+        <p class="exp-txt">Aprenda a ler correntezas, navegar com precisão e manter controle mental em qualquer condição. Nadar no mar exige mais do que força — exige preparo real para natação em águas abertas.</p>
       </article>
 
-      <article class="exp-flip reveal d3" tabindex="0" aria-label="Preparação para Desafios">
-        <div class="exp-flip-inner">
-          <div class="exp-flip-face exp-flip-front">
-            <div class="exp-icon" aria-hidden="true">
-              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="24" cy="24" r="22" stroke="var(--glow)" stroke-width="1.5" fill="var(--gp)"/>
-                <circle cx="24" cy="24" r="10" stroke="var(--ocean)" stroke-width="1.5" fill="none"/>
-                <circle cx="24" cy="24" r="5" stroke="var(--glow)" stroke-width="1.8" fill="none"/>
-                <circle cx="24" cy="24" r="1.5" fill="var(--glow)"/>
-                <path d="M24 12v4M24 32v4M12 24h4M32 24h4" stroke="var(--glow)" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <h3 class="exp-flip-front-title">Preparação para Desafios</h3>
-            <span class="exp-flip-front-hint">Passe o mouse</span>
-          </div>
-          <div class="exp-flip-face exp-flip-back">
-            <h3 class="exp-flip-back-title">Preparação para Desafios</h3>
-            <p class="exp-flip-back-txt">De travessias a provas oficiais de treinamento de natação open water, o planejamento de temporada é feito sob medida. Você chega no dia da prova pronto — técnica, físico e cabeça alinhados.</p>
-          </div>
+      <article class="exp-card reveal d3">
+        <div class="exp-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="24" cy="24" r="22" stroke="var(--glow)" stroke-width="1.5" fill="var(--gp)"/>
+            <circle cx="24" cy="24" r="10" stroke="var(--ocean)" stroke-width="1.5" fill="none"/>
+            <circle cx="24" cy="24" r="5" stroke="var(--glow)" stroke-width="1.8" fill="none"/>
+            <circle cx="24" cy="24" r="1.5" fill="var(--glow)"/>
+            <path d="M24 12v4M24 32v4M12 24h4M32 24h4" stroke="var(--glow)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
         </div>
+        <h3 class="exp-tit">Preparação para Desafios</h3>
+        <p class="exp-txt">De travessias a provas oficiais de treinamento de natação open water, o planejamento de temporada é feito sob medida. Você chega no dia da prova pronto — técnica, físico e cabeça alinhados.</p>
       </article>
 
-      <article class="exp-flip reveal d4" tabindex="0" aria-label="Comunidade e Acompanhamento">
-        <div class="exp-flip-inner">
-          <div class="exp-flip-face exp-flip-front">
-            <div class="exp-icon" aria-hidden="true">
-              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="24" cy="24" r="22" stroke="var(--glow)" stroke-width="1.5" fill="var(--gp)"/>
-                <circle cx="17" cy="20" r="4.5" fill="none" stroke="var(--glow)" stroke-width="1.8"/>
-                <circle cx="31" cy="20" r="4.5" fill="none" stroke="var(--glow)" stroke-width="1.8"/>
-                <path d="M9 36c0-4.4 3.6-8 8-8" stroke="var(--ocean)" stroke-width="2" stroke-linecap="round" fill="none"/>
-                <path d="M31 28c4.4 0 8 3.6 8 8" stroke="var(--ocean)" stroke-width="2" stroke-linecap="round" fill="none"/>
-                <path d="M19 28c1.5-.4 3.1-.4 5 0" stroke="var(--glow)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-              </svg>
-            </div>
-            <h3 class="exp-flip-front-title">Comunidade e Acompanhamento</h3>
-            <span class="exp-flip-front-hint">Passe o mouse</span>
-          </div>
-          <div class="exp-flip-face exp-flip-back">
-            <h3 class="exp-flip-back-title">Comunidade e Acompanhamento</h3>
-            <p class="exp-flip-back-txt">Faça parte de um grupo que se motiva junto. Treinos em equipe, suporte contínuo e a presença real do professor — porque resultado vem com consistência e comunidade 029Swimming.</p>
-          </div>
+      <article class="exp-card reveal d4">
+        <div class="exp-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="24" cy="24" r="22" stroke="var(--glow)" stroke-width="1.5" fill="var(--gp)"/>
+            <circle cx="17" cy="20" r="4.5" fill="none" stroke="var(--glow)" stroke-width="1.8"/>
+            <circle cx="31" cy="20" r="4.5" fill="none" stroke="var(--glow)" stroke-width="1.8"/>
+            <path d="M9 36c0-4.4 3.6-8 8-8" stroke="var(--ocean)" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <path d="M31 28c4.4 0 8 3.6 8 8" stroke="var(--ocean)" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <path d="M19 28c1.5-.4 3.1-.4 5 0" stroke="var(--glow)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          </svg>
         </div>
+        <h3 class="exp-tit">Comunidade e Acompanhamento</h3>
+        <p class="exp-txt">Faça parte de um grupo que se motiva junto. Treinos em equipe, suporte contínuo e a presença real do professor — porque resultado vem com consistência e comunidade 029Swimming.</p>
       </article>
 
     </div>
@@ -5161,32 +4730,16 @@ function startHeroTimer(){
 }
 document.addEventListener("DOMContentLoaded",startHeroTimer);
 
-/* Vídeo de fundo: garantir reprodução após load
-   FIX: HTML usa .hero-video (sem -bg), então atualizamos o seletor.
-   Tentamos primeiro pela classe correta; se não achar, fallback p/ classe legada. */
+/* Vídeo de fundo: carrega após 1s para não bloquear LCP  */
 window.addEventListener("load",()=>{
-  const video=document.querySelector(".hero-video, .hero-video-bg, #heroVideo");
+  const video=document.querySelector(".hero-video-bg");
   if(!video)return;
-  // Garante propriedades críticas para o autoplay
-  video.muted=true;
-  video.playsInline=true;
+  // Ativa preload depois que a página carregou
   video.preload="auto";
   // Quando o vídeo estiver pronto, exibir suavemente
   video.addEventListener("canplay",()=>{
     video.style.opacity="1";
-    video.style.visibility="visible";
   },{once:true});
-  // Tenta dar play (caso o autoplay tenha sido bloqueado pelo navegador)
-  const tryPlay=()=>{
-    const p=video.play();
-    if(p&&p.catch)p.catch(()=>{
-      // Se bloqueado, tenta no primeiro toque/clique do usuário
-      const resume=()=>{video.play().catch(()=>{});document.removeEventListener("click",resume);document.removeEventListener("touchstart",resume);};
-      document.addEventListener("click",resume,{once:true});
-      document.addEventListener("touchstart",resume,{once:true});
-    });
-  };
-  tryPlay();
 });
 
 
@@ -6599,92 +6152,6 @@ html, body {
       e.preventDefault();
       openCulturaModal();
     });
-  });
-})();
-</script>
-
-<!-- ═══════════════════════════════════════════════════════════
-     LIQUID GLASS — sheen premium em todos os botões
-     Técnica: mix-blend-mode:overlay garante que o gradiente de
-     vidro se sobreponha sem cobrir texto, cor ou ícone existente.
-     Nada no hero, layout ou conteúdo é alterado.
-     ═══════════════════════════════════════════════════════════ -->
-<style id="liquid-glass">
-/*
-  Técnica correta para glass sobre qualquer cor:
-  isolation:isolate cria stacking context próprio.
-  z-index:-1 no ::after fica ACIMA do background mas
-  ABAIXO do conteúdo (texto/ícones) — sem cobrir nada.
-*/
-.liquid-glass{
-  position:relative!important;
-  isolation:isolate;
-}
-.liquid-glass::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:inherit;
-  pointer-events:none;
-  z-index:-1;
-  /* Gradiente de vidro: clarear canto superior + escurecer inferior */
-  background:linear-gradient(
-    135deg,
-    rgba(255,255,255,.28) 0%,
-    rgba(255,255,255,.10) 28%,
-    transparent 52%,
-    rgba(0,0,0,.10) 100%
-  );
-  /* Inset highlights: borda de luz no topo + sombra na base */
-  box-shadow:
-    inset  2px  2px 1px rgba(255,255,255,.38),
-    inset -1.5px -1.5px 1px rgba(0,0,0,.28),
-    0 0 18px rgba(0,180,216,.18);
-  transition:opacity .3s ease;
-}
-.liquid-glass:hover::after{
-  opacity:.65;
-}
-</style>
-
-<!-- SVG filter: distorção líquida (Chrome/Edge — progressive enhancement) -->
-<svg id="lg-filter-svg" aria-hidden="true" focusable="false"
-     style="position:absolute;width:0;height:0;overflow:hidden;pointer-events:none">
-  <defs>
-    <filter id="lg-filter" x="0%" y="0%" width="100%" height="100%"
-            color-interpolation-filters="sRGB">
-      <feTurbulence type="fractalNoise" baseFrequency="0.05 0.05"
-                    numOctaves="1" seed="1" result="noise"/>
-      <feGaussianBlur in="noise" stdDeviation="2" result="blurred"/>
-      <feDisplacementMap in="SourceGraphic" in2="blurred"
-                         scale="70" xChannelSelector="R" yChannelSelector="B"
-                         result="displaced"/>
-      <feGaussianBlur in="displaced" stdDeviation="4" result="final"/>
-      <feComposite in="final" in2="final" operator="over"/>
-    </filter>
-  </defs>
-</svg>
-
-<script>
-(function(){
-  /* Botões utilitários/ícone que NÃO recebem o efeito */
-  var SKIP = [
-    '#wa-float','#chat-btn','#chat-send','#chat-close',
-    '.nav-burger','.mob-menu-close','.faq-q',
-    '.hc-prev','.hc-next','.hc-dot',
-    '.nav-search-btn','.hc-progress-fill'
-  ].join(',');
-
-  /* Todos os botões e links de ação do site */
-  var SEL = [
-    'a.btn','button.form-btn',
-    'a.hpx-cta-big','.mob-cta',
-    '.qs-btn','.btn-wa',
-    '.aluno-btn','.section-cta a'
-  ].join(',');
-
-  document.querySelectorAll(SEL).forEach(function(el){
-    if(!el.matches(SKIP)) el.classList.add('liquid-glass');
   });
 })();
 </script>
