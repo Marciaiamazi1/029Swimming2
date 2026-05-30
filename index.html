@@ -3877,6 +3877,104 @@ HOME
   .exp-card { padding: 1.8rem 1.4rem 1.6rem; }
 }
 
+/* ══ CARDS METODOLOGIA — FLIP 3D ─────────────────────────── */
+/* Wrapper externo: define perspectiva e altura mínima */
+.met-card {
+  perspective: 900px;
+  cursor: pointer;
+  border-radius: var(--r);
+  min-height: 260px;
+  box-shadow: 0 8px 32px rgba(0,180,216,.18);
+}
+/* Camada rotacionável */
+.met-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 260px;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(.4,0,.2,1);
+}
+/* Flip ao passar o mouse */
+.met-card:hover .met-card-inner {
+  transform: rotateY(180deg);
+}
+/* Regras comuns frente e verso */
+.met-card-front,
+.met-card-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: var(--r);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* FRENTE — imagem de fundo com overlay cinematográfico */
+.met-card-front {
+  background-image: url('/images/Foto2.png');
+  background-size: cover;
+  background-position: center;
+  transition: background-size 0.7s var(--ease);
+}
+/* Overlay escuro semi-transparente sobre a imagem */
+.met-card-front::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(2,11,20,.62);
+  border-radius: var(--r);
+}
+/* Zoom suave na imagem durante hover — aplicado no inner */
+.met-card:hover .met-card-front {
+  background-size: 107%;
+}
+/* Título da frente — sobre o overlay */
+.met-card-front-content {
+  position: relative;
+  z-index: 2;
+  padding: 1.6rem 1.4rem;
+  text-align: center;
+}
+.met-card-front-content h3 {
+  font-family: var(--fd);
+  font-size: .82rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: .04em;
+  line-height: 1.3;
+  text-shadow: 0 0 18px rgba(0,180,216,.6), 0 2px 8px rgba(0,0,0,.7);
+}
+/* VERSO — gradiente escuro com glow azul */
+.met-card-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(145deg, #020b14, #071828);
+  border: 1px solid rgba(0,180,216,.2);
+  box-shadow: 0 0 24px rgba(0,180,216,.15);
+  padding: 1.8rem 1.6rem;
+  text-align: center;
+  flex-direction: column;
+  gap: .8rem;
+}
+.met-card-back p {
+  font-family: var(--fb);
+  font-size: .9rem;
+  font-weight: 400;
+  color: var(--t1);
+  line-height: 1.75;
+}
+/* Mobile: desabilita flip e exibe frente com overlay simplificado */
+@media(max-width:600px) {
+  .met-card { perspective: none; }
+  .met-card-inner { transform: none !important; min-height: 200px; }
+  .met-card-back { display: none; }
+  .met-card-front { position: relative; inset: auto; border-radius: var(--r); }
+  .met-card-front-content { padding: 1.2rem 1rem; }
+  .met-card-front-content h3 { font-size: .78rem; }
+}
+
 /* ══ QUOTE BANNER ────────────────────────────────────────── */
 .quote-banner {
   background: linear-gradient(135deg, #0a1e35, rgba(0,100,180,.85));
@@ -4359,60 +4457,61 @@ footer {
     </div>
     <div class="exp-grid">
 
-      <article class="exp-card reveal d1">
-        <div class="exp-icon" aria-hidden="true">
-          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="24" cy="24" r="22" stroke="var(--glow)" stroke-width="1.5" fill="var(--gp)"/>
-            <path d="M10 30c3-3 6-3 9 0s6 3 9 0 6-3 9 0" stroke="var(--glow)" stroke-width="2" stroke-linecap="round" fill="none"/>
-            <path d="M10 24c3-3 6-3 9 0s6 3 9 0 6-3 9 0" stroke="var(--ocean)" stroke-width="2" stroke-linecap="round" fill="none"/>
-            <circle cx="24" cy="17" r="3" fill="var(--glow)"/>
-            <path d="M24 20v6" stroke="var(--glow)" stroke-width="2" stroke-linecap="round"/>
-          </svg>
+      <!-- Card 1: Técnica e Evolução -->
+      <div class="met-card placeholder-bg reveal d1">
+        <div class="met-card-inner">
+          <div class="met-card-front">
+            <div class="met-card-front-content">
+              <h3>Técnica e Evolução</h3>
+            </div>
+          </div>
+          <div class="met-card-back">
+            <p>Aprimore sua técnica e evolua com consistência.</p>
+          </div>
         </div>
-        <h3 class="exp-tit">Técnica e Evolução</h3>
-        <p class="exp-txt">Cada braçada analisada e corrigida. O Prof. Michel Victor acompanha sua evolução de forma individual, ajustando o plano a cada etapa do seu desenvolvimento na natação.</p>
-      </article>
+      </div>
 
-      <article class="exp-card reveal d2">
-        <div class="exp-icon" aria-hidden="true">
-          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="24" cy="24" r="22" stroke="var(--glow)" stroke-width="1.5" fill="var(--gp)"/>
-            <path d="M24 13l2.5 7h7.5l-6 4.5 2.5 7-6.5-4.5-6.5 4.5 2.5-7-6-4.5h7.5z" fill="none" stroke="var(--glow)" stroke-width="1.8" stroke-linejoin="round"/>
-            <path d="M15 37c0-5 4-9 9-9s9 4 9 9" stroke="var(--ocean)" stroke-width="2" stroke-linecap="round" fill="none"/>
-          </svg>
+      <!-- Card 2: Segurança em Águas Abertas -->
+      <div class="met-card placeholder-bg reveal d2">
+        <div class="met-card-inner">
+          <div class="met-card-front">
+            <div class="met-card-front-content">
+              <h3>Segurança em Águas Abertas</h3>
+            </div>
+          </div>
+          <div class="met-card-back">
+            <p>Nade com confiança em qualquer condição.</p>
+          </div>
         </div>
-        <h3 class="exp-tit">Segurança em Águas Abertas</h3>
-        <p class="exp-txt">Aprenda a ler correntezas, navegar com precisão e manter controle mental em qualquer condição. Nadar no mar exige mais do que força — exige preparo real para natação em águas abertas.</p>
-      </article>
+      </div>
 
-      <article class="exp-card reveal d3">
-        <div class="exp-icon" aria-hidden="true">
-          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="24" cy="24" r="22" stroke="var(--glow)" stroke-width="1.5" fill="var(--gp)"/>
-            <circle cx="24" cy="24" r="10" stroke="var(--ocean)" stroke-width="1.5" fill="none"/>
-            <circle cx="24" cy="24" r="5" stroke="var(--glow)" stroke-width="1.8" fill="none"/>
-            <circle cx="24" cy="24" r="1.5" fill="var(--glow)"/>
-            <path d="M24 12v4M24 32v4M12 24h4M32 24h4" stroke="var(--glow)" stroke-width="2" stroke-linecap="round"/>
-          </svg>
+      <!-- Card 3: Preparação para Desafios -->
+      <div class="met-card placeholder-bg reveal d3">
+        <div class="met-card-inner">
+          <div class="met-card-front">
+            <div class="met-card-front-content">
+              <h3>Preparação para Desafios</h3>
+            </div>
+          </div>
+          <div class="met-card-back">
+            <p>Chegue pronto para cada prova e travessia.</p>
+          </div>
         </div>
-        <h3 class="exp-tit">Preparação para Desafios</h3>
-        <p class="exp-txt">De travessias a provas oficiais de treinamento de natação open water, o planejamento de temporada é feito sob medida. Você chega no dia da prova pronto — técnica, físico e cabeça alinhados.</p>
-      </article>
+      </div>
 
-      <article class="exp-card reveal d4">
-        <div class="exp-icon" aria-hidden="true">
-          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="24" cy="24" r="22" stroke="var(--glow)" stroke-width="1.5" fill="var(--gp)"/>
-            <circle cx="17" cy="20" r="4.5" fill="none" stroke="var(--glow)" stroke-width="1.8"/>
-            <circle cx="31" cy="20" r="4.5" fill="none" stroke="var(--glow)" stroke-width="1.8"/>
-            <path d="M9 36c0-4.4 3.6-8 8-8" stroke="var(--ocean)" stroke-width="2" stroke-linecap="round" fill="none"/>
-            <path d="M31 28c4.4 0 8 3.6 8 8" stroke="var(--ocean)" stroke-width="2" stroke-linecap="round" fill="none"/>
-            <path d="M19 28c1.5-.4 3.1-.4 5 0" stroke="var(--glow)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-          </svg>
+      <!-- Card 4: Comunidade e Acompanhamento -->
+      <div class="met-card placeholder-bg reveal d4">
+        <div class="met-card-inner">
+          <div class="met-card-front">
+            <div class="met-card-front-content">
+              <h3>Comunidade e Acompanhamento</h3>
+            </div>
+          </div>
+          <div class="met-card-back">
+            <p>Treine com suporte, propósito e evolução contínua.</p>
+          </div>
         </div>
-        <h3 class="exp-tit">Comunidade e Acompanhamento</h3>
-        <p class="exp-txt">Faça parte de um grupo que se motiva junto. Treinos em equipe, suporte contínuo e a presença real do professor — porque resultado vem com consistência e comunidade 029Swimming.</p>
-      </article>
+      </div>
 
     </div>
     <div style="text-align:center;margin-top:2.5rem">
