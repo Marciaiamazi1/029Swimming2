@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -3691,6 +3691,59 @@ HOME
 .qs-badge-num { font-size: 1.9rem; font-weight: 900; }
 .qs-badge-label { font-size: .72rem; }
 
+
+/* ══ POR TRÁS DA 029SWIMMING ══════════════════════════════ */
+#por-tras { background: var(--bg2); }
+.pt-grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 3.5rem;
+  align-items: start;
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.pt-foto-wrap { position: relative; }
+.pt-foto {
+  border-radius: 28px 10px 28px 10px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,.45), 0 0 0 1px rgba(0,180,216,.15);
+}
+.pt-foto img { width: 100%; height: 420px; object-fit: cover; object-position: top center; display: block; }
+.pt-nome {
+  font-family: var(--fd); font-size: 1.15rem; font-weight: 900;
+  color: var(--t1); margin-bottom: .3rem;
+}
+.pt-cargo {
+  font-size: .65rem; color: var(--glow); letter-spacing: .1em;
+  text-transform: uppercase; margin-bottom: 1.5rem;
+}
+.pt-creds { display: flex; flex-direction: column; gap: .5rem; margin-bottom: 1.5rem; }
+.pt-cred-item {
+  display: flex; align-items: center; gap: .7rem;
+  font-size: .85rem; color: var(--t2);
+}
+.pt-cred-item::before {
+  content: ""; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--glow); flex-shrink: 0;
+}
+.pt-texto p { font-size: .95rem; color: var(--t2); line-height: 1.75; margin-bottom: 1rem; }
+.pt-texto p:last-child { margin-bottom: 0; }
+.pt-stats {
+  display: flex; gap: 2rem; flex-wrap: wrap;
+  margin-top: 1.5rem; padding-top: 1.5rem;
+  border-top: 1px solid var(--bd);
+}
+.pt-stat { text-align: left; }
+.pt-stat-n {
+  font-family: var(--fd); font-size: 1.6rem; font-weight: 900;
+  color: var(--glow); display: block;
+}
+.pt-stat-l { font-size: .75rem; color: var(--t3); text-transform: uppercase; letter-spacing: .08em; }
+@media (max-width: 860px) {
+  .pt-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .pt-foto img { height: 300px; }
+}
+
 /* ══ SOBRE NARRATIVO ────────────────────────────────────── */
 #sobre-narrativo {
   background: var(--bg3);
@@ -4416,6 +4469,63 @@ footer {
 
   </div>
 </section>
+
+<!-- ══ POR TRÁS DA 029SWIMMING ══ -->
+<section id="por-tras" class="section-padded reveal">
+  <div class="container">
+    <div class="pt-header" style="text-align:center;margin-bottom:3rem">
+      <p class="s-eye" style="justify-content:center">029Swimming</p>
+      <h2 class="s-h2" style="text-align:center">Por trás da <em>029Swimming</em></h2>
+      <p class="s-lead" style="text-align:center;margin:.6rem auto 0;max-width:520px">O profissional que transforma sua relação com as águas abertas.</p>
+    </div>
+    <div class="pt-grid">
+      <!-- FOTO -->
+      <div class="pt-foto-wrap reveal-l">
+        <div class="pt-foto">
+          <img src="images/coach-michel.jpg" alt="Prof. Michel Victor — 029Swimming" loading="lazy">
+        </div>
+      </div>
+      <!-- BIO -->
+      <div class="pt-bio reveal-r">
+        <p class="pt-nome">Prof. Michel Victor</p>
+        <p class="pt-cargo">Fundador &amp; Head Coach &middot; 029Swimming</p>
+        <div class="pt-creds">
+          <span class="pt-cred-item">Bacharel em Educação Física — Anhanguera ABC</span>
+          <span class="pt-cred-item">Pós-graduação em Esportes Aquáticos — Faculdade Minas</span>
+          <span class="pt-cred-item">Especialista em Natação em Águas Abertas e Triathlon</span>
+          <span class="pt-cred-item">Fundador da 029Swimming</span>
+        </div>
+        <div class="pt-texto">
+          <p>
+            O Prof. Michel Victor não é apenas um treinador — é alguém que conhece o mar de perto,
+            entende o que cada atleta sente ao entrar na água antes de uma prova
+            e sabe exatamente o que precisa ser treinado para chegar na transição inteiro.
+          </p>
+          <p>
+            Com Bacharelado em Educação Física pela Anhanguera ABC e pós-graduação em Esportes Aquáticos
+            pela Faculdade Minas, combina base acadêmica robusta com experiência prática no acompanhamento
+            de atletas de natação e triathlon de todos os níveis.
+          </p>
+        </div>
+        <div class="pt-stats">
+          <div class="pt-stat">
+            <span class="pt-stat-n">8+</span>
+            <span class="pt-stat-l">Anos de experiência</span>
+          </div>
+          <div class="pt-stat">
+            <span class="pt-stat-n">+85</span>
+            <span class="pt-stat-l">Provas acompanhadas</span>
+          </div>
+          <div class="pt-stat">
+            <span class="pt-stat-n">100%</span>
+            <span class="pt-stat-l">Personalizado</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 
 
