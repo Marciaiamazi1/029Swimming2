@@ -2574,12 +2574,12 @@ blockquote.dep-card footer.dep-author{display:flex;align-items:center;gap:.75rem
 .qs-wrap{
   position:relative;
   z-index:1;
-  max-width:780px;
+  /* layout 2 colunas: conteúdo à esquerda, imagem à direita */
+  max-width:1100px;
   margin:0 auto;
   display:grid;
-  /* coluna única — foto removida */
-  grid-template-columns: 1fr;
-  gap: clamp(2rem, 5vw, 4.5rem);
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2.5rem, 5vw, 5rem);
   align-items:center;
 }
 
@@ -2832,17 +2832,69 @@ blockquote.dep-card footer.dep-author{display:flex;align-items:center;gap:.75rem
 }
 .qs-btn svg{ width:16px; height:16px; }
 
+/* ── Animação de entrada da imagem (slide da direita + fade) ── */
+.qs-photo-stage{
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+}
+.qs-photo-stage.qs-visible{
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ── Hover na imagem: scale suave ─────────────────────────── */
+.qs-photo-stage:hover .qs-photo img{
+  transform: scale(1.04);
+}
+.qs-photo img{
+  transition: transform .5s cubic-bezier(.22,1,.36,1);
+}
+
+/* ── Estilo da foto principal (nova) ──────────────────────── */
+.qs-photo{
+  position:relative;
+  z-index:2;
+  width:100%;
+  min-height: 420px;
+  border-radius: 20px;
+  overflow:hidden;
+  border: 1px solid rgba(0,180,216,.28);
+  box-shadow:
+    0 0 0 1px rgba(0,212,255,.12),
+    0 24px 64px rgba(0,0,0,.55),
+    0 0 60px rgba(0,180,216,.18);
+}
+.qs-photo img{
+  width:100%; height:100%;
+  min-height:420px;
+  object-fit:cover;
+  object-position:center top;
+  display:block;
+}
+
 /* ── Responsivo ─────────────────────────── */
 @media (max-width: 960px){
   .qs-wrap{
+    /* mobile: texto acima, imagem abaixo */
     grid-template-columns: 1fr;
     gap: 2.5rem;
   }
-  .qs-photo-stage{ max-width: 520px; margin: 0 auto; width:100%; }
-  .qs-content{ text-align:left; }
+  /* reposiciona: content primeiro, photo-stage segundo */
+  .qs-content{ order: 1; }
+  .qs-photo-stage{ order: 2; max-width: 520px; margin: 0 auto; width:100%; }
+  .qs-photo-stage{
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  .qs-photo-stage.qs-visible{
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 @media (max-width: 620px){
-  .qs-photo{ aspect-ratio: 3 / 4; border-radius: 22px; }
+  .qs-photo{ min-height: 280px; border-radius: 16px; }
+  .qs-photo img{ min-height: 280px; }
   .qs-badge{ top: 12px; right: 10px; padding: .65rem .85rem; gap:.55rem; }
   .qs-badge-num{ font-size: 1.35rem; }
   .qs-badge-label{ font-size: .6rem; max-width: 100px; }
@@ -4450,7 +4502,7 @@ footer {
 <section id="sobre" aria-labelledby="qs-title">
   <div class="qs-wrap">
 
-    <!-- Conteúdo -->
+    <!-- Conteúdo (esquerda) -->
     <div class="qs-content reveal-r">
       <div class="qs-eyebrow">Quem somos</div>
       <h2 class="qs-title" id="qs-title">Mais que natação,<br><em>é superação.</em></h2>
@@ -4464,6 +4516,20 @@ footer {
           Quero conhecer a assessoria
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
+      </div>
+    </div>
+
+    <!-- Imagem (direita) — animada via IntersectionObserver -->
+    <div class="qs-photo-stage" id="qs-photo-stage" aria-hidden="true">
+      <!-- Blob decorativo atrás da foto -->
+      <div class="qs-photo" style="position:relative;">
+        <img
+          src="images/quem-somos-hero.png"
+          alt="Atleta da 029Swimming em competição de águas abertas — metodologia personalizada do Prof. Michel Victor"
+          loading="lazy"
+          width="800"
+          height="600"
+        >
       </div>
     </div>
 
@@ -4872,6 +4938,8 @@ window.addEventListener("load",()=>{
 function toggleFaq(el){const item=el.closest('.faq-item'),open=item.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));if(!open)item.classList.add('open');}
 /* Reveal  */
 (function(){const els=document.querySelectorAll('.reveal,.reveal-l,.reveal-r');if(!els.length)return;const obs2=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),Math.min(i*40,200));obs.unobserve(e.target);}});},{threshold:.12,rootMargin:'0px 0px -40px 0px'});els.forEach(el=>obs2.observe(el));})();
+/* Animação de entrada — imagem Quem Somos (slide da direita + fade) */
+(function(){var el=document.getElementById('qs-photo-stage');if(!el)return;var io=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){setTimeout(function(){el.classList.add('qs-visible');},120);io.unobserve(el);}});},{threshold:.15,rootMargin:'0px 0px -40px 0px'});io.observe(el);})();
 /* Parallax hero  */
 (function(){const hero=document.querySelector('.hero');if(!hero||window.matchMedia('(max-width:768px)').matches)return;window.addEventListener('scroll',()=>{const s=window.scrollY,img=hero.querySelector('.hero-bg-fallback img');if(img&&s<window.innerHeight)img.style.transform=`scale(1.08) translateY(${s*.25}px)`;},{passive:true});})();
 
