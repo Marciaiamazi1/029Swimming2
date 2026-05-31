@@ -4536,6 +4536,58 @@ footer {
   </div>
 </section>
 
+<!-- ══ WAVE CAROUSEL — MICHEL ══ -->
+<section id="mc-section" aria-label="Galeria de fotos">
+  <div class="mc-header">
+    <p class="mc-eyebrow">029Swimming</p>
+    <h2 class="mc-title">Momentos que <em>inspiram</em></h2>
+  </div>
+
+  <div class="mc-slider" id="mcSlider">
+
+    <div class="mc-slide active" data-index="0">
+      <img src="images/carousel-m1.jpg" alt="029Swimming — atletas em treino de águas abertas" loading="eager">
+    </div>
+    <div class="mc-slide" data-index="1">
+      <img src="images/carousel-m2.png" alt="029Swimming — preparação profissional" loading="lazy">
+    </div>
+    <div class="mc-slide" data-index="2">
+      <img src="images/carousel-m3.png" alt="029Swimming — prova em águas abertas" loading="lazy">
+    </div>
+    <div class="mc-slide" data-index="3">
+      <img src="images/carousel-m4.jpg" alt="029Swimming — treino com o Prof. Michel Victor" loading="lazy">
+    </div>
+    <div class="mc-slide" data-index="4">
+      <img src="images/carousel-m5.jpg" alt="029Swimming — assessoria personalizada" loading="lazy">
+    </div>
+    <div class="mc-slide" data-index="5">
+      <img src="images/carousel-m6.jpg" alt="029Swimming — atletas em competição" loading="lazy">
+    </div>
+    <div class="mc-slide" data-index="6">
+      <img src="images/carousel-m7.jpg" alt="029Swimming — superação nas águas abertas" loading="lazy">
+    </div>
+
+    <button class="mc-arrow prev" id="mcPrev" aria-label="Foto anterior">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="mc-arrow next" id="mcNext" aria-label="Próxima foto">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
+    </button>
+
+    <div class="mc-dots" id="mcDots">
+      <div class="mc-dot active" data-dot="0"></div>
+      <div class="mc-dot" data-dot="1"></div>
+      <div class="mc-dot" data-dot="2"></div>
+      <div class="mc-dot" data-dot="3"></div>
+      <div class="mc-dot" data-dot="4"></div>
+      <div class="mc-dot" data-dot="5"></div>
+      <div class="mc-dot" data-dot="6"></div>
+    </div>
+
+    <div class="mc-progress" id="mcProgress"></div>
+  </div>
+</section>
+
 <!-- ══ POR TRÁS DA 029SWIMMING ══ -->
 <section id="por-tras" class="section-padded reveal">
   <div class="container">
@@ -6316,6 +6368,117 @@ html, body {
 </style>
 
 <script>
+/* ══ WAVE CAROUSEL — MICHEL ════════════════════════════════════ */
+(function(){
+  var slides   = Array.from(document.querySelectorAll('#mcSlider .mc-slide'));
+  var dots     = Array.from(document.querySelectorAll('#mcDots .mc-dot'));
+  var bar      = document.getElementById('mcProgress');
+  if(!slides.length || !bar) return;
+  var TOTAL    = slides.length;
+  var AUTO_MS  = 5000;
+  var current  = 0;
+  var animating= false;
+  var autoTimer= null;
+
+  function ease(t){ return t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; }
+
+  function waveClip(prog){
+    var e   = ease(prog);
+    var cx  = 100 - e * 116;
+    var amp = 7.5;
+    var n   = 26;
+    var freq= 2.8;
+    var pts = ['0% 0%'];
+    for(var i=0;i<=n;i++){
+      var y = (i/n)*100;
+      var x = cx + Math.sin((i/n)*Math.PI*2*freq)*amp;
+      pts.push(x.toFixed(2)+'% '+y.toFixed(2)+'%');
+    }
+    pts.push('0% 100%');
+    return 'polygon('+pts.join(', ')+')';
+  }
+
+  function syncDots(){
+    dots.forEach(function(d,i){ d.classList.toggle('active', i===current); });
+  }
+
+  function startBar(){
+    bar.style.transition = 'none';
+    bar.style.width = '0%';
+    bar.offsetWidth;
+    bar.style.transition = 'width '+AUTO_MS+'ms linear';
+    bar.style.width = '100%';
+    autoTimer = setTimeout(function(){ goTo((current+1)%TOTAL); }, AUTO_MS);
+  }
+
+  function stopBar(){
+    clearTimeout(autoTimer);
+    var w  = parseFloat(getComputedStyle(bar).width);
+    var pw = bar.parentElement.offsetWidth;
+    bar.style.transition = 'none';
+    bar.style.width = (w/pw*100).toFixed(1)+'%';
+  }
+
+  function goTo(next){
+    if(animating || next===current) return;
+    animating = true;
+    stopBar();
+    var from = slides[current];
+    var to   = slides[next];
+    to.classList.add('below');
+    to.style.zIndex   = '1';
+    from.style.zIndex = '2';
+    var dur   = 1350;
+    var start = performance.now();
+    function frame(now){
+      var prog = Math.min((now-start)/dur, 1);
+      from.style.clipPath = waveClip(prog);
+      if(prog < 1){
+        requestAnimationFrame(frame);
+      } else {
+        from.classList.remove('active');
+        from.style.clipPath = '';
+        from.style.zIndex   = '';
+        to.classList.remove('below');
+        to.classList.add('active');
+        to.style.zIndex = '';
+        current   = next;
+        animating = false;
+        syncDots();
+        startBar();
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  document.getElementById('mcPrev').addEventListener('click', function(){
+    if(!animating) goTo((current-1+TOTAL)%TOTAL);
+  });
+  document.getElementById('mcNext').addEventListener('click', function(){
+    if(!animating) goTo((current+1)%TOTAL);
+  });
+  dots.forEach(function(d){
+    d.addEventListener('click', function(){
+      var idx = parseInt(d.dataset.dot);
+      if(!animating && idx!==current) goTo(idx);
+    });
+  });
+
+  /* touch swipe */
+  var slider = document.getElementById('mcSlider');
+  var tx = 0;
+  slider.addEventListener('touchstart', function(e){ tx=e.touches[0].clientX; },{passive:true});
+  slider.addEventListener('touchend', function(e){
+    var dx = e.changedTouches[0].clientX - tx;
+    if(Math.abs(dx)>50 && !animating)
+      goTo(dx<0 ? (current+1)%TOTAL : (current-1+TOTAL)%TOTAL);
+  },{passive:true});
+
+  startBar();
+})();
+</script>
+
+<script>
 (function(){
   var m=document.getElementById('culturaModal');
   if(!m)return;
@@ -6347,6 +6510,117 @@ html, body {
 </script>
 
 <style>
+/* ═══ WAVE CAROUSEL — MICHEL ═══════════════════════════════════
+   Mesmo efeito de transição da aba Galeria (wave clip-path).
+   Classes prefixadas com "mc-" para evitar conflitos.           */
+#mc-section {
+  background: #0a0e1a;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+.mc-header {
+  text-align: center;
+  padding: clamp(2.5rem, 5vw, 4rem) 1.5rem 1.8rem;
+}
+.mc-eyebrow {
+  font-family: 'Barlow', sans-serif;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: #f0a500;
+  margin-bottom: .7rem;
+}
+.mc-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+  font-weight: 700;
+  color: #e8f4fd;
+  line-height: 1.15;
+}
+.mc-title em { color: #00d4ff; font-style: italic; }
+
+/* ── Slider ── */
+.mc-slider {
+  position: relative;
+  width: 100%;
+  height: clamp(300px, 65vh, 720px);
+  overflow: hidden;
+  background: #050c18;
+}
+.mc-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  z-index: 0;
+}
+.mc-slide.active { opacity: 1; z-index: 2; }
+.mc-slide.below  { opacity: 1; z-index: 1; }
+.mc-slide img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  display: block;
+}
+.mc-slide::after {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none; z-index: 3;
+  background: linear-gradient(
+    to bottom,
+    rgba(10,14,26,.3) 0%, transparent 25%,
+    transparent 72%, rgba(10,14,26,.6) 100%
+  );
+}
+
+/* ── Arrows ── */
+.mc-arrow {
+  position: absolute; top: 50%; z-index: 10;
+  transform: translateY(-50%);
+  width: 50px; height: 50px; border-radius: 50%;
+  background: rgba(0,0,0,.38); backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,.22); color: #fff;
+  cursor: pointer; display: flex; align-items: center;
+  justify-content: center; transition: all .25s; user-select: none;
+}
+.mc-arrow:hover {
+  background: rgba(0,212,255,.22);
+  border-color: rgba(0,212,255,.6);
+  transform: translateY(-50%) scale(1.09);
+}
+.mc-arrow.prev { left: 1.4rem; }
+.mc-arrow.next { right: 1.4rem; }
+@media(max-width:480px){
+  .mc-arrow { width: 40px; height: 40px; }
+  .mc-arrow.prev { left: .7rem; }
+  .mc-arrow.next { right: .7rem; }
+}
+
+/* ── Dots ── */
+.mc-dots {
+  position: absolute; bottom: 1.4rem; left: 50%;
+  transform: translateX(-50%); z-index: 10;
+  display: flex; gap: .55rem;
+}
+.mc-dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: rgba(255,255,255,.35);
+  cursor: pointer; transition: all .3s;
+}
+.mc-dot.active {
+  background: #00d4ff;
+  transform: scale(1.35);
+  box-shadow: 0 0 10px rgba(0,212,255,.7);
+}
+
+/* ── Progress bar ── */
+.mc-progress {
+  position: absolute; bottom: 0; left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #00d4ff, #f59e0b);
+  z-index: 10;
+}
+
 /* ═══ QUEM SOMOS — FUNDO BRANCO ════════════════════════════════
    Override final: vence qualquer !important anterior porque
    aparece depois no documento (mesma especificidade).           */
