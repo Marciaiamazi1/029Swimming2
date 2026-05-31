@@ -6345,5 +6345,50 @@ html, body {
   });
 })();
 </script>
+
+<style>
+/* ═══ QUEM SOMOS — FUNDO BRANCO ════════════════════════════════
+   Override final: vence qualquer !important anterior porque
+   aparece depois no documento (mesma especificidade).           */
+#sobre {
+  background: #ffffff !important;
+}
+
+/* Blobs decorativos ciano ficam inconsistentes no branco */
+#sobre::before,
+#sobre::after {
+  opacity: 0 !important;
+}
+
+/* Textos — de claro-sobre-escuro para escuro-sobre-branco */
+#sobre .qs-eyebrow {
+  color: #0077b6 !important;
+}
+#sobre .qs-title {
+  color: #0a1628 !important;
+}
+#sobre .qs-title em {
+  color: #0077b6 !important;
+}
+#sobre .qs-lead {
+  color: #2c4a6e !important;
+}
+#sobre strong {
+  color: #0a1628 !important;
+}
+#sobre .qs-feat-tit {
+  color: #0a1628 !important;
+}
+#sobre .qs-feat-txt {
+  color: #2c4a6e !important;
+}
+#sobre .qs-feat {
+  background: rgba(0,119,182,.05) !important;
+  border-color: rgba(0,119,182,.18) !important;
+}
+#sobre .qs-feat-ico {
+  background: rgba(0,119,182,.1) !important;
+}
+</style>
 </body>
 </html>
