@@ -6631,33 +6631,30 @@ html, body {
   z-index: 10;
 }
 
-/* ═══ ÁGUAS ABERTAS — LAYERED TYPOGRAPHY (lateral esquerdo) ════
-   Texto vertical no lado esquerdo do hero, 34px, duas camadas
-   sobrepostas e levemente deslocadas — efeito editorial esportivo.
+/* ═══ ÁGUAS ABERTAS — LAYERED TYPOGRAPHY (horizontal, esquerda) =
+   Texto horizontal, 34px, duas camadas sobrepostas deslocadas.
+   Posicionado no lado esquerdo do hero, verticalmente centralizado.
    pointer-events:none → nenhum clique bloqueado.
    z-index:3 → acima do overlay (2), abaixo do conteúdo (4).    */
 
+/* Oculta o texto central do hero (títulos, typewriter, stats) */
+.hc-texts { display: none !important; }
+
 .aa-layer-wrap {
   position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  bottom: 0 !important;
+  left: clamp(1.5rem, 4vw, 5rem) !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
   right: auto !important;
-  width: auto !important;
+  bottom: auto !important;
   pointer-events: none !important;
   z-index: 3 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-  padding-left: 1.1rem !important;
   user-select: none;
 }
 
 .aa-inner {
   position: relative;
   display: inline-block;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
   pointer-events: none !important;
 }
 
@@ -6679,11 +6676,13 @@ html, body {
   animation: aa-front-in 1.4s cubic-bezier(.23,1,.32,1) .15s both;
 }
 
-/* Camada de fundo — contorno ciano translúcido, deslocado 5px */
+/* Camada de fundo — contorno branco translúcido, deslocada 5px */
 .aa-back {
   display: block;
   position: absolute;
-  inset: 0;
+  top: 5px;
+  left: 5px;
+  right: 0;
   z-index: 1;
   font-family: 'Barlow', 'Inter', sans-serif;
   font-size: 34px;
@@ -6702,20 +6701,20 @@ html, body {
 }
 
 @keyframes aa-front-in {
-  from { opacity: 0; filter: blur(10px); transform: translateX(-16px); }
+  from { opacity: 0; filter: blur(10px); transform: translateX(-20px); }
   to   { opacity: 1; filter: blur(0);    transform: translateX(0); }
 }
 @keyframes aa-back-in {
-  from { opacity: 0; filter: blur(14px); transform: translate(5px, 5px) translateX(-22px); }
+  from { opacity: 0; filter: blur(14px); transform: translate(5px, 25px); }
   to   { opacity: .65; filter: blur(0);  transform: translate(5px, 5px); }
 }
 
-/* Tablet: manter visível, levemente menor */
+/* Tablet */
 @media (max-width: 900px) {
-  .aa-front, .aa-back { font-size: 28px; }
+  .aa-front, .aa-back { font-size: 26px; }
 }
 
-/* Mobile: ocultar para não competir com o menu/conteúdo */
+/* Mobile: ocultar */
 @media (max-width: 600px) {
   .aa-layer-wrap { display: none !important; }
 }
