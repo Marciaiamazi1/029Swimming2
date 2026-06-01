@@ -2470,7 +2470,7 @@ blockquote.dep-card footer.dep-author{display:flex;align-items:center;gap:.75rem
   font-weight:400;
   letter-spacing:.28em;
   text-transform:uppercase;
-  color:rgba(0,180,216,.72);
+  color:#000000;
   line-height:1;
   margin-bottom:.15rem;
   display:block;
@@ -2489,13 +2489,11 @@ blockquote.dep-card footer.dep-author{display:flex;align-items:center;gap:.75rem
   font-family:'DSEG7 Classic','DSEG7 Classic Mini','Courier New',monospace;
   font-size:1.55rem;
   font-weight:700;
-  color:#00b4d8;
+  color:#000000;
   letter-spacing:-1px;
   display:inline-block;
   transform:scaleX(0.70);
   transform-origin:left center;
-  /* Glow sutil — identidade digital/cronômetro */
-  text-shadow:0 0 10px rgba(0,180,216,.55),0 0 22px rgba(0,180,216,.25);
   line-height:1;
   /* Compensa espaço perdido pelo scaleX */
   margin-right:-.3rem;
@@ -2523,29 +2521,33 @@ blockquote.dep-card footer.dep-author{display:flex;align-items:center;gap:.75rem
 }
 
 /* Reflexo espelhado — cópia abaixo da waterline */
+/* A animação liquidReflection é aplicada no container inteiro para que
+   "0:29" e "SWIMMING" se movam em sincronia como um único bloco */
 .brand-reflection{
   display:flex;
   align-items:baseline;
   gap:0;
   line-height:1;
+  /* Espelha verticalmente o bloco completo e anima como um corpo único */
+  transform:scaleY(-1) skewX(0deg);
+  transform-origin:center top;
+  animation:liquidReflection 3.8s ease-in-out infinite;
   /* Máscara: reflexo desvanece rapidamente de cima para baixo */
   -webkit-mask-image:linear-gradient(to bottom,rgba(255,255,255,.22),transparent 58%);
   mask-image:linear-gradient(to bottom,rgba(255,255,255,.22),transparent 58%);
   pointer-events:none;
 }
 
-/* Elementos do reflexo — sobrescrevem transform da classe base */
-/* brand-ref-029: herda scaleX(.70) do brand-029 mas precisa do scaleY(-1) */
+/* Elementos do reflexo — apenas preservam o scaleX do "0:29";
+   o scaleY(-1) e a animação ficam no container .brand-reflection */
 .brand-ref-029{
-  /* Anula o transform do .brand-029 e define o próprio para o reflexo */
-  transform:scaleX(0.70) scaleY(-1) skewX(0deg) !important;
-  transform-origin:center top;
-  animation:liquidReflection 3.8s ease-in-out infinite;
+  /* scaleX(.70) para manter proporção da fonte DSEG7; sem scaleY aqui */
+  transform:scaleX(0.70) !important;
+  transform-origin:left center;
 }
 .brand-ref-swimming{
-  transform:scaleY(-1) skewX(0deg) !important;
-  transform-origin:center top;
-  animation:liquidReflection 3.8s ease-in-out infinite;
+  /* SWIMMING não tem scaleX, herda apenas o scaleY(-1) do container */
+  transform:none !important;
 }
 
 /* Responsividade */
