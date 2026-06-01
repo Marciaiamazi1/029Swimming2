@@ -20,7 +20,10 @@
 <meta property="og:url" content="https://029swimming.com.br/">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Barlow:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Barlow:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<!-- DSEG7 Classic — fonte de display de segmentos digitais -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dseg@0.46.0/css/dseg.min.css">
 <style>
 /* ══ TOKENS ══════════════════════════════════ */
 :root{
@@ -2423,6 +2426,133 @@ blockquote.dep-card footer.dep-author{display:flex;align-items:center;gap:.75rem
 #navbar .nav-links a:hover::after{width:100%;left:0}
 @media(max-width:860px){#navbar .nav-links{display:none}}
 
+/* ══ Brand text block — identidade textual ao lado do logotipo ══ */
+
+/* Animação liquid reflection */
+@keyframes liquidReflection{
+  0%  { transform:scaleY(-1) skewX(0deg); }
+  25% { transform:scaleY(-0.96) skewX(0.3deg); }
+  50% { transform:scaleY(-0.93) skewX(-0.3deg); }
+  75% { transform:scaleY(-0.97) skewX(0.6deg); }
+  100%{ transform:scaleY(-1) skewX(0deg); }
+}
+
+/* Grupo esquerdo — agrupa logo + bloco textual lado a lado */
+.brand-left-group{
+  display:flex;
+  align-items:center;
+  gap:0;
+  flex-shrink:0;
+  pointer-events:auto;
+}
+
+/* Container principal — fica ao lado do brand-link */
+.brand-text-block{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:center;
+  /* Separa visualmente do logotipo */
+  margin-left:.5rem;
+  padding-left:.75rem;
+  border-left:1px solid rgba(0,180,216,.22);
+  /* Clip para o reflexo não vazar verticalmente */
+  overflow:hidden;
+  /* Altura compatível com o logo */
+  height:clamp(52px,6.5vw,75px);
+  flex-shrink:0;
+}
+
+/* "ASSESSORIA" — label acima */
+.brand-assessoria{
+  font-family:'Bebas Neue','Barlow',sans-serif;
+  font-size:.55rem;
+  font-weight:400;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:rgba(0,180,216,.72);
+  line-height:1;
+  margin-bottom:.15rem;
+  display:block;
+}
+
+/* Linha com "0:29" + "SWIMMING" */
+.brand-name-row{
+  display:flex;
+  align-items:baseline;
+  gap:0;
+  line-height:1;
+}
+
+/* "0:29" — fonte DSEG7, comprimida horizontalmente */
+.brand-029{
+  font-family:'DSEG7 Classic','DSEG7 Classic Mini','Courier New',monospace;
+  font-size:1.55rem;
+  font-weight:700;
+  color:#00b4d8;
+  letter-spacing:-1px;
+  display:inline-block;
+  transform:scaleX(0.70);
+  transform-origin:left center;
+  /* Glow sutil — identidade digital/cronômetro */
+  text-shadow:0 0 10px rgba(0,180,216,.55),0 0 22px rgba(0,180,216,.25);
+  line-height:1;
+  /* Compensa espaço perdido pelo scaleX */
+  margin-right:-.3rem;
+}
+
+/* "SWIMMING" — Bebas Neue, mesmo bloco de altura */
+.brand-swimming{
+  font-family:'Bebas Neue','Barlow',sans-serif;
+  font-size:1.55rem;
+  font-weight:400;
+  color:#ffffff;
+  letter-spacing:5px;
+  text-transform:uppercase;
+  line-height:1;
+  display:inline-block;
+}
+
+/* Linha d'água entre texto e reflexo */
+.brand-waterline{
+  width:100%;
+  height:1px;
+  background:linear-gradient(90deg,rgba(0,180,216,.55),rgba(0,180,216,.08),transparent);
+  margin:1px 0 0;
+  flex-shrink:0;
+}
+
+/* Reflexo espelhado — cópia abaixo da waterline */
+.brand-reflection{
+  display:flex;
+  align-items:baseline;
+  gap:0;
+  line-height:1;
+  /* Máscara: reflexo desvanece rapidamente de cima para baixo */
+  -webkit-mask-image:linear-gradient(to bottom,rgba(255,255,255,.22),transparent 58%);
+  mask-image:linear-gradient(to bottom,rgba(255,255,255,.22),transparent 58%);
+  pointer-events:none;
+}
+
+/* Elementos do reflexo — sobrescrevem transform da classe base */
+/* brand-ref-029: herda scaleX(.70) do brand-029 mas precisa do scaleY(-1) */
+.brand-ref-029{
+  /* Anula o transform do .brand-029 e define o próprio para o reflexo */
+  transform:scaleX(0.70) scaleY(-1) skewX(0deg) !important;
+  transform-origin:center top;
+  animation:liquidReflection 3.8s ease-in-out infinite;
+}
+.brand-ref-swimming{
+  transform:scaleY(-1) skewX(0deg) !important;
+  transform-origin:center top;
+  animation:liquidReflection 3.8s ease-in-out infinite;
+}
+
+/* Responsividade */
+@media(max-width:860px){
+  .brand-text-block{ display:none; }
+}
+
 /* ══ Dropdown Galeria ══ */
 #navbar .nav-dropdown{position:relative;pointer-events:auto}
 #navbar .nav-dropdown-trigger{display:inline-flex;align-items:center;gap:.4rem;cursor:pointer}
@@ -3155,9 +3285,28 @@ footer{ border-top: 1px solid var(--sw-border); }
 
 <!-- Cabeçalho — logotipo + menu + busca + Área do Aluno -->
 <header id="navbar" role="banner" aria-label="029Swimming">
-  <a class="brand-link" href="#inicio" aria-label="029Swimming — Início">
-    <img class="brand-logo" src="images/logo-029.png" alt="029Swimming">
-  </a>
+
+  <!-- Grupo esquerdo: logotipo + identidade textual -->
+  <div class="brand-left-group">
+    <a class="brand-link" href="#inicio" aria-label="029Swimming — Início">
+      <img class="brand-logo" src="images/logo-029.png" alt="029Swimming">
+    </a>
+
+    <!-- Bloco de identidade textual — ao lado do logotipo -->
+    <div class="brand-text-block" aria-label="Assessoria 0:29 Swimming">
+      <span class="brand-assessoria">ASSESSORIA</span>
+      <div class="brand-name-row">
+        <span class="brand-029">0:29</span><span class="brand-swimming">SWIMMING</span>
+      </div>
+      <!-- Linha d'água entre texto real e reflexo -->
+      <div class="brand-waterline" aria-hidden="true"></div>
+      <!-- Reflexo liquid — aria-hidden para não duplicar conteúdo para leitores de tela -->
+      <div class="brand-reflection" aria-hidden="true">
+        <span class="brand-029 brand-ref-029">0:29</span><span class="brand-swimming brand-ref-swimming">SWIMMING</span>
+      </div>
+    </div>
+  </div>
+
   <div class="nav-right">
     <nav class="nav-links" aria-label="Menu principal">
       <div class="nav-dropdown" id="navAssessoriaDropdown">
